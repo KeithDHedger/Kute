@@ -8,7 +8,7 @@ kute_CFLAGS = -O3
 
 bin_PROGRAMS = kute
 
-man1_MANS = ../resources/man/kute.1
+#man1_MANS = ../resources/man/kute.1
 
 #BUILT_SOURCES = kute
 #CLEANFILES = ../resources/man/kute.1
