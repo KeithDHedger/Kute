@@ -2,8 +2,8 @@
 --read-all '/media/LinuxData/Music/Anastacia/Anastacia/01 Seasons Change.m4a'
 */
 /*
-** (U)niversal (T)ag (C)ommand
-** Copyright (C) Keith Hedger, 2008.
+** (K)eiths (U)niversal (T)ag (E)ngine
+** Copyright (C) Keith Hedger, 2009.
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ struct option long_options[] =
 
 void printhelp(void)
 {
-	printf("Usage: utc [OPTION] [FILE]\n");
+	printf("Usage: kute [OPTION] FILE\n");
 }
 
 
