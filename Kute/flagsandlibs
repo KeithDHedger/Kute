@@ -1,0 +1,17 @@
+
+INCLUDES =	$(MP4_CFLAGS) \
+		$(FLAC_CFLAGS) \
+		$(ID3_CFLAGS) \
+		$(ID3TAG_CFLAGS) \
+		-I$(top_srcdir) \
+		-DPREFIX=\""${prefix}\"" \
+		-DDATADIR=\""${pkgdatadir}"\" \
+		-DSYSCONFDIR=\""${sysconfdir}/${PACKAGE}"\" \
+		-DLIBDIR=\""${libdir}/${PACKAGE}"\"
+
+LIBS =	$(MP4_LIBS) \
+	$(FLAC_LIBS) \
+	$(ID3TAG_LIBS) \
+	$(ID3_LIBS)
+
+

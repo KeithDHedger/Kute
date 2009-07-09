@@ -1,0 +1,70 @@
+#!/bin/bash
+DEVPREFIX=/media/LinuxData/Development64/local
+RET=$(zenity --entry --text="Name Your Sub Project")
+if [ "XX$RET" = XX"" ]  ;then
+	echo bye
+	exit 0
+fi
+echo $RET
+TYPE=$(zenity --list --title="Bare Bones" --text="Select Your Options" \
+				--radiolist --column="" --column "Project Type" \
+				TRUE "Command Line Project" FALSE "Gnome CLI" FALSE  "GUI Project")
+
+if echo "$TYPE" | grep "GUI" > /dev/null ; then
+	TYPE="GUI"
+	cp -r $DEVPREFIX/share/bones/bonesGUI/subbones "./$RET"
+fi
+
+if echo "$TYPE" | grep "Gnome" > /dev/null ; then
+	TYPE="GNOME"
+	cp -r $DEVPREFIX/share/bones/bonesGNOMECOMMAND/subbones "./$RET"
+fi
+
+if echo "$TYPE" | grep "Command" > /dev/null ; then
+	TYPE="COMMAND"
+	cp -r $DEVPREFIX/share/bones/bonesCOMMAND/subbones "./$RET"
+fi
+
+#cp -r /usr/local/share/bones/bonesGUI/subbones ./$RET
+if [ $TYPE = "GUI" ] ; then
+	cp -r $DEVPREFIX/share/bones/bonesGUI/subbones "./$RET"
+#	cp -r ./bonesGUI/subbones ./$RET
+else
+	cp -r $DEVPREFIX/share/bones/bonesCOMMAND/subbones "./$RET"
+#	cp -r ./bonesCOMMAND/subbones ./$RET
+fi
+
+SUBFOLDERAPP="$RET\/app"
+SUBFOLDERDEBUG="$RET\/debug"
+
+sed "s/)#\*\*\*MMM\*\*\*/ ${SUBFOLDERAPP}\/Makefile ${SUBFOLDERDEBUG}\/Makefile)#***MMM***/g" ./configure.ac > ./temp
+mv ./temp ./configure.ac
+
+if [ $TYPE = "GUI" ] ; then
+	sed "s/\*\*\*XXX\*\*\*/$RET/g" "./$RET/src/main.cpp" > "./$RET/src/main.cpp.bak"
+	mv "./$RET/src/main.cpp.bak" "./$RET/src/main.cpp"
+	sed "s/\*\*\*XXX\*\*\*/$RET/g" "./$RET/src/globals.h" > "./$RET/src/globals.h.bak"
+	mv "./$RET/src/globals.h.bak" "./$RET/src/globals.h"
+fi
+
+echo "cd ../../$RET/src" >> ./remakesourcelist
+echo "csrclst=\$(echo ../src/*.c ../src/*.cpp)" >> ./remakesourcelist
+echo "echo COMMONSRC = \$csrclst > ../sources" >> ./remakesourcelist
+
+sed "s/#\*\*\*MMM\*\*\*/ $SUBFOLDERAPP $SUBFOLDERDEBUG#***MMM***/g" ./Makefile.am > ./temp
+mv ./temp ./Makefile.am
+
+RETLOWER=$(echo "$RET" | tr A-Z a-z)
+sed "s/\*\*\*XXX\*\*\*/$RETLOWER/g" "./${RET}/app/Makefile.am" > ./temp
+mv ./temp "./${RET}/app/Makefile.am"
+
+RETLOWER=$(echo "$RET" | tr A-Z a-z)
+sed "s/\*\*\*XXX\*\*\*/$RETLOWER/g" "./${RET}/debug/Makefile.am" > ./temp
+mv ./temp "./${RET}/debug/Makefile.am"
+
+if [ $TYPE = "GUI" ] ; then
+	mv "./${RET}/resources/glade/XXX.glade" "./${RET}/resources/glade/${RET}.glade"
+	mv "./${RET}/resources/glade/XXX.gladep" "./${RET}/resources/glade/${RET}.gladep"
+fi
+
+./remakesourcelist
