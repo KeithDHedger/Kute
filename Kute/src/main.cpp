@@ -58,6 +58,24 @@ struct option long_options[] =
 void printhelp(void)
 {
 	printf("Usage: kute [OPTION] FILE\n");
+	printf("OPTION			Usage\n\n");
+	printf("r, --read-all		Print tags to stdout (default)\n");
+	printf("a, --artist=ARG		Set tag ARTIST to ARG\n");
+	printf("l, --album=ARG		Set tag ALBUM to ARG\n");
+	printf("n, --title=ARG		Set tag TITLE to ARG\n");
+	printf("t, --track=ARG		Set tag TRACK to ARG\n");
+	printf("T, --total-tracks=ARG	Set tag TOTALTRACKS to ARG\n");
+	printf("C, --cd=ARG		Set tag CD to ARG\n");
+	printf("i, --compilation=ARG	Set tag COMPILATION to ARG\n");
+	printf("			Note this is non standard and ARG should be 1 for part of a compilation or 0 for not\n");
+	printf("y, --year=ARG		Set tag YEAR to ARG\n");
+	printf("g, --genre=ARG		Set tag GENRE to ARG\n");
+	printf("m, --composer=ARG	Set tag COMPOSER to ARG\n");
+	printf("o, --comment=ARG	Set tag COMMENT to ARG\n");
+	printf("f, --force-flac		Don't try to guess the file type treat it as a FLAC file \n");
+	printf("c, --force-aac		Don't try to guess the file type treat it as an AAC file\n");
+	printf("p, --force-mp3		Don't try to guess the file type treat it as an MP3 file\n");
+	printf("?, --help		Print this help\n");
 }
 
 
