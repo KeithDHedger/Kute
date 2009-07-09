@@ -1,0 +1,4 @@
+#!/bin/bash
+
+mkdir -p ../resources/man
+help2man -N ./kute > ../resources/man/kute.1
