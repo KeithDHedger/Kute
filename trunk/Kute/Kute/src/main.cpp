@@ -51,6 +51,7 @@ struct option long_options[] =
 		{"force-flac",0,0,'f'},
 		{"force-aac",0,0,'c'},
 		{"force-mp3",0,0,'p'},
+		{"use-quotes",0,0,'q'},
 		{"help",0,0,'?'},
 		{0, 0, 0, 0}
 	};
@@ -129,7 +130,7 @@ int main(int argc, char **argv)
 	while (1)
 		{
 		int option_index = 0;
-		c = getopt_long (argc, argv, ":alntTCiygmo:rfcp?h",long_options, &option_index);
+		c = getopt_long (argc, argv, ":alntTCiygmo:rfcpq?h",long_options, &option_index);
 		if (c == -1)
 			break;
 
@@ -212,6 +213,9 @@ int main(int argc, char **argv)
 			case 'p':
 				force=true;
 				filetype=IS_MP3;
+				break;
+			case 'q':
+				quotes=true;
 				break;
 			case '?':
 			case 'h':

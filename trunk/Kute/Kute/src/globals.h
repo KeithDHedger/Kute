@@ -31,6 +31,7 @@ extern char*		filename;
 extern int		filetype;
 extern bool		readall;
 extern bool		force;
+extern bool		quotes;
 extern MP4FileHandle	filehandle;
 
 extern char*		title;

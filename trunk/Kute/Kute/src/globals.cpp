@@ -13,6 +13,7 @@ char*		filename;
 int		filetype=UNKNOWN_TYPE;
 bool		readall=false;
 bool		force=false;
+bool		quotes=false;
 
 char*		title=NULL;
 char*		album=NULL;
@@ -34,10 +35,21 @@ char*		gbuff=&bufferdata[0];
 
 void print_tags(void)
 {
-	printf("FILENAME=%s\nFILETYPE=%i\n",filename,filetype);
-	printf("TITLE=%s\nARTIST=%s\nALBUM=%s\nTRACK=%s\nTOTALTRACKS=%s\n",title,artist,album,trackstring,totaltracksstring);
-	printf("CD=%s\nGENRE=%s\nYEAR=%s\nCOMPILATION=%s\n",cdstring,genre,year,compilationstring);
-	printf("COMPOSER=%s\nCOMMENT=%s\n",composer,comment);
+	if (quotes==true)
+		{
+		printf("FILENAME=\"%s\"\nFILETYPE=%i\n",filename,filetype);
+		printf("TITLE=\"%s\"\nARTIST=\"%s\"\nALBUM=\"%s\"\nTRACK=%s\nTOTALTRACKS=%s\n",title,artist,album,trackstring,totaltracksstring);
+		printf("CD=%s\nGENRE=\"%s\"\nYEAR=\"%s\"\nCOMPILATION=%s\n",cdstring,genre,year,compilationstring);
+		printf("COMPOSER=\"%s\"\nCOMMENT=\"%s\"\n",composer,comment);
+
+		}
+	else
+		{
+		printf("FILENAME=%s\nFILETYPE=%i\n",filename,filetype);
+		printf("TITLE=%s\nARTIST=%s\nALBUM=%s\nTRACK=%s\nTOTALTRACKS=%s\n",title,artist,album,trackstring,totaltracksstring);
+		printf("CD=%s\nGENRE=%s\nYEAR=%s\nCOMPILATION=%s\n",cdstring,genre,year,compilationstring);
+		printf("COMPOSER=%s\nCOMMENT=%s\n",composer,comment);
+		}
 }
 
 
