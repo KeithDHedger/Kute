@@ -52,6 +52,7 @@ extern int		tagstoset[12];
 extern char		bufferdata[2048];
 extern char*		flacbuffer;
 extern char*		gbuff;
+extern char*		tempbuffer;
 void print_tags(void);
 
 #define _GLOBALS_

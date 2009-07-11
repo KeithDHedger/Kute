@@ -161,16 +161,25 @@ int main(int argc, char **argv)
 			case 't':
 				set_a_tag=true;
 				trackstring=optarg;
+				if (trackstring[0]=='0')
+					trackstring=(char*)"";
+
 				tagstoset[SETTRACK]=1;
 				break;
 			case 'T':
 				set_a_tag=true;
 				totaltracksstring=optarg;
+				if (totaltracksstring[0]=='0')
+					totaltracksstring=(char*)"";
+
 				tagstoset[SETTOTALTRACKS]=1;
 				break;
 			case 'C':
 				set_a_tag=true;
 				cdstring=optarg;
+				if (cdstring[0]=='0')
+					cdstring=(char*)"";
+
 				tagstoset[SETCD]=1;
 				break;
 //			case 'C':
@@ -180,6 +189,9 @@ int main(int argc, char **argv)
 			case 'i':
 				set_a_tag=true;
 				compilationstring=optarg;
+				if (compilationstring[0]=='0')
+					compilationstring=(char*)"";
+
 				tagstoset[SETCOMPILATION]=1;
 				break;
 			case 'y':

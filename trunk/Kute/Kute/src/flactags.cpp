@@ -16,6 +16,22 @@
  * Write Flac tag, using the level 2 flac interface
  */
 
+void set_tag(FLAC__StreamMetadata *block,FLAC__StreamMetadata_VorbisComment_Entry entry,const char* tagtype,char* tagdata)
+{
+
+ 	if (tagdata!=NULL && strlen(tagdata)>0)
+		{
+		sprintf(tempbuffer,"%s=%s",tagtype,tagdata);
+		entry.entry = (FLAC__byte *)tempbuffer;
+		entry.length = strlen((const char *)entry.entry);
+		FLAC__metadata_object_vorbiscomment_append_comment(block, entry,true);
+		}
+	else
+		{
+		FLAC__metadata_object_vorbiscomment_remove_entries_matching(block,tagtype);
+		}
+}
+
 void set_flac_tags(void)
 {
 
@@ -56,166 +72,49 @@ void set_flac_tags(void)
 				FLAC__StreamMetadata *block = FLAC__metadata_iterator_get_block(iter);
 				FLAC__StreamMetadata_VorbisComment *vc = &block->data.vorbis_comment;
 
-				char*	buffer=(char*)malloc(2048);
 				FLAC__StreamMetadata_VorbisComment_Entry entry;
 	
 				if (tagstoset[SETTITLE]==1)
-					{
- 					if (title!=NULL && strlen(title)>0)
-						{
-            	  				sprintf(buffer,"TITLE=%s",title);
-						entry.entry = (FLAC__byte *)buffer;
-						entry.length = strlen((const char *)entry.entry);
-						FLAC__metadata_object_vorbiscomment_append_comment(block, entry,true);
-						}
-					else
-						FLAC__metadata_object_vorbiscomment_remove_entries_matching(block,"TITLE");
+					set_tag(block,entry,"TITLE",title);
 
-					}
 				if (tagstoset[SETARTIST]==1)
-					{
-					if (artist!=NULL && strlen(artist)>0)
-						{
-	                			sprintf(buffer,"ARTIST=%s",artist);
-						entry.entry = (FLAC__byte *)buffer;
-						entry.length = strlen((const char *)entry.entry);
-						FLAC__metadata_object_vorbiscomment_append_comment(block, entry,true);
-						}
-					else
-						FLAC__metadata_object_vorbiscomment_remove_entries_matching(block,"ARTIST");
-					}
+					set_tag(block,entry,"ARTIST",artist);
 	
 				if (tagstoset[SETALBUM]==1)
-					{
-					if (album!=NULL && strlen(album)>0)
-						{
-	                			sprintf(buffer,"ALBUM=%s",album);
-						entry.entry = (FLAC__byte *)buffer;
-						entry.length = strlen((const char *)entry.entry);
-						FLAC__metadata_object_vorbiscomment_append_comment(block, entry,true);
-						}
-					else
-						FLAC__metadata_object_vorbiscomment_remove_entries_matching(block,"ALBUM");
-					}
+					set_tag(block,entry,"ALBUM",album);
 
 				if (tagstoset[SETTRACK]==1)
-					{
-					if (trackstring!=NULL && strlen(trackstring)>0)
-						{
-	                			sprintf(buffer,"TRACKNUMBER=%s",trackstring);
-						entry.entry = (FLAC__byte *)buffer;
-						entry.length = strlen((const char *)entry.entry);
-						FLAC__metadata_object_vorbiscomment_append_comment(block, entry,true);
-						}
-					else
-						FLAC__metadata_object_vorbiscomment_remove_entries_matching(block,"TRACKNUMBER");
-
-					}
+					set_tag(block,entry,"TRACKNUMBER",trackstring);
 
 				if (tagstoset[SETTOTALTRACKS]==1)
-					{
-					if (totaltracksstring!=NULL && strlen(totaltracksstring)>0)
-						{
-	                			sprintf(buffer,"TRACKTOTAL=%s",totaltracksstring);
-						entry.entry = (FLAC__byte *)buffer;
-						entry.length = strlen((const char *)entry.entry);
-						FLAC__metadata_object_vorbiscomment_append_comment(block, entry,true);
-						}
-					else
-						FLAC__metadata_object_vorbiscomment_remove_entries_matching(block,"TRACKTOTAL");
-					}
+					set_tag(block,entry,"TRACKTOTAL",totaltracksstring);
 
 				if (tagstoset[SETCD]==1)
-					{
-					if (cdstring!=NULL && strlen(cdstring)>0)
-						{
-	           	    			sprintf(buffer,"DISCNUMBER=%s",cdstring);
-						entry.entry = (FLAC__byte *)buffer;
-						entry.length = strlen((const char *)entry.entry);
-						FLAC__metadata_object_vorbiscomment_append_comment(block, entry,true);
-						}
-					else
-						FLAC__metadata_object_vorbiscomment_remove_entries_matching(block,"DISCNUMBER");
-					}
+					set_tag(block,entry,"DISCNUMBER",cdstring);
 
 				if (tagstoset[SETCOMPILATION]==1)
-					{
-					if (compilationstring!=NULL && strlen(compilationstring)>0)
-						{
-	          	    			sprintf(buffer,"COMPILATION=%s",compilationstring);
-						entry.entry = (FLAC__byte *)buffer;
-						entry.length = strlen((const char *)entry.entry);
-						FLAC__metadata_object_vorbiscomment_append_comment(block, entry,true);
-						}
-					else
-						FLAC__metadata_object_vorbiscomment_remove_entries_matching(block,"COMPILATION");
-					}
+					set_tag(block,entry,"COMPILATION",compilationstring);
 
 				if (tagstoset[SETYEAR]==1)
-					{
-					if (year!=NULL && strlen(year)>0)
-						{
-	        	    			sprintf(buffer,"DATE=%s",year);
-						entry.entry = (FLAC__byte *)buffer;
-						entry.length = strlen((const char *)entry.entry);
-						FLAC__metadata_object_vorbiscomment_append_comment(block, entry,true);
-						}
-					else
-						FLAC__metadata_object_vorbiscomment_remove_entries_matching(block,"DATE");
-					}
+					set_tag(block,entry,"DATE",year);
 
 				if (tagstoset[SETGENRE]==1)
-					{
-					if (genre!=NULL && strlen(genre)>0)
-						{
-	        	    			sprintf(buffer,"GENRE=%s",genre);
-						entry.entry = (FLAC__byte *)buffer;
-						entry.length = strlen((const char *)entry.entry);
-						FLAC__metadata_object_vorbiscomment_append_comment(block, entry,true);
-						}
-					else
-						FLAC__metadata_object_vorbiscomment_remove_entries_matching(block,"GENRE");
-					}
+					set_tag(block,entry,"GENRE",genre);
 
 				if (tagstoset[SETCOMPOSER]==1)
-					{
-					if (composer!=NULL && strlen(composer)>0)
-						{
-	        	   	 		sprintf(buffer,"COMPOSER=%s",composer);
-						entry.entry = (FLAC__byte *)buffer;
-						entry.length = strlen((const char *)entry.entry);
-						FLAC__metadata_object_vorbiscomment_append_comment(block, entry,true);
-						}
-					else
-						FLAC__metadata_object_vorbiscomment_remove_entries_matching(block,"COMPOSER");
-					}
+					set_tag(block,entry,"COMPOSER",composer);
 
 				if (tagstoset[SETCOMMENT]==1)
-				{
-					if (comment!=NULL && strlen(comment)>0)
-						{
-	        	    			sprintf(buffer,"COMMENT=%s",comment);
-						entry.entry = (FLAC__byte *)buffer;
-						entry.length = strlen((const char *)entry.entry);
-						FLAC__metadata_object_vorbiscomment_append_comment(block, entry,true);
-
-	        	    			sprintf(buffer,"DESCRIPTION=%s",comment);
-						entry.entry = (FLAC__byte *)buffer;
-						entry.length = strlen((const char *)entry.entry);
-						FLAC__metadata_object_vorbiscomment_append_comment(block, entry,true);
-						}
-					else
-						{
-						FLAC__metadata_object_vorbiscomment_remove_entries_matching(block,"COMMENT");
-						FLAC__metadata_object_vorbiscomment_remove_entries_matching(block,"DESCRIPTION");
-						}
+					{
+					set_tag(block,entry,"COMMENT",comment);
+					set_tag(block,entry,"DESCRIPTION",comment);
 					}
 
 				FLAC__metadata_chain_sort_padding(chain);
 				FLAC__metadata_chain_write(chain,true,true);
 				FLAC__metadata_iterator_delete(iter);
 				FLAC__metadata_chain_delete(chain);
-				free(buffer);
+				//free(buffer);
 				return;
 				break;
 				}
