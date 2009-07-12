@@ -28,32 +28,82 @@ void set_tag(void)
 	}
 
 	if (tagstoset[SETTITLE]==1)
-		MP4SetMetadataName(filehandle,title);
+		{
+		if (title==NULL)
+			MP4DeleteMetadataName(filehandle);
+		else
+			MP4SetMetadataName(filehandle,title);
+		}
 	if (tagstoset[SETALBUM]==1)
-		MP4SetMetadataAlbum(filehandle,album);
+		{
+		if (album==NULL)
+			MP4DeleteMetadataAlbum(filehandle);
+		else
+			MP4SetMetadataAlbum(filehandle,album);
+		}
 	if (tagstoset[SETARTIST]==1)
-		MP4SetMetadataArtist(filehandle,artist);
+		{
+		if (artist==NULL)
+			MP4DeleteMetadataArtist(filehandle);
+		else
+			MP4SetMetadataArtist(filehandle,artist);
+		}
 	if (tagstoset[SETTRACK]==1 || tagstoset[SETTOTALTRACKS]==1)
 		{
-		MP4GetMetadataTrack(filehandle,&track,&totaltracks);
-		if (tagstoset[SETTRACK]==1)
-			track=strtol(trackstring,NULL, 10);
-		if (tagstoset[SETTOTALTRACKS]==1)
-			totaltracks=strtol(totaltracksstring,NULL, 10);
-		MP4SetMetadataTrack(filehandle,track,totaltracks);
+		if (trackstring==NULL)
+			MP4DeleteMetadataTrack(filehandle);
+		else
+			{
+			MP4GetMetadataTrack(filehandle,&track,&totaltracks);
+			if (tagstoset[SETTRACK]==1)
+				track=strtol(trackstring,NULL, 10);
+			if (tagstoset[SETTOTALTRACKS]==1)
+				totaltracks=strtol(totaltracksstring,NULL, 10);
+			MP4SetMetadataTrack(filehandle,track,totaltracks);
+			}
 		}
 	if (tagstoset[SETCD]==1 || tagstoset[SETTOTALCDS]==1)
-		MP4SetMetadataDisk(filehandle,cd,totalcds);
+		{
+		if (cdstring==NULL)
+			MP4DeleteMetadataDisk(filehandle);
+		else
+			MP4SetMetadataDisk(filehandle,cd,totalcds);
+		}
 	if (tagstoset[SETCOMPILATION]==1)
-		MP4SetMetadataCompilation(filehandle,compilation);
+		{
+		if (compilationstring==NULL)
+			MP4DeleteMetadataCompilation(filehandle);
+		else
+			MP4SetMetadataCompilation(filehandle,compilation);
+		}
 	if (tagstoset[SETYEAR]==1)
-		MP4SetMetadataYear(filehandle,year);
+		{
+		if (year==NULL)
+			MP4DeleteMetadataYear(filehandle);
+		else
+			MP4SetMetadataYear(filehandle,year);
+		}
 	if (tagstoset[SETGENRE]==1)
-		MP4SetMetadataGenre(filehandle,genre);
+		{
+		if (genre==NULL)
+			MP4DeleteMetadataGenre(filehandle);
+		else
+			MP4SetMetadataGenre(filehandle,genre);
+		}
 	if (tagstoset[SETCOMPOSER]==1)
-		MP4SetMetadataWriter(filehandle,composer);
+		{
+		if (composer==NULL)
+			MP4DeleteMetadataWriter(filehandle);
+		else
+			MP4SetMetadataWriter(filehandle,composer);
+		}
 	if (tagstoset[SETCOMMENT]==1)
-		MP4SetMetadataComment(filehandle,comment);
+		{
+		if (comment==NULL)
+			MP4DeleteMetadataComment(filehandle);
+		else
+			MP4SetMetadataComment(filehandle,comment);
+		}
 
 	MP4Close(filehandle);
 }
@@ -80,12 +130,22 @@ bool do_read_all(void)
 	if (album==NULL)
 		album=(char*)"";
 	MP4GetMetadataTrack(filehandle,&track,&totaltracks);
-	sprintf(tbuff,"%i",track);
-	trackstring=(char*)malloc(strlen(tbuff)+1);
-	sprintf(trackstring,"%i",track);
-	sprintf(tbuff,"%i",totaltracks);
-	totaltracksstring=(char*)malloc(strlen(tbuff)+1);
-	sprintf(totaltracksstring,"%i",totaltracks);
+	if (track>0)
+		{	
+		sprintf(tbuff,"%i",track);
+		trackstring=(char*)malloc(strlen(tbuff)+1);
+		sprintf(trackstring,"%i",track);
+	
+		sprintf(tbuff,"%i",totaltracks);
+		totaltracksstring=(char*)malloc(strlen(tbuff)+1);
+		sprintf(totaltracksstring,"%i",totaltracks);
+		}
+	else
+		{
+		trackstring=(char*)calloc(1,1);
+		totaltracksstring=(char*)calloc(1,1);
+		}
+
 
 	MP4GetMetadataDisk(filehandle,&cd,&totalcds);
 	sprintf(tbuff,"%i",cd);
@@ -99,9 +159,14 @@ bool do_read_all(void)
 	if (year==NULL)
 		year=(char*)"";
 	MP4GetMetadataCompilation(filehandle,&compilation);
-	sprintf(tbuff,"%i",compilation);
-	compilationstring=(char*)malloc(strlen(tbuff)+1);
-	sprintf(compilationstring,"%i",compilation);
+		if (compilation>0)
+			{	
+			sprintf(tbuff,"%i",compilation);
+			compilationstring=(char*)malloc(strlen(tbuff)+1);
+			sprintf(compilationstring,"%i",compilation);
+			}
+		else
+			compilationstring=(char*)calloc(1,1);
 
 	MP4GetMetadataWriter(filehandle,&composer);
 	if (composer==NULL)
