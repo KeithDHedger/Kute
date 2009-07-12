@@ -70,5 +70,6 @@ find -iname "*.flac" | while read
 		fi
 		echo "Finished" >> /tmp/flaactoaac.log
 		$KUTE --artist="$ARTIST"  --album="$ALBUM" --title="$TITLE" --track="$TRACK" --total-tracks="$TOTALTRACKS" --cd="$CD" --compilation="$COMPILATION" --year="$YEAR" --genre="$GENRE" --composer="$COMPOSER" --comment="$COMMENT" "$OUTFILE"
+		rm "$INFILE"
 	done
 
