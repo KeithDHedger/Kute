@@ -64,10 +64,15 @@ void set_tag(void)
 		}
 	if (tagstoset[SETCD]==1 || tagstoset[SETTOTALCDS]==1)
 		{
-		if (cdstring==NULL)
+		if (cdstring==NULL||strlen(cdstring)==0)
+			{
 			MP4DeleteMetadataDisk(filehandle);
+			}
 		else
+			{
+			totalcds=cd=strtol(cdstring,NULL, 10);
 			MP4SetMetadataDisk(filehandle,cd,totalcds);
+			}
 		}
 	if (tagstoset[SETCOMPILATION]==1)
 		{
@@ -148,9 +153,14 @@ bool do_read_all(void)
 
 
 	MP4GetMetadataDisk(filehandle,&cd,&totalcds);
-	sprintf(tbuff,"%i",cd);
-	cdstring=(char*)malloc(strlen(tbuff)+1);
-	sprintf(cdstring,"%i",cd);
+		if (compilation>0)
+			{	
+			sprintf(tbuff,"%i",cd);
+			cdstring=(char*)malloc(strlen(tbuff)+1);
+			sprintf(cdstring,"%i",cd);
+			}
+		else
+			cdstring=(char*)calloc(1,1);
 
 	MP4GetMetadataGenre(filehandle,&genre);
 	if (genre==NULL)
