@@ -153,14 +153,14 @@ bool do_read_all(void)
 
 
 	MP4GetMetadataDisk(filehandle,&cd,&totalcds);
-		if (compilation>0)
-			{	
-			sprintf(tbuff,"%i",cd);
-			cdstring=(char*)malloc(strlen(tbuff)+1);
-			sprintf(cdstring,"%i",cd);
-			}
-		else
-			cdstring=(char*)calloc(1,1);
+	if (cd>0)
+		{	
+		sprintf(tbuff,"%i",cd);
+		cdstring=(char*)malloc(strlen(tbuff)+1);
+		sprintf(cdstring,"%i",cd);
+		}
+	else
+		cdstring=(char*)calloc(1,1);
 
 	MP4GetMetadataGenre(filehandle,&genre);
 	if (genre==NULL)
