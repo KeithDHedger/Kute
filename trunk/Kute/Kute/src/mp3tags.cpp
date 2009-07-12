@@ -163,8 +163,9 @@ void set_mp3_tag(const char *tagname,enum id3_field_type type,char *tagdata)
 		{
 		if ((frame = id3_tag_findframe(tag,tagname, 0)) != NULL)
 			{
-		//printf("XXXXXXXXXX c=%s len=%i\n",tagdata,strlen(tagdata));
+		printf("XXXXXXXXXX c=%s len=%i\n",tagdata,strlen(tagdata));
 			id3_tag_detachframe(tag,frame);
+			//id3_frame_delete(frame);
 			id3_file_update(mp3file);
 			return;
 			}
@@ -296,32 +297,52 @@ void set_mp3_tags(void)
 	if (tagstoset[SETCD]==1 || tagstoset[SETTOTALCDS]==1)
 		set_mp3_tag("TPOS",ID3_FIELD_TYPE_STRINGLIST,cdstring);
 
-	if (tagstoset[SETTRACK]==1 || tagstoset[SETTOTALTRACKS]==1)
+	get_mp3_tag(ID3_FRAME_TRACK,&tempbuffer);
+
+	char* ttrack=(char*)calloc(100,1);
+	char* ttot=(char*)calloc(100,1);
+	if(strchr(tempbuffer,'/'))
 		{
-		//char * tbuff=(char*)calloc(100,1);
-		for (int j=0;j<2048;j++)
-			tempbuffer[j]=0;
-		get_mp3_tag(ID3_FRAME_TRACK,&tempbuffer);
-		if (tagstoset[SETTRACK]==1)
-			sprintf(tempbuffer,"%s",trackstring);
-		if (tagstoset[SETTOTALTRACKS]==1 && (totaltracksstring!=NULL && strlen(totaltracksstring)>0))
+		ttrack=strtok(tempbuffer, "/");
+		ttot=strtok(NULL, "/");
+		}
+	else
+		{
+		ttot[0]=0;
+		strcpy(ttrack,tempbuffer);
+		}
+
+	if (tagstoset[SETTOTALTRACKS]==1)
+		{
+		sprintf(ttot,"%s",totaltracksstring);
+		}
+	
+	if (tagstoset[SETTRACK]==1)
+		{
+		if (trackstring==NULL || strlen(trackstring)==0)
 			{
-			strcat(tempbuffer,"/");
-			strcat(tempbuffer,totaltracksstring);
+			ttrack[0]=0;
+			ttot[0]=0;
+			sprintf(ttrack," ");
 			}
-		
-		if (tagstoset[SETTRACK]==1 && (trackstring==NULL || strlen(trackstring)==0))
+		else
 			{
-			tempbuffer[0]=0;
+			strcpy(ttrack,trackstring);
+			}
+		if (ttot!=NULL && strlen(ttot)>0)
+			{
+			sprintf(tempbuffer,"%s/%s",ttrack,ttot);
+			}
+		else
+			{
+			sprintf(tempbuffer,"%s",ttrack);
 			}
 
-		printf("t=%s tt=%s tbuff=%s\n",trackstring,totaltracksstring,tempbuffer);
 		set_mp3_tag(ID3_FRAME_TRACK,ID3_FIELD_TYPE_STRINGLIST,tempbuffer);
 		}
 
 	if (tagstoset[SETCOMPILATION]==1)
 		{
-		printf("XXXXXXXXXX c=%s len=%i\n",compilationstring,strlen(compilationstring));
 		set_mp3_tag("TCMP",ID3_FIELD_TYPE_STRINGLIST,compilationstring);
 		}
 
