@@ -1,7 +1,7 @@
 #!/bin/bash
 #NAUTILUS_SCRIPT_CURRENT_URI
 
-FFMPEG="/media/LinuxData/Development64/local/bin/ffmpeg -v 0 -qscale 1 -i"
+FFMPEG="/media/LinuxData/Development64/local/bin/ffmpeg -v 0 -sameq -i"
 KUTE="/media/LinuxData/Development64/Projects/Kute/trunk/Kute/Kute/app/kute"
 
 if [ "$(tty)" = "not a tty" ];then
