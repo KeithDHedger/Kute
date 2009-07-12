@@ -113,18 +113,26 @@ bool read_all_mp3(void)
 	get_mp3_tag(ID3_FRAME_ALBUM,&album);
 	get_mp3_tag(ID3_FRAME_ARTIST,&artist);
 	get_mp3_tag(ID3_FRAME_TRACK,&trackstring);
-	if(strchr(trackstring,'/'))
+	printf("t=%s tt=%s\n",trackstring,totaltracksstring);
+	if(trackstring==NULL || strlen(trackstring)==0)
 		{
-		token=strtok(trackstring, "/");
-		token=strtok(NULL, "/");
-		totaltracksstring=(char*)malloc(strlen(token)+1);
-		strcpy(totaltracksstring,token);
+		trackstring=(char*)"";
+		totaltracksstring=(char*)"";
 		}
 	else
 		{
-		totaltracksstring=(char*)"";
+		if(strchr(trackstring,'/'))
+			{
+			token=strtok(trackstring, "/");
+			token=strtok(NULL, "/");
+			totaltracksstring=(char*)malloc(strlen(token)+1);
+			strcpy(totaltracksstring,token);
+			}
+		else
+			{
+			totaltracksstring=(char*)"";
+			}
 		}
-
 	get_mp3_tag("TPOS",&cdstring);
 	if(strchr(cdstring,'/'))
 		{
@@ -151,6 +159,19 @@ void set_mp3_tag(const char *tagname,enum id3_field_type type,char *tagdata)
 {
 	int nstrings;
 
+	if (tagdata==NULL || strlen(tagdata)==0)
+		{
+		if ((frame = id3_tag_findframe(tag,tagname, 0)) != NULL)
+			{
+		//printf("XXXXXXXXXX c=%s len=%i\n",tagdata,strlen(tagdata));
+			id3_tag_detachframe(tag,frame);
+			id3_file_update(mp3file);
+			return;
+			}
+		else
+			return;
+		}
+
 	if ((frame = id3_tag_findframe(tag,tagname, 0)) == NULL)
 		{
 		if ((frame = id3_frame_new(tagname)) == NULL)
@@ -159,10 +180,9 @@ void set_mp3_tag(const char *tagname,enum id3_field_type type,char *tagdata)
 			return;
 			}
 		}
-		//else
-		//	{
-			id3_tag_attachframe(tag,frame);
-		//	}
+
+	id3_tag_attachframe(tag,frame);
+
 
 	for (int i = 0; (field = id3_frame_field(frame, i)); i++)
 		{
@@ -275,15 +295,35 @@ void set_mp3_tags(void)
 		set_mp3_tag(ID3_FRAME_COMMENT,ID3_FIELD_TYPE_STRINGFULL,comment);
 	if (tagstoset[SETCD]==1 || tagstoset[SETTOTALCDS]==1)
 		set_mp3_tag("TPOS",ID3_FIELD_TYPE_STRINGLIST,cdstring);
+
 	if (tagstoset[SETTRACK]==1 || tagstoset[SETTOTALTRACKS]==1)
 		{
-		if (totaltracksstring==NULL)
-			totaltracksstring=(char*)calloc(1,1);
-		sprintf(gbuff,"%s/%s",trackstring,totaltracksstring);
-		set_mp3_tag(ID3_FRAME_TRACK,ID3_FIELD_TYPE_STRINGLIST,gbuff);
+		//char * tbuff=(char*)calloc(100,1);
+		for (int j=0;j<2048;j++)
+			tempbuffer[j]=0;
+		get_mp3_tag(ID3_FRAME_TRACK,&tempbuffer);
+		if (tagstoset[SETTRACK]==1)
+			sprintf(tempbuffer,"%s",trackstring);
+		if (tagstoset[SETTOTALTRACKS]==1 && (totaltracksstring!=NULL && strlen(totaltracksstring)>0))
+			{
+			strcat(tempbuffer,"/");
+			strcat(tempbuffer,totaltracksstring);
+			}
+		
+		if (tagstoset[SETTRACK]==1 && (trackstring==NULL || strlen(trackstring)==0))
+			{
+			tempbuffer[0]=0;
+			}
+
+		printf("t=%s tt=%s tbuff=%s\n",trackstring,totaltracksstring,tempbuffer);
+		set_mp3_tag(ID3_FRAME_TRACK,ID3_FIELD_TYPE_STRINGLIST,tempbuffer);
 		}
+
 	if (tagstoset[SETCOMPILATION]==1)
+		{
+		printf("XXXXXXXXXX c=%s len=%i\n",compilationstring,strlen(compilationstring));
 		set_mp3_tag("TCMP",ID3_FIELD_TYPE_STRINGLIST,compilationstring);
+		}
 
 
     int ret = id3_file_update(mp3file);

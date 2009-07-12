@@ -114,7 +114,6 @@ void set_flac_tags(void)
 				FLAC__metadata_chain_write(chain,true,true);
 				FLAC__metadata_iterator_delete(iter);
 				FLAC__metadata_chain_delete(chain);
-				//free(buffer);
 				return;
 				break;
 				}
