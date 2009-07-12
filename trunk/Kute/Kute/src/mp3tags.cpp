@@ -30,27 +30,6 @@ char *latinstr=(char*)malloc(10000);
 int  strcnt;
 unsigned field_type;
 
-void Id3tag_Genre_To_String (void)
-{
-	int genre_code=atoi(genre);
-
-	if (genre_code>=ID3_INVALID_GENRE)
-		{
-		genre=(char*)realloc(genre,1);
-		genre[0]=0;
-		}
-	else if (genre_code>GENRE_MAX)
-		{
-		genre=(char*)realloc(genre,8);
-		strcpy(genre,"Unknown");
-		}
-	else
-		{
-		genre=(char*)realloc(genre,strlen(id3_genres[genre_code]+1));
-		strcpy(genre,id3_genres[genre_code]);
-		}
-}
-
 void get_mp3_tag(const char *tagname,char **tagdata)
 {
 	if ( (frame = id3_tag_findframe(tag,tagname, 0)) )
@@ -86,6 +65,8 @@ void get_mp3_tag(const char *tagname,char **tagdata)
 
 bool read_all_mp3(void)
 {
+	int genre_code;
+	const id3_ucs4_t *tnam;
 
 	if ( (mp3tmpfile=open(filename,O_RDONLY)) < 0 )
 		{
@@ -113,7 +94,7 @@ bool read_all_mp3(void)
 	get_mp3_tag(ID3_FRAME_ALBUM,&album);
 	get_mp3_tag(ID3_FRAME_ARTIST,&artist);
 	get_mp3_tag(ID3_FRAME_TRACK,&trackstring);
-	printf("t=%s tt=%s\n",trackstring,totaltracksstring);
+	//printf("t=%s tt=%s\n",trackstring,totaltracksstring);
 	if(trackstring==NULL || strlen(trackstring)==0)
 		{
 		trackstring=(char*)"";
@@ -145,7 +126,18 @@ bool read_all_mp3(void)
 	get_mp3_tag("TCMP",&compilationstring);
 	get_mp3_tag(ID3_FRAME_YEAR,&year);
 	get_mp3_tag(ID3_FRAME_GENRE,&genre);
-	Id3tag_Genre_To_String();
+	genre_code=atoi(genre);
+	if (genre_code>-1)
+		{
+		tnam=id3_genre_index(genre_code);
+		id3_latin1_t * data=id3_ucs4_latin1duplicate(tnam);
+		genre=(char*)realloc(genre,strlen((const char*)data));
+		strcpy(genre,(char*)data);
+		}
+	else
+		{
+		genre="";
+		}
 	get_mp3_tag("TCOM",&composer);
 	get_mp3_tag(ID3_FRAME_COMMENT,&comment);
 
@@ -163,7 +155,7 @@ void set_mp3_tag(const char *tagname,enum id3_field_type type,char *tagdata)
 		{
 		if ((frame = id3_tag_findframe(tag,tagname, 0)) != NULL)
 			{
-		printf("XXXXXXXXXX c=%s len=%i\n",tagdata,strlen(tagdata));
+		//printf("XXXXXXXXXX c=%s len=%i\n",tagdata,strlen(tagdata));
 			id3_tag_detachframe(tag,frame);
 			//id3_frame_delete(frame);
 			id3_file_update(mp3file);
@@ -339,6 +331,8 @@ void set_mp3_tags(void)
 			}
 
 		set_mp3_tag(ID3_FRAME_TRACK,ID3_FIELD_TYPE_STRINGLIST,tempbuffer);
+		free(ttrack);
+		free(ttot);
 		}
 
 	if (tagstoset[SETCOMPILATION]==1)
