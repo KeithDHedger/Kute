@@ -136,7 +136,7 @@ bool read_all_mp3(void)
 		}
 	else
 		{
-		genre="";
+		genre=(char*)"";
 		}
 	get_mp3_tag("TCOM",&composer);
 	get_mp3_tag(ID3_FRAME_COMMENT,&comment);
@@ -151,18 +151,16 @@ void set_mp3_tag(const char *tagname,enum id3_field_type type,char *tagdata)
 {
 	int nstrings;
 
+	frame=NULL;
 	if (tagdata==NULL || strlen(tagdata)==0)
 		{
-		if ((frame = id3_tag_findframe(tag,tagname, 0)) != NULL)
+		while ((frame = id3_tag_findframe(tag,tagname, 0)) != NULL)
 			{
-		//printf("XXXXXXXXXX c=%s len=%i\n",tagdata,strlen(tagdata));
+			//printf("XXXXXXXXXX c=%s len=%i\n",tagdata,strlen(tagdata));
 			id3_tag_detachframe(tag,frame);
-			//id3_frame_delete(frame);
 			id3_file_update(mp3file);
-			return;
 			}
-		else
-			return;
+		return;
 		}
 
 	if ((frame = id3_tag_findframe(tag,tagname, 0)) == NULL)
@@ -279,8 +277,8 @@ void set_mp3_tags(void)
 	if (tagstoset[SETGENRE]==1)
 		{
 		int num=id3_genre_number(id3_utf8_ucs4duplicate((const id3_utf8_t*)genre));
-		sprintf(gbuff,"%i",num);
-		set_mp3_tag(ID3_FRAME_GENRE,ID3_FIELD_TYPE_STRINGLIST,gbuff);
+		sprintf(tempbuffer,"%i",num);
+		set_mp3_tag(ID3_FRAME_GENRE,ID3_FIELD_TYPE_STRINGLIST,tempbuffer);
 		}
 	if (tagstoset[SETCOMPOSER]==1)
 		set_mp3_tag("TCOM",ID3_FIELD_TYPE_STRINGLIST,composer);
@@ -295,44 +293,36 @@ void set_mp3_tags(void)
 	char* ttot=(char*)calloc(100,1);
 	if(strchr(tempbuffer,'/'))
 		{
-		ttrack=strtok(tempbuffer, "/");
-		ttot=strtok(NULL, "/");
+		sprintf(ttrack,"%s",strtok(tempbuffer, "/"));
+		sprintf(ttot,"/%s",strtok(NULL, "/"));
 		}
 	else
 		{
 		ttot[0]=0;
 		strcpy(ttrack,tempbuffer);
 		}
-
 	if (tagstoset[SETTOTALTRACKS]==1)
 		{
-		sprintf(ttot,"%s",totaltracksstring);
+		if (totaltracksstring!=NULL && strlen(totaltracksstring)>0)
+			sprintf(ttot,"/%s",totaltracksstring);
+		else
+			sprintf(ttot,"");
 		}
-	
 	if (tagstoset[SETTRACK]==1)
 		{
-		if (trackstring==NULL || strlen(trackstring)==0)
+		sprintf(ttrack,"%s",trackstring);
+		}
+
+	if (tagstoset[SETTOTALTRACKS]==1 || tagstoset[SETTRACK]==1)
+		{
+		if (ttrack!=NULL && strlen(ttrack)>0)
 			{
-			ttrack[0]=0;
-			ttot[0]=0;
-			sprintf(ttrack," ");
+			sprintf(tempbuffer,"%s%s",ttrack,ttot);
 			}
 		else
-			{
-			strcpy(ttrack,trackstring);
-			}
-		if (ttot!=NULL && strlen(ttot)>0)
-			{
-			sprintf(tempbuffer,"%s/%s",ttrack,ttot);
-			}
-		else
-			{
-			sprintf(tempbuffer,"%s",ttrack);
-			}
+			sprintf(tempbuffer,"");
 
 		set_mp3_tag(ID3_FRAME_TRACK,ID3_FIELD_TYPE_STRINGLIST,tempbuffer);
-		free(ttrack);
-		free(ttot);
 		}
 
 	if (tagstoset[SETCOMPILATION]==1)

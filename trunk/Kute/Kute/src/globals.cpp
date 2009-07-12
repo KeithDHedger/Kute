@@ -29,9 +29,9 @@ char*		totaltracksstring=NULL;
 char*		compilationstring=NULL;
 
 char*		trackstring=NULL;
-char		bufferdata[2048];
-char*		flacbuffer=&bufferdata[0];
-char*		gbuff=&bufferdata[0];
+//char		bufferdata[2048];
+//char*		flacbuffer=&bufferdata[0];
+//char*		gbuff=&bufferdata[0];
 char*		tempbuffer=(char*)calloc(2048,1);
 void print_tags(void)
 {

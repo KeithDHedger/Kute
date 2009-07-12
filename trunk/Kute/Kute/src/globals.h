@@ -49,9 +49,9 @@ extern char*		trackstring;
 extern char*		compilationstring;
 extern int		tagstoset[12];
 
-extern char		bufferdata[2048];
-extern char*		flacbuffer;
-extern char*		gbuff;
+//extern char		bufferdata[2048];
+//extern char*		flacbuffer;
+//extern char*		gbuff;
 extern char*		tempbuffer;
 void print_tags(void);
 
