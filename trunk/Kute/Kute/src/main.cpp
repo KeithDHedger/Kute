@@ -161,7 +161,7 @@ int main(int argc, char **argv)
 			case 't':
 				set_a_tag=true;
 				trackstring=optarg;
-				if (trackstring[0]=='0')
+				if (trackstring[0]=='0' && strlen(trackstring)==1)
 					trackstring=(char*)"";
 
 				tagstoset[SETTRACK]=1;
@@ -169,7 +169,7 @@ int main(int argc, char **argv)
 			case 'T':
 				set_a_tag=true;
 				totaltracksstring=optarg;
-				if (totaltracksstring[0]=='0')
+				if (totaltracksstring[0]=='0' && strlen(totaltracksstring)==1)
 					totaltracksstring=(char*)"";
 
 				tagstoset[SETTOTALTRACKS]=1;
@@ -177,7 +177,7 @@ int main(int argc, char **argv)
 			case 'C':
 				set_a_tag=true;
 				cdstring=optarg;
-				if (cdstring[0]=='0')
+				if (cdstring[0]=='0' && strlen(cdstring)==1)
 					cdstring=(char*)"";
 
 				tagstoset[SETCD]=1;
@@ -189,7 +189,7 @@ int main(int argc, char **argv)
 			case 'i':
 				set_a_tag=true;
 				compilationstring=optarg;
-				if (compilationstring[0]=='0')
+				if (compilationstring[0]=='0' && strlen(compilationstring)==1)
 					compilationstring=(char*)"";
 
 				tagstoset[SETCOMPILATION]=1;
