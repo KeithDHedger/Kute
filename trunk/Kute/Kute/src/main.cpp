@@ -242,7 +242,8 @@ int main(int argc, char **argv)
 			}
 		}
 
-	if (optind < argc)
+	while(optind < argc)
+		{
 		filename=argv[optind];
 
 				//filename="/media/BackingStore/testriperrs/xxx (copy).mp3";
@@ -297,7 +298,13 @@ int main(int argc, char **argv)
 
 		}
 		if (tags_ok==true)
+			{
 			print_tags();
+			if (optind < argc)
+				printf("\n");
+			}
+		optind++;
+		}
 /*
 	free(title);
 	free(artist);
