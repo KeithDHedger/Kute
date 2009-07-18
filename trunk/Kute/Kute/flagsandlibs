@@ -14,4 +14,3 @@ LIBS =	$(MP4_LIBS) \
 	$(ID3TAG_LIBS) \
 	$(ID3_LIBS)
 
-

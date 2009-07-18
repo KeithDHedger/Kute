@@ -33,6 +33,8 @@
 #include "flactags.h"
 #include "mp3tags.h"
 
+using namespace std;
+
 struct option long_options[] =
 	{
 		{"read-all",0,0,'r'},
