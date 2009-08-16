@@ -52,7 +52,7 @@ get_metatags ()
 
 cd "$1"
 
-touch /tmp/flaactoaac.log
+touch /tmp/alltomp3.log
 
 find -iname "*.flac" -o -iname "*.m4a" -o -iname "*.aac" | while read
 	do
