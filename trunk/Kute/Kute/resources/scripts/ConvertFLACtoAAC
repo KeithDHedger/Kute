@@ -32,7 +32,7 @@ get_metatags ()
 		COMPILATION=$($KUTE  "$1" |grep -i compilation=|cut -d \= -f 2)
 		COMPOSER=$($KUTE  "$1" |grep -i composer=|cut -d \= -f 2)
 		COMMENT=$($KUTE  "$1" |grep -i comment=|cut -d \= -f 2)
-		EXT=".flac"
+		EXT=".m4a"
 	fi
 
 	if [ X"$TITLE" = X ]
@@ -60,8 +60,8 @@ find -iname "*.flac" | while read
 		
 		get_metatags "$INFILE"
 
-		OUTFILE=${INFILE/%${EXT}/}".m4a"
-		echo "Converting $INFILE..." >> /tmp/flaactoaac.log
+		OUTFILE=${INFILE/%${EXT}/}${EXT}
+		echo "Converting $INFILE to $OUTFILE..." >> /tmp/flaactoaac.log
 		if [ $FROMWHERE = NAUTILUS ];then
 			$FFMPEG "$INFILE" "$OUTFILE" 2>&1 0</dev/null |zenity --progress --pulsate --auto-kill --title="Decoding" --text="Decoding ${INFILE//&//}" --auto-close
 			

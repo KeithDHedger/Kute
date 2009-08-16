@@ -3,6 +3,7 @@
 
 FFMPEG="/media/LinuxData/Development64/local/bin/ffmpeg -v 0 -qscale 1 -i"
 KUTE="/media/LinuxData/Development64/Projects/Kute/trunk/Kute/Kute/app/kute"
+TOEXT=".mp3"
 
 if [ "$(tty)" = "not a tty" ];then
 	FROMWHERE="NAUTILUS"
@@ -32,7 +33,7 @@ get_metatags ()
 		COMPILATION=$($KUTE  "$1" |grep -i compilation=|cut -d \= -f 2)
 		COMPOSER=$($KUTE  "$1" |grep -i composer=|cut -d \= -f 2)
 		COMMENT=$($KUTE  "$1" |grep -i comment=|cut -d \= -f 2)
-		EXT=".mp3"
+		EXT=".flac"
 	fi
 
 	if [ X"$TITLE" = X ]
@@ -53,15 +54,15 @@ cd "$1"
 
 touch /tmp/flaactoaac.log
 
-find -iname "*.flac" -o iname "*.m4a" -o -iname "*.aac" | while read
+find -iname "*.flac" -o -iname "*.m4a" -o -iname "*.aac" | while read
 	do
 		INFILE="$PWD"${REPLY#.}
 		FILETYPE=$(file -b "$INFILE")
 		
 		get_metatags "$INFILE"
 
-		OUTFILE=${INFILE/%${EXT}/}".m4a"
-		echo "Converting $INFILE..." >> /tmp/flaactoaac.log
+		OUTFILE=${INFILE/%${EXT}/}${TOEXT}
+		echo "Converting $INFILE to $OUTFILE..." >> /tmp/flaactoaac.log
 		if [ $FROMWHERE = NAUTILUS ];then
 			$FFMPEG "$INFILE" "$OUTFILE" 2>&1 0</dev/null |zenity --progress --pulsate --auto-kill --title="Decoding" --text="Decoding ${INFILE//&//}" --auto-close
 			
