@@ -3,6 +3,7 @@
 
 FFMPEG="/media/LinuxData/Development64/local/bin/ffmpeg -v 0 -sameq -i"
 KUTE="/media/LinuxData/Development64/local/bin/kute"
+TOEXT=".m4a"
 
 if [ "$(tty)" = "not a tty" ];then
 	FROMWHERE="NAUTILUS"
@@ -32,7 +33,7 @@ get_metatags ()
 		COMPILATION=$($KUTE  "$1" |grep -i compilation=|cut -d \= -f 2)
 		COMPOSER=$($KUTE  "$1" |grep -i composer=|cut -d \= -f 2)
 		COMMENT=$($KUTE  "$1" |grep -i comment=|cut -d \= -f 2)
-		EXT=".m4a"
+		EXT=".flac"
 	fi
 
 	if [ X"$TITLE" = X ]
@@ -60,7 +61,7 @@ find -iname "*.flac" | while read
 		
 		get_metatags "$INFILE"
 
-		OUTFILE=${INFILE/%${EXT}/}${EXT}
+		OUTFILE=${INFILE/%${EXT}/}${TOEXT}
 		echo "Converting $INFILE to $OUTFILE..." >> /tmp/flaactoaac.log
 		if [ $FROMWHERE = NAUTILUS ];then
 			$FFMPEG "$INFILE" "$OUTFILE" 2>&1 0</dev/null |zenity --progress --pulsate --auto-kill --title="Decoding" --text="Decoding ${INFILE//&//}" --auto-close
