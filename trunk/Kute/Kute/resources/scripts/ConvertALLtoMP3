@@ -12,29 +12,9 @@ else
 
 fi
 
-is_flac()
-{
-	file -b "$1" | grep 'FLAC' || echo $1 | grep -i '\.flac$'
-}
-
 get_metatags ()
 {
-
-	if (is_flac "$1")
-	then
-		ARTIST=$($KUTE  "$1" |grep -i artist=|cut -d \= -f 2)
-		ALBUM=$($KUTE  "$1" |grep -i album=|cut -d \= -f 2)
-		TITLE=$($KUTE  "$1" |grep -i title=|cut -d \= -f 2)
-		TRACK=$($KUTE  "$1" |grep -i track=|cut -d \= -f 2)
-		TOTALTRACKS=$($KUTE  "$1" |grep -i totaltracks=|cut -d \= -f 2)
-		CD=$($KUTE  "$1" |grep -i cd=|cut -d \= -f 2)
-		GENRE=$($KUTE  "$1" |grep -i genre=|cut -d \= -f 2)
-		YEAR=$($KUTE  "$1" |grep -i year=|cut -d \= -f 2)
-		COMPILATION=$($KUTE  "$1" |grep -i compilation=|cut -d \= -f 2)
-		COMPOSER=$($KUTE  "$1" |grep -i composer=|cut -d \= -f 2)
-		COMMENT=$($KUTE  "$1" |grep -i comment=|cut -d \= -f 2)
-		EXT=".flac"
-	fi
+#Just in case no mete tags use folder names
 
 	if [ X"$TITLE" = X ]
 		then TITLE=$(basename "$1" $EXT)
@@ -48,6 +28,17 @@ get_metatags ()
 		then ARTIST=$(basename "$(dirname "$(dirname "$1")")")
 	fi
 
+	ARTIST=$($KUTE  "$1" |grep -i artist=|cut -d \= -f 2)
+	ALBUM=$($KUTE  "$1" |grep -i album=|cut -d \= -f 2)
+	TITLE=$($KUTE  "$1" |grep -i title=|cut -d \= -f 2)
+	TRACK=$($KUTE  "$1" |grep -i track=|cut -d \= -f 2)
+	TOTALTRACKS=$($KUTE  "$1" |grep -i totaltracks=|cut -d \= -f 2)
+	CD=$($KUTE  "$1" |grep -i cd=|cut -d \= -f 2)
+	GENRE=$($KUTE  "$1" |grep -i genre=|cut -d \= -f 2)
+	YEAR=$($KUTE  "$1" |grep -i year=|cut -d \= -f 2)
+	COMPILATION=$($KUTE  "$1" |grep -i compilation=|cut -d \= -f 2)
+	COMPOSER=$($KUTE  "$1" |grep -i composer=|cut -d \= -f 2)
+	COMMENT=$($KUTE  "$1" |grep -i comment=|cut -d \= -f 2)
 }
 
 cd "$1"
@@ -61,13 +52,17 @@ find -iname "*.flac" -o -iname "*.m4a" -o -iname "*.aac" | while read
 		
 		get_metatags "$INFILE"
 
-		OUTFILE=${INFILE/%${EXT}/}${TOEXT}
+		OUTFILE=${INFILE%.m4a}
+		OUTFILE=${OUTFILE%.flac}
+
+		OUTFILE="$OUTFILE"${TOEXT}
 		echo "Converting $INFILE to $OUTFILE..." >> /tmp/flaactoaac.log
 		if [ $FROMWHERE = NAUTILUS ];then
 			$FFMPEG "$INFILE" "$OUTFILE" 2>&1 0</dev/null |zenity --progress --pulsate --auto-kill --title="Decoding" --text="Decoding ${INFILE//&//}" --auto-close
 			
 		else
 			$FFMPEG "$INFILE" "$OUTFILE" 2>/dev/null 0</dev/null
+			echo "Converting $INFILE to $OUTFILE..."
 		fi
 		echo "Finished" >> /tmp/flaactoaac.log
 		$KUTE --artist="$ARTIST"  --album="$ALBUM" --title="$TITLE" --track="$TRACK" --total-tracks="$TOTALTRACKS" --cd="$CD" --compilation="$COMPILATION" --year="$YEAR" --genre="$GENRE" --composer="$COMPOSER" --comment="$COMMENT" "$OUTFILE"
