@@ -56,15 +56,15 @@ find -iname "*.flac" -o -iname "*.m4a" -o -iname "*.aac" | while read
 		OUTFILE=${OUTFILE%.flac}
 
 		OUTFILE="$OUTFILE"${TOEXT}
-		echo "Converting $INFILE to $OUTFILE..." >> /tmp/flaactoaac.log
+		echo "Converting $INFILE to $OUTFILE..." >> /tmp/alltomp3.log
 		if [ $FROMWHERE = NAUTILUS ];then
 			$FFMPEG "$INFILE" "$OUTFILE" 2>&1 0</dev/null |zenity --progress --pulsate --auto-kill --title="Decoding" --text="Decoding ${INFILE//&//}" --auto-close
 			
 		else
-			$FFMPEG "$INFILE" "$OUTFILE" 2>/dev/null 0</dev/null
 			echo "Converting $INFILE to $OUTFILE..."
+			$FFMPEG "$INFILE" "$OUTFILE" 2>/dev/null 0</dev/null
 		fi
-		echo "Finished" >> /tmp/flaactoaac.log
+		echo "Finished" >> /tmp/alltomp3.log
 		$KUTE --artist="$ARTIST"  --album="$ALBUM" --title="$TITLE" --track="$TRACK" --total-tracks="$TOTALTRACKS" --cd="$CD" --compilation="$COMPILATION" --year="$YEAR" --genre="$GENRE" --composer="$COMPOSER" --comment="$COMMENT" "$OUTFILE"
 		rm "$INFILE"
 	done
