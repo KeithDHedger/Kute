@@ -1,8 +1,12 @@
 #!/bin/bash
 #NAUTILUS_SCRIPT_CURRENT_URI
 
+FFMPEGPATH="***XXX***"
+#zenity --info --text="$1"
+#exit 0
+
 #FFMPEG="/media/LinuxData/Development64/local/bin/ffmpeg -v 0 -qscale 1 -i"
-FFMPEG="/usr/bin/ffmpeg -v 0 -qscale 1 -i "
+FFMPEG="${FFMPEGPATH} -v 0 -qscale 1 -i "
 KUTE="/media/LinuxData/Development64/Projects/Kute/trunk/Kute/Kute/app/kute"
 TOEXT=".mp3"
 

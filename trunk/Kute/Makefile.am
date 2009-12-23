@@ -15,3 +15,5 @@ $(shell /usr/bin/install -cpd ~/.gnome2/nautilus-scripts/Kute)
 $(shell /usr/bin/install -cp Kute/resources/scripts/ConvertALLtoMP3  ~/.gnome2/nautilus-scripts/Kute/ConvertALLtoMP3)
 $(shell /usr/bin/install -cp Kute/resources/scripts/ConvertFLACtoAAC  ~/.gnome2/nautilus-scripts/Kute/ConvertFLACtoAAC)
 
+
+#$(shell ../resources/myscript "@TESTVAR@")
