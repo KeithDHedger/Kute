@@ -5,7 +5,7 @@
 
 #FFMPEG="/media/LinuxData/Development64/local/bin/ffmpeg -v 0 -qscale 1 -i"
 FFMPEG="${FFMPEGPATH} -v 0 -qscale 1 -i "
-KUTE="/media/LinuxData/Development64/Projects/Kute/trunk/Kute/Kute/app/kute"
+KUTE="${KUTEPATH}/bin/kute"
 TOEXT=".mp3"
 
 if [ "$(tty)" = "not a tty" ];then

@@ -4,4 +4,4 @@
 
 cd $(dirname $0)
 echo "FFMPEGPATH=\"$1\"" > ./scripts/includepath
-
+echo "KUTEPATH=\"$2\"" >> ./scripts/includepath

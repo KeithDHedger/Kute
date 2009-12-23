@@ -15,4 +15,4 @@ bin_PROGRAMS = kute
 
 #$(shell mkdir -p ../resources/man)
 #$(shell help2man -N ./kute > ../resources/man/kute.1)
-$(shell ../resources/myscript "@FFPATH@")
+$(shell ../resources/myscript "@FFPATH@" $(prefix))
