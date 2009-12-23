@@ -47,7 +47,7 @@ AC_SUBST(MP4_LIBS)
 AC_ARG_WITH(ffmpeg-path,
           AC_HELP_STRING(
 	  	  [--with-ffmpeg-path],
-		  [Full path to ffmpeg binary (ie /usr/local/bin/ffmpeg), Default:/usr/bin/ffmpeg]),
+		  [Full path to ffmpeg]),
 	[ TESTVAR="$withval"],
 	[ TESTVAR="/usr/bin/ffmpeg" ])
 AC_SUBST(TESTVAR)
