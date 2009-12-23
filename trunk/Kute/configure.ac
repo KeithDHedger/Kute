@@ -33,27 +33,13 @@ MP4_CFLAGS="-I/usr/include"
 AC_SUBST(MP4_CFLAGS)
 AC_SUBST(MP4_LIBS)
 
-
-
-#TESTVAR="XXXXXXXXXXX"
-#AC_DEFINE(TESTVAR,zxzx)
-#AC_ARG_VAR (TESTVAR, description)
-#AC_SUBST(TESTVAR)
-#AC_ARG_ENABLE([spell],
-#	AS_HELP_STRING([--disable-spell],[Disable spell plugin (default: enabled)]),
-#	[enable_enchant=$enableval],
-#	[enable_enchant=yes])
-#
 AC_ARG_WITH(ffmpeg-path,
           AC_HELP_STRING(
 	  	  [--with-ffmpeg-path],
 		  [Full path to ffmpeg]),
-	[ TESTVAR="$withval"],
-	[ TESTVAR="/usr/bin/ffmpeg" ])
-AC_SUBST(TESTVAR)
-
-#fubar=42
-#AC_CONFIG_COMMANDS([fubar],[echo this is extra $fubar, and so on.],[fubar=$fubar])
+	[ FFPATH="$withval"],
+	[ FFPATH="/usr/bin/ffmpeg" ])
+AC_SUBST(FFPATH)
 
 #TAG_MODULES="taglib >= 1.5.0"
 #PKG_CHECK_MODULES(TAGLIB, $TAG_MODULES)
