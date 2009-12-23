@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#/media/LinuxData/Development64/Projects/Kute/trunk/Kute/Kute/resources/scripts/ConvertALLtoMP3
+
+cd $(dirname $0)
+#zenity --info --text="$1"
+sed "s/\*\*\*XXX\*\*\*/$1/" ./scripts/ConvertALLtoMP3 > ./scripts/ConvertALLtoMP3.bak
