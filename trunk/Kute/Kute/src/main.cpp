@@ -78,6 +78,7 @@ void printhelp(void)
 	printf("f, --force-flac		Don't try to guess the file type treat it as a FLAC file \n");
 	printf("c, --force-aac		Don't try to guess the file type treat it as an AAC file\n");
 	printf("p, --force-mp3		Don't try to guess the file type treat it as an MP3 file\n");
+	printf("q, --use-quotes		Quote file/artist/album names etc\n");
 	printf("?, --help		Print this help\n");
 }
 
