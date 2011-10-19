@@ -5,7 +5,8 @@
 //globals.h
 //
 
-#include <mp4.h>
+#include <mp4v2/mp4v2.h>
+#include <stdlib.h>
 
 #ifndef _GLOBALS_
 #define IS_FLAC 1
@@ -34,6 +35,7 @@ extern bool		force;
 extern bool		quotes;
 extern MP4FileHandle	filehandle;
 
+extern bool		removealltags;
 extern char*		title;
 extern char*		album;
 extern char*		artist;

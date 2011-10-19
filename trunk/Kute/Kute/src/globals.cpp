@@ -5,7 +5,7 @@
 //globals.cpp
 //
 
-#include <mp4.h>
+#include <mp4v2/mp4v2.h>
 
 #include "globals.h"
 
@@ -15,6 +15,7 @@ bool		readall=false;
 bool		force=false;
 bool		quotes=false;
 
+bool		removealltags=false;
 char*		title=NULL;
 char*		album=NULL;
 char*		artist=NULL;

@@ -7,6 +7,7 @@
 
 #include <FLAC/metadata.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "globals.h"
 #include "flactags.h"

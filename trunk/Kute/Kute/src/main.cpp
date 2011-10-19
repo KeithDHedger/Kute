@@ -25,8 +25,16 @@
 #include <string.h>
 #include <stdlib.h>
 #include <getopt.h>
-#include <mp4.h>
+#include <mp4v2/mp4v2.h>
 #include <FLAC/metadata.h>
+
+
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
 
 #include "globals.h"
 #include "mp4tags.h"
@@ -54,6 +62,7 @@ struct option long_options[] =
 		{"force-aac",0,0,'c'},
 		{"force-mp3",0,0,'p'},
 		{"use-quotes",0,0,'q'},
+		{"remove-all",0,0,'R'},
 		{"help",0,0,'?'},
 		{0, 0, 0, 0}
 	};
@@ -79,6 +88,7 @@ void printhelp(void)
 	printf("c, --force-aac		Don't try to guess the file type treat it as an AAC file\n");
 	printf("p, --force-mp3		Don't try to guess the file type treat it as an MP3 file\n");
 	printf("q, --use-quotes		Quote file/artist/album names etc\n");
+	printf("R, --remove-all		Remove ALL tags\n");
 	printf("?, --help		Print this help\n");
 }
 
@@ -133,7 +143,7 @@ int main(int argc, char **argv)
 	while (1)
 		{
 		int option_index = 0;
-		c = getopt_long (argc, argv, ":alntTCiygmo:rfcpq?h",long_options, &option_index);
+		c = getopt_long (argc, argv, ":alntTCiygmo:rfcpqR?h",long_options, &option_index);
 		if (c == -1)
 			break;
 
@@ -232,6 +242,10 @@ int main(int argc, char **argv)
 			case 'q':
 				quotes=true;
 				break;
+			case 'R':
+				removealltags=true;
+				set_a_tag=true;
+				break;
 			case '?':
 			case 'h':
 				printhelp();
@@ -264,7 +278,7 @@ int main(int argc, char **argv)
 		switch (filetype)
 			{
 			case IS_AAC:
-				set_tag();
+				set_mp4_tag();
 				break;
 			case IS_FLAC:
 				set_flac_tags();

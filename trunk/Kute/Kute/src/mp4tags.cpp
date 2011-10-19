@@ -5,10 +5,19 @@
 //mp4tags.cpp
 //
 
-#include <mp4.h>
+#include <mp4v2/mp4v2.h>
 
 #include "globals.h"
 #include "mp4tags.h"
+
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 u_int16_t	track=0;
 u_int16_t	totaltracks=0;
@@ -17,7 +26,7 @@ u_int16_t	totalcds=0;
 u_int8_t	compilation=0;
 char		*tbuff=(char*)malloc(100);
 
-void set_tag(void)
+void set_mp4_tag(void)
 {
 	MP4FileHandle	filehandle = NULL;
 	filehandle = MP4Modify(filename,0,0);
@@ -26,6 +35,11 @@ void set_tag(void)
 		printf("Could not open %s for Writing!\n",filename);
 		exit(2);
 	}
+
+	if (removealltags==true)
+		{
+		MP4MetadataDelete(filehandle);
+		}
 
 	if (tagstoset[SETTITLE]==1)
 		{
