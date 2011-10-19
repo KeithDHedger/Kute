@@ -128,7 +128,7 @@ void get_file_type(void)
 
 	mp4info=MP4FileInfo(filename,0);
 	if (mp4info!=NULL)
-		filetype=IS_AAC;
+		filetype=IS_MP4;
 }
 
 int main(int argc, char **argv)
@@ -195,10 +195,7 @@ int main(int argc, char **argv)
 
 				tagstoset[SETCD]=1;
 				break;
-//			case 'C':
-//				set_a_tag=true;
-//				tagstoset[SETTOTALCDS]=1;
-//				break;
+
 			case 'i':
 				set_a_tag=true;
 				compilationstring=optarg;
@@ -233,7 +230,7 @@ int main(int argc, char **argv)
 				break;
 			case 'c':
 				force=true;
-				filetype=IS_AAC;
+				filetype=IS_MP4;
 				break;
 			case 'p':
 				force=true;
@@ -263,64 +260,58 @@ int main(int argc, char **argv)
 		{
 		filename=argv[optind];
 
-				//filename="/media/BackingStore/testriperrs/xxx (copy).mp3";
-				//set_a_tag=true;
-				//artist="an artist";;
-				//tagstoset[SETARTIST]=1;
+		if (force==false)
+			get_file_type();
 
-
-	if (force==false)
-		get_file_type();
-
-	if (set_a_tag==true)
-		{
-		readall=false;
-		switch (filetype)
+		if (set_a_tag==true)
 			{
-			case IS_AAC:
-				set_mp4_tag();
-				break;
-			case IS_FLAC:
-				set_flac_tags();
-				break;
-			case IS_MP3:
-				set_mp3_tags();
-				break;
-			default:
-				printf("Unknown file type\n");
-				exit(1);
-				break;
+			readall=false;
+			switch (filetype)
+				{
+				case IS_MP4:
+					set_mp4_tag();
+					break;
+				case IS_FLAC:
+					set_flac_tags();
+					break;
+				case IS_MP3:
+					set_mp3_tags();
+					break;
+				default:
+					printf("Unknown file type\n");
+					exit(1);
+					break;
+				}
 			}
-		}
 	
-	if (readall==true)
-		{
-
-		switch(filetype)
+		if (readall==true)
 			{
-			case IS_FLAC:
-				tags_ok=do_read_all_flac();
-				break;
-			case IS_AAC:
-				tags_ok=do_read_all();
-				break;
-			case IS_MP3:
-				tags_ok=read_all_mp3();
-				break;
-			default:
-				printf("No readable tags in file %s\n",filename);
-				return 1;
-				break;
+
+			switch(filetype)
+				{
+				case IS_FLAC:
+					tags_ok=do_read_all_flac();
+					break;
+				case IS_MP4:
+					tags_ok=do_read_all();
+					break;
+				case IS_MP3:
+					tags_ok=read_all_mp3();
+					break;
+				default:
+					printf("No readable tags in file %s\n",filename);
+					return 1;
+					break;
+				}
 			}
 
-		}
-		if (tags_ok==true)
-			{
-			print_tags();
-			if (optind < argc)
-				printf("\n");
-			}
-		optind++;
+			if (tags_ok==true)
+				{
+				print_tags();
+				if (optind < argc)
+					printf("\n");
+				}
+			optind++;
 		}
 /*
 	free(title);

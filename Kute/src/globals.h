@@ -10,7 +10,7 @@
 
 #ifndef _GLOBALS_
 #define IS_FLAC 1
-#define IS_AAC 2
+#define IS_MP4 2
 #define IS_MP3 3
 #define UNKNOWN_TYPE 4
 
