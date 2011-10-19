@@ -9,6 +9,9 @@
 #include <stdlib.h>
 
 #ifndef _GLOBALS_
+
+#define VERSION 0.0.55
+
 #define IS_FLAC 1
 #define IS_MP4 2
 #define IS_MP3 3
@@ -51,9 +54,6 @@ extern char*		trackstring;
 extern char*		compilationstring;
 extern int		tagstoset[12];
 
-//extern char		bufferdata[2048];
-//extern char*		flacbuffer;
-//extern char*		gbuff;
 extern char*		tempbuffer;
 void print_tags(void);
 
