@@ -38,10 +38,10 @@ void print_tags(void)
 {
 	if (quotes==true)
 		{
-		printf("FILENAME=\"%s\"\nFILETYPE=%i\n",filename,filetype);
-		printf("TITLE=\"%s\"\nARTIST=\"%s\"\nALBUM=\"%s\"\nTRACK=%s\nTOTALTRACKS=%s\n",title,artist,album,trackstring,totaltracksstring);
-		printf("CD=%s\nGENRE=\"%s\"\nYEAR=\"%s\"\nCOMPILATION=%s\n",cdstring,genre,year,compilationstring);
-		printf("COMPOSER=\"%s\"\nCOMMENT=\"%s\"\n",composer,comment);
+		printf("FILENAME='%s'\nFILETYPE=%i\n",filename,filetype);
+		printf("TITLE='%s'\nARTIST='%s'\nALBUM='%s'\nTRACK=%s\nTOTALTRACKS=%s\n",title,artist,album,trackstring,totaltracksstring);
+		printf("CD=%s\nGENRE='%s'\nYEAR='%s'\nCOMPILATION=%s\n",cdstring,genre,year,compilationstring);
+		printf("COMPOSER='%s'\nCOMMENT='%s'\n",composer,comment);
 
 		}
 	else
