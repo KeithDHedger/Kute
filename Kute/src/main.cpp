@@ -88,7 +88,7 @@ void printhelp(void)
 	printf("c, --force-aac		Don't try to guess the file type treat it as an AAC file\n");
 	printf("p, --force-mp3		Don't try to guess the file type treat it as an MP3 file\n");
 	printf("q, --use-quotes		Quote file/artist/album names etc\n");
-	printf("R, --remove-all		Remove ALL tags\n");
+	printf("R, --remove-all		Remove ALL Mp4 tags\n");
 	printf("?, --help		Print this help\n");
 }
 

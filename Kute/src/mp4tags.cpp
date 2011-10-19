@@ -48,6 +48,7 @@ void set_mp4_tag(void)
 		else
 			MP4SetMetadataName(filehandle,title);
 		}
+
 	if (tagstoset[SETALBUM]==1)
 		{
 		if (album==NULL)
