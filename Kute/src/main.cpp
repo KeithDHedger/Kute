@@ -52,7 +52,6 @@ struct option long_options[] =
 		{"track",1,0,'t'},
 		{"total-tracks",1,0,'T'},
 		{"cd",1,0,'C'},
-		//{"total-cds",1,0,'C'},
 		{"compilation",1,0,'i'},
 		{"year",1,0,'y'},
 		{"genre",1,0,'g'},
@@ -69,7 +68,8 @@ struct option long_options[] =
 
 void printhelp(void)
 {
-	printf("Usage: kute [OPTION] FILE\n");
+	printf("kute, version %s\n",VERSION);
+	printf("Usage: kute [OPTION] FILE [FILE]...\n");
 	printf("OPTION			Usage\n\n");
 	printf("r, --read-all		Print tags to stdout (default)\n");
 	printf("a, --artist=ARG		Set tag ARTIST to ARG\n");
