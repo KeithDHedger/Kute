@@ -20,6 +20,8 @@
 ** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 **/
 //Mon 31 Jul 2006 12:30:55 BST 
+//svnsync synchronize --sync-username keithhedger --sync-password songmaster svn+ssh://keithhedger@svn.code.sf.net/p/kute/code/ file:///media/LinuxData/Development/SVN/Kute
+
 
 #include <stdio.h>
 #include <string.h>
