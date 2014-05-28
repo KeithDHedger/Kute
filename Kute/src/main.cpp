@@ -22,7 +22,6 @@
 //Mon 31 Jul 2006 12:30:55 BST 
 //svnsync synchronize --sync-username keithhedger --sync-password songmaster svn+ssh://keithhedger@svn.code.sf.net/p/kute/code/ file:///media/LinuxData/Development/SVN/Kute
 
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
