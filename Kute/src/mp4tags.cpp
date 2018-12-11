@@ -1,9 +1,22 @@
-//
-//Keith Hedger
-//Mon Jun 29 11:36:15 BST 2009
-//
-//mp4tags.cpp
-//
+/*
+ *
+ * ©K. D. Hedger. Tue 11 Dec 16:34:22 GMT 2018 keithdhedger@gmail.com
+
+ * This file (mp4tags.cpp) is part of Kute.
+
+ * Kute is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation,either version 3 of the License,or
+ * at your option) any later version.
+
+ * Kute is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with Kute.  If not,see <http://www.gnu.org/licenses/>.
+*/
 
 #include <mp4v2/mp4v2.h>
 
@@ -26,12 +39,12 @@ u_int16_t	totalcds=0;
 u_int8_t	compilation=0;
 char		*tbuff=(char*)malloc(100);
 
-void set_mp4_tag(void)
+void setMp4Tag(void)
 {
 	MP4FileHandle	mp4file;
 	const MP4Tags	*tags;
 
-	mp4file = MP4Modify(filename,0);
+	mp4file=MP4Modify(filename,0);
 	if(mp4file==MP4_INVALID_FILE_HANDLE)
 		{
 			printf("Could not open %s for Writing!\n",filename);
@@ -50,20 +63,20 @@ void set_mp4_tag(void)
 	if(tagstoset[SETARTIST]==1)
 		MP4TagsSetArtist(tags,artist);
 
-	if (tagstoset[SETTRACK]==1 || tagstoset[SETTOTALTRACKS]==1)
+	if(tagstoset[SETTRACK]==1 || tagstoset[SETTOTALTRACKS]==1)
 		{
-			MP4TagTrack	trck={0,0};
+			MP4TagTrack	trck= {0,0};
 			if(tagstoset[SETTRACK]==1)
 				trck.index=strtol(trackstring,NULL,10);
-			if (tagstoset[SETTOTALTRACKS]==1)
-				trck.total=strtol(totaltracksstring,NULL, 10);
+			if(tagstoset[SETTOTALTRACKS]==1)
+				trck.total=strtol(totaltracksstring,NULL,10);
 			MP4TagsSetTrack(tags,&trck);
 		}
 
 	if(tagstoset[SETCD]==1 || tagstoset[SETTOTALCDS]==1)
 		{
 			long t=0;
-			MP4TagDisk	dsk={0,0};
+			MP4TagDisk	dsk= {0,0};
 			if(tagstoset[SETCD]==1)
 				dsk.index=atoi(cdstring);
 
@@ -96,24 +109,24 @@ void set_mp4_tag(void)
 
 	if(tagstoset[SETCOMPOSER]==1)
 		MP4TagsSetComposer(tags,composer);
-	
+
 	if(tagstoset[SETCOMMENT]==1)
 		MP4TagsSetComments(tags,comment);
 
 	MP4TagsStore(tags,mp4file);
- 	MP4TagsFree(tags);
+	MP4TagsFree(tags);
 	MP4Close(mp4file);
 	MP4Optimize(filename,NULL);
 }
 
-bool do_read_all(void)
+bool doReadAllFlacTags(void)
 {
 	MP4FileHandle	mp4file=NULL;
 	const MP4Tags	*tags;
 
 	mp4file=MP4Read(filename);
 
-	if (mp4file==MP4_INVALID_FILE_HANDLE)
+	if(mp4file==MP4_INVALID_FILE_HANDLE)
 		{
 			printf("ERROR Could not open %s for reading as a mp4 file!\n",filename);
 			return false;
@@ -129,7 +142,7 @@ bool do_read_all(void)
 	artist=(char*)tags->artist;
 	if(artist==NULL)
 		artist=(char*)"";
-	
+
 	album=(char*)tags->album;
 	if(album==NULL)
 		album=(char*)"";
@@ -168,7 +181,7 @@ bool do_read_all(void)
 	year=(char*)tags->releaseDate;
 	if(year==NULL)
 		year=(char*)"";
-	
+
 	if(tags->compilation)
 		asprintf(&compilationstring,"%i",*tags->compilation);
 	else
@@ -181,10 +194,10 @@ bool do_read_all(void)
 	comment=(char*)tags->comments;
 	if(comment==NULL)
 		comment=(char*)"";
-	
+
 	if(!tags)
 		MP4TagsFree(tags);
-	if (!mp4file)
+	if(!mp4file)
 		MP4Close(mp4file);
 
 	return true;

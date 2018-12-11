@@ -1,11 +1,11 @@
 
-AUTOMAKE_OPTIONS = subdir-objects
+AUTOMAKE_OPTIONS=subdir-objects
 
 include ../flagsandlibs
 include ../sources
 
-kute_SOURCES = $(COMMONSRC)
+kute_SOURCES=$(COMMONSRC)
 
-kute_CFLAGS = -O3
+kute_CFLAGS=-O3
 
-bin_PROGRAMS = kute
+bin_PROGRAMS=kute
