@@ -33,20 +33,13 @@ MP4_CFLAGS="-I/usr/include"
 AC_SUBST(MP4_CFLAGS)
 AC_SUBST(MP4_LIBS)
 
-AC_ARG_WITH(ffmpeg-path,
-          AC_HELP_STRING(
-	  	  [--with-ffmpeg-path],
-		  [Full path to ffmpeg (Default:/usr/bin/ffmpeg)]),
-	[ FFPATH="$withval"],
-	[ FFPATH="/usr/bin/ffmpeg" ])
-AC_SUBST(FFPATH)
-
-#TAG_MODULES="taglib >= 1.5.0"
-#PKG_CHECK_MODULES(TAGLIB, $TAG_MODULES)
-#TAG_CFLAGS=-I/usr/include/taglib
-#TAG_LIBS="--ltag"
-#AC_SUBST(TAGLIB_CFLAGS)
-#AC_SUBST(TAGLIB_LIBS)
+#AC_ARG_WITH(ffmpeg-path,
+#          AC_HELP_STRING(
+#	  	  [--with-ffmpeg-path],
+#		  [Full path to ffmpeg (Default:/usr/bin/ffmpeg)]),
+#	[ FFPATH="$withval"],
+#	[ FFPATH="/usr/bin/ffmpeg" ])
+#AC_SUBST(FFPATH)
 
 
 
@@ -55,5 +48,5 @@ PKG_CHECK_MODULES(FLAC, $FLAC_MODULES)
 AC_SUBST(FLAC_CFLAGS)
 AC_SUBST(FLAC_LIBS)
 
-AC_OUTPUT(Makefile Kute/app/Makefile Kute/debug/Makefile)#***MMM***
+AC_OUTPUT(Makefile Kute/app/Makefile)
 
