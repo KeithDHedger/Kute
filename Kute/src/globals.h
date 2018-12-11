@@ -10,8 +10,6 @@
 
 #ifndef _GLOBALS_
 
-#define VERSION "0.1.70"
-
 #define IS_FLAC 1
 #define IS_MP4 2
 #define IS_MP3 3

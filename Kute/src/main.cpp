@@ -41,6 +41,7 @@
 #include "mp4tags.h"
 #include "flactags.h"
 #include "mp3tags.h"
+#include "config.h"
 
 using namespace std;
 

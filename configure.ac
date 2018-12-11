@@ -1,6 +1,6 @@
 #
 #
-AC_INIT([Kute],[1.0],[XXX],[Kute])
+AC_INIT([Kute],[0.2.0],[XXX],[Kute])
 
 AC_CONFIG_HEADER([config.h])
 AC_PROG_CXX
