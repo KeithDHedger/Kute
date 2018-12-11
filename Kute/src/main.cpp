@@ -195,6 +195,8 @@ int main(int argc, char **argv)
 					cdstring=(char*)"";
 
 				tagstoset[SETCD]=1;
+				if(strchr(cdstring,'/'))
+					tagstoset[SETTOTALCDS]=1;
 				break;
 
 			case 'i':

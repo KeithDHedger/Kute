@@ -12,6 +12,5 @@
 #define _MP4TAGS_
 
 void set_mp4_tag(void);
-//void set_artist(char* artist);
 bool do_read_all(void);
 #endif
