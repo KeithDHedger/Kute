@@ -1,2 +1,120 @@
-0.2.0
-1st commit to github from sourceforge.
+
+Kute - (K)eiths (U)niversal (T)ag (E)ditor
+
+
+Read/Write  tags  to/from  a music file including FLAC,AAC and MP3. Multiple files can be tagged simultaneously. Tags can also be removed (see examples). File type is found automatically (default) or can forced to a specific format.
+
+OPTIONS
+       r, --read-all Print tags to stdout (default)
+
+       a, --artist=ARG
+              Set tag ARTIST to ARG
+
+       l, --album=ARG
+              Set tag ALBUM to ARG
+
+       n, --title=ARG
+              Set tag TITLE to ARG
+
+       t, --track=ARG
+              Set tag TRACK to ARG
+
+       T, --total-tracks=ARG
+              Set tag TOTALTRACKS to ARG
+
+       C, --cd=ARG
+              Set tag CD to ARG
+
+       i, --compilation=ARG
+            Set tag COMPILATION to ARG
+              Note this is non standard and ARG should be 1 for part of a compilation or 0 for not
+
+       y, --year=ARG
+              Set tag YEAR to ARG
+
+       g, --genre=ARG
+              Set tag GENRE to ARG
+
+       m, --composer=ARG
+              Set tag COMPOSER to ARG
+
+       o, --comment=ARG
+              Set tag COMMENT to ARG
+
+       f, --force-flac
+              Don't try to guess the file type treat it as a FLAC file
+
+       c, --force-aac
+              Don't try to guess the file type treat it as an AAC file
+
+       p, --force-mp3
+              Don't try to guess the file type treat it as an MP3 file
+
+	   q, --use-quotes
+              Quote file/artist/album names etc
+
+       ?,h, --help
+              Print this help
+
+EXAMPLES
+       kute "/media/LinuxData/Music/Buddy Holly/The Very Best Of Buddy Holly/01 That'll Be The Day.flac"
+       Produces:
+       FILENAME=/media/LinuxData/Music/Buddy Holly/The Very Best Of Buddy Holly/01 That'll Be The Day.flac
+       FILETYPE=1
+       TITLE=That'll Be The Day
+       ARTIST=Buddy Holly
+       ALBUM=The Very Best Of Buddy Holly
+       TRACK=01
+       TOTALTRACKS=20
+       CD=
+       GENRE=Rock & Roll
+       YEAR=
+       COMPILATION=
+       COMPOSER=
+       COMMENT=
+
+       Set the title to "new title"
+
+       kute --title="new title" "/media/LinuxData/Music/Buddy Holly/The Very Best Of Buddy Holly/01 That'll Be The Day.flac"
+
+       Remove track number and track total
+
+       kute --track= "/media/LinuxData/Music/Buddy Holly/The Very Best Of Buddy Holly/01 That'll Be The Day.flac"
+
+       Set the album for "01 The Jean Genie.flac" AND "12 Diamond Dogs.flac" to "The Best of David Bowie"
+
+       kute --album="The Best of David  Bowie"  "/media/LinuxData/Music/David  Bowie/The  Best  of  David  Bowie/01  The  Jean  Genie.flac"  "/media/Linux-
+       Data/Music/David Bowie/The Best of David Bowie/12 Diamond Dogs.flac"
+
+NOTES
+       Setting the track number, cd number, track total or compiliation to 0 will remove the tag.
+       Forcing a file type onto a different file may cause unexpected results.
+
+       Always, ALWAYS use on a backup of the original, just in case!
+
+       Filetypes
+       1=FLAC
+       2=AAC
+       3=MP3
+       4=UNKNOWN
+
+       Removing the track tag will alo remove the total tracks tag.
+
+
+AUTHOR
+       Keith Hedger
+
+REPORTING BUGS
+       keithdhedger@gmail.com
+
+COPYRIGHT
+       K.D.Hedger 2009-2018
+
+
+
+
+
+
+
+
+
