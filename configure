@@ -590,6 +590,8 @@ LTLIBOBJS
 LIBOBJS
 FLAC_LIBS
 FLAC_CFLAGS
+TAGLIB_LIBS
+TAGLIB_CFLAGS
 MP4_LIBS
 MP4_CFLAGS
 ID3TAG_LIBS
@@ -597,8 +599,6 @@ ID3TAG_CFLAGS
 PKG_CONFIG_LIBDIR
 PKG_CONFIG_PATH
 PKG_CONFIG
-ID3_LIBS
-ID3_CFLAGS
 EGREP
 GREP
 CPP
@@ -713,6 +713,8 @@ PKG_CONFIG_PATH
 PKG_CONFIG_LIBDIR
 ID3TAG_CFLAGS
 ID3TAG_LIBS
+TAGLIB_CFLAGS
+TAGLIB_LIBS
 FLAC_CFLAGS
 FLAC_LIBS'
 
@@ -1355,6 +1357,9 @@ Some influential environment variables:
   ID3TAG_CFLAGS
               C compiler flags for ID3TAG, overriding pkg-config
   ID3TAG_LIBS linker flags for ID3TAG, overriding pkg-config
+  TAGLIB_CFLAGS
+              C compiler flags for TAGLIB, overriding pkg-config
+  TAGLIB_LIBS linker flags for TAGLIB, overriding pkg-config
   FLAC_CFLAGS C compiler flags for FLAC, overriding pkg-config
   FLAC_LIBS   linker flags for FLAC, overriding pkg-config
 
@@ -4363,18 +4368,17 @@ $as_echo "#define STDC_HEADERS 1" >>confdefs.h
 fi
 
 
+#AC_SUBST(CFLAGS)
+#AC_SUBST(CPPFLAGS)
+#AC_SUBST(LDFLAGS)
 
+#CFLAGS=-Wall
+#AC_SUBST(CFLAGS)
 
-
-
-CFLAGS=-Wall
-
-
-
-ID3_LIBS="-lid3"
-ID3_CFLAGS="-I/usr/include"
-
-
+#ID3_LIBS="-lid3"
+#ID3_CFLAGS="-I/usr/include"
+#AC_SUBST(ID3_CFLAGS)
+#AC_SUBST(ID3_LIBS)
 
 ID3TAG_MODULES="id3tag >= 0.15.0"
 
@@ -4593,6 +4597,101 @@ fi
 
 MP4_LIBS="-lmp4v2"
 MP4_CFLAGS="-I/usr/include"
+
+
+
+TAGLIB_MODULES="taglib >= 1.11.1"
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $TAGLIB_MODULES" >&5
+$as_echo_n "checking for $TAGLIB_MODULES... " >&6; }
+
+if test -n "$TAGLIB_CFLAGS"; then
+    pkg_cv_TAGLIB_CFLAGS="$TAGLIB_CFLAGS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"\$TAGLIB_MODULES\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "$TAGLIB_MODULES") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_TAGLIB_CFLAGS=`$PKG_CONFIG --cflags "$TAGLIB_MODULES" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+if test -n "$TAGLIB_LIBS"; then
+    pkg_cv_TAGLIB_LIBS="$TAGLIB_LIBS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"\$TAGLIB_MODULES\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "$TAGLIB_MODULES") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_TAGLIB_LIBS=`$PKG_CONFIG --libs "$TAGLIB_MODULES" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        TAGLIB_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "$TAGLIB_MODULES" 2>&1`
+        else
+	        TAGLIB_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "$TAGLIB_MODULES" 2>&1`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$TAGLIB_PKG_ERRORS" >&5
+
+	as_fn_error $? "Package requirements ($TAGLIB_MODULES) were not met:
+
+$TAGLIB_PKG_ERRORS
+
+Consider adjusting the PKG_CONFIG_PATH environment variable if you
+installed software in a non-standard prefix.
+
+Alternatively, you may set the environment variables TAGLIB_CFLAGS
+and TAGLIB_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details." "$LINENO" 5
+elif test $pkg_failed = untried; then
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+	{ { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+is in your PATH or set the PKG_CONFIG environment variable to the full
+path to pkg-config.
+
+Alternatively, you may set the environment variables TAGLIB_CFLAGS
+and TAGLIB_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+
+To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+See \`config.log' for more details" "$LINENO" 5; }
+else
+	TAGLIB_CFLAGS=$pkg_cv_TAGLIB_CFLAGS
+	TAGLIB_LIBS=$pkg_cv_TAGLIB_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+fi
 
 
 

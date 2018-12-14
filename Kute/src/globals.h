@@ -19,6 +19,9 @@
 */
 
 #include <mp4v2/mp4v2.h>
+#include <id3v1tag.h>
+#include <mpegfile.h>
+
 #include <stdlib.h>
 
 #ifndef _GLOBALS_
@@ -30,29 +33,29 @@
 
 enum {SETTITLE=0,SETALBUM,SETARTIST,SETTRACK,SETTOTALTRACKS,SETCD,SETTOTALCDS,SETCOMPILATION,SETYEAR,SETGENRE,SETCOMPOSER,SETCOMMENT,MAXTAG};
 
-extern char		*filename;
-extern int		filetype;
-extern bool		readall;
-extern bool		force;
-extern bool		quotes;
+extern char	*filename;
+extern int	filetype;
+extern bool	readall;
+extern bool	force;
+extern bool	quotes;
 
-extern bool		removealltags;
-extern char		*title;
-extern char		*album;
-extern char		*artist;
+extern bool	removealltags;
+extern char	*title;
+extern char	*album;
+extern char	*artist;
 
-extern char		*year;
-extern char		*genre;
-extern char		*composer;
-extern char		*comment;
+extern char	*year;
+extern char	*genre;
+extern char	*composer;
+extern char	*comment;
 
-extern char		*cdstring;
-extern char		*totaltracksstring;
-extern char		*trackstring;
-extern char		*compilationstring;
-extern int		tagstoset[MAXTAG];
+extern char	*cdstring;
+extern char	*totaltracksstring;
+extern char	*trackstring;
+extern char	*compilationstring;
+extern int	tagstoset[MAXTAG];
 
-extern char		*tempbuffer;
+extern char	*tempbuffer;
 
 void printTags(void);
 

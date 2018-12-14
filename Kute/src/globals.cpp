@@ -29,13 +29,13 @@ bool	force=false;
 bool	quotes=false;
 
 bool	removealltags=false;
-char*	title=NULL;
-char*	album=NULL;
-char*	artist=NULL;
-char*	year=NULL;
-char*	genre=NULL;
-char*	composer=NULL;
-char*	comment=NULL;
+char	*title=NULL;
+char	*album=NULL;
+char	*artist=NULL;
+char	*year=NULL;
+char	*genre=NULL;
+char	*composer=NULL;
+char	*comment=NULL;
 
 int		tagstoset[MAXTAG];
 char	*cdstring=NULL;

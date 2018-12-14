@@ -24,7 +24,7 @@
 #include <id3tag.h>
 #include "globals.h"
 
-bool readAllMp3(void);
+bool readAllMp3(bool nochange=false);
 void setMp3Tags(void);
 
 #endif

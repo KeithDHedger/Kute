@@ -1,4 +1,8 @@
 0.2.0
+Setting any mp3 tag now creates v1 an v2 tags.
+Fixed duplicating mp3 tags when changing.
+Added taglib dep.
+Removed redundant id3 dep.
 Code clean.
 Added file headers.
 Done quick readme.

@@ -1064,50 +1064,54 @@ m4trace:configure.ac:11: -1- m4_pattern_allow([^CPP$])
 m4trace:configure.ac:11: -1- m4_pattern_allow([^GREP$])
 m4trace:configure.ac:11: -1- m4_pattern_allow([^EGREP$])
 m4trace:configure.ac:11: -1- m4_pattern_allow([^STDC_HEADERS$])
-m4trace:configure.ac:13: -1- m4_pattern_allow([^CFLAGS$])
-m4trace:configure.ac:14: -1- m4_pattern_allow([^CPPFLAGS$])
-m4trace:configure.ac:15: -1- m4_pattern_allow([^LDFLAGS$])
-m4trace:configure.ac:18: -1- m4_pattern_allow([^CFLAGS$])
-m4trace:configure.ac:23: -1- m4_pattern_allow([^ID3_CFLAGS$])
-m4trace:configure.ac:24: -1- m4_pattern_allow([^ID3_LIBS$])
-m4trace:configure.ac:27: -1- PKG_CHECK_MODULES([ID3TAG], [$ID3TAG_MODULES])
-m4trace:configure.ac:27: -1- PKG_PROG_PKG_CONFIG
-m4trace:configure.ac:27: -1- m4_pattern_forbid([^_?PKG_[A-Z_]+$])
-m4trace:configure.ac:27: -1- m4_pattern_allow([^PKG_CONFIG(_(PATH|LIBDIR|SYSROOT_DIR|ALLOW_SYSTEM_(CFLAGS|LIBS)))?$])
-m4trace:configure.ac:27: -1- m4_pattern_allow([^PKG_CONFIG_(DISABLE_UNINSTALLED|TOP_BUILD_DIR|DEBUG_SPEW)$])
-m4trace:configure.ac:27: -1- m4_pattern_allow([^PKG_CONFIG$])
-m4trace:configure.ac:27: -1- m4_pattern_allow([^PKG_CONFIG_PATH$])
-m4trace:configure.ac:27: -1- m4_pattern_allow([^PKG_CONFIG_LIBDIR$])
-m4trace:configure.ac:27: -1- m4_pattern_allow([^PKG_CONFIG$])
+m4trace:configure.ac:26: -1- PKG_CHECK_MODULES([ID3TAG], [$ID3TAG_MODULES])
+m4trace:configure.ac:26: -1- PKG_PROG_PKG_CONFIG
+m4trace:configure.ac:26: -1- m4_pattern_forbid([^_?PKG_[A-Z_]+$])
+m4trace:configure.ac:26: -1- m4_pattern_allow([^PKG_CONFIG(_(PATH|LIBDIR|SYSROOT_DIR|ALLOW_SYSTEM_(CFLAGS|LIBS)))?$])
+m4trace:configure.ac:26: -1- m4_pattern_allow([^PKG_CONFIG_(DISABLE_UNINSTALLED|TOP_BUILD_DIR|DEBUG_SPEW)$])
+m4trace:configure.ac:26: -1- m4_pattern_allow([^PKG_CONFIG$])
+m4trace:configure.ac:26: -1- m4_pattern_allow([^PKG_CONFIG_PATH$])
+m4trace:configure.ac:26: -1- m4_pattern_allow([^PKG_CONFIG_LIBDIR$])
+m4trace:configure.ac:26: -1- m4_pattern_allow([^PKG_CONFIG$])
+m4trace:configure.ac:26: -1- m4_pattern_allow([^ID3TAG_CFLAGS$])
+m4trace:configure.ac:26: -1- m4_pattern_allow([^ID3TAG_LIBS$])
+m4trace:configure.ac:26: -1- PKG_CHECK_EXISTS([$ID3TAG_MODULES], [pkg_cv_[]ID3TAG_CFLAGS=`$PKG_CONFIG --[]cflags "$ID3TAG_MODULES" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes ], [pkg_failed=yes])
+m4trace:configure.ac:26: -1- PKG_CHECK_EXISTS([$ID3TAG_MODULES], [pkg_cv_[]ID3TAG_LIBS=`$PKG_CONFIG --[]libs "$ID3TAG_MODULES" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes ], [pkg_failed=yes])
+m4trace:configure.ac:26: -1- _PKG_SHORT_ERRORS_SUPPORTED
 m4trace:configure.ac:27: -1- m4_pattern_allow([^ID3TAG_CFLAGS$])
-m4trace:configure.ac:27: -1- m4_pattern_allow([^ID3TAG_LIBS$])
-m4trace:configure.ac:27: -1- PKG_CHECK_EXISTS([$ID3TAG_MODULES], [pkg_cv_[]ID3TAG_CFLAGS=`$PKG_CONFIG --[]cflags "$ID3TAG_MODULES" 2>/dev/null`
+m4trace:configure.ac:28: -1- m4_pattern_allow([^ID3TAG_LIBS$])
+m4trace:configure.ac:32: -1- m4_pattern_allow([^MP4_CFLAGS$])
+m4trace:configure.ac:33: -1- m4_pattern_allow([^MP4_LIBS$])
+m4trace:configure.ac:36: -1- PKG_CHECK_MODULES([TAGLIB], [$TAGLIB_MODULES])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^TAGLIB_CFLAGS$])
+m4trace:configure.ac:36: -1- m4_pattern_allow([^TAGLIB_LIBS$])
+m4trace:configure.ac:36: -1- PKG_CHECK_EXISTS([$TAGLIB_MODULES], [pkg_cv_[]TAGLIB_CFLAGS=`$PKG_CONFIG --[]cflags "$TAGLIB_MODULES" 2>/dev/null`
 		      test "x$?" != "x0" && pkg_failed=yes ], [pkg_failed=yes])
-m4trace:configure.ac:27: -1- PKG_CHECK_EXISTS([$ID3TAG_MODULES], [pkg_cv_[]ID3TAG_LIBS=`$PKG_CONFIG --[]libs "$ID3TAG_MODULES" 2>/dev/null`
+m4trace:configure.ac:36: -1- PKG_CHECK_EXISTS([$TAGLIB_MODULES], [pkg_cv_[]TAGLIB_LIBS=`$PKG_CONFIG --[]libs "$TAGLIB_MODULES" 2>/dev/null`
 		      test "x$?" != "x0" && pkg_failed=yes ], [pkg_failed=yes])
-m4trace:configure.ac:27: -1- _PKG_SHORT_ERRORS_SUPPORTED
-m4trace:configure.ac:28: -1- m4_pattern_allow([^ID3TAG_CFLAGS$])
-m4trace:configure.ac:29: -1- m4_pattern_allow([^ID3TAG_LIBS$])
-m4trace:configure.ac:33: -1- m4_pattern_allow([^MP4_CFLAGS$])
-m4trace:configure.ac:34: -1- m4_pattern_allow([^MP4_LIBS$])
-m4trace:configure.ac:47: -1- PKG_CHECK_MODULES([FLAC], [$FLAC_MODULES])
-m4trace:configure.ac:47: -1- m4_pattern_allow([^FLAC_CFLAGS$])
-m4trace:configure.ac:47: -1- m4_pattern_allow([^FLAC_LIBS$])
-m4trace:configure.ac:47: -1- PKG_CHECK_EXISTS([$FLAC_MODULES], [pkg_cv_[]FLAC_CFLAGS=`$PKG_CONFIG --[]cflags "$FLAC_MODULES" 2>/dev/null`
+m4trace:configure.ac:36: -1- _PKG_SHORT_ERRORS_SUPPORTED
+m4trace:configure.ac:37: -1- m4_pattern_allow([^TAGLIB_CFLAGS$])
+m4trace:configure.ac:38: -1- m4_pattern_allow([^TAGLIB_LIBS$])
+m4trace:configure.ac:51: -1- PKG_CHECK_MODULES([FLAC], [$FLAC_MODULES])
+m4trace:configure.ac:51: -1- m4_pattern_allow([^FLAC_CFLAGS$])
+m4trace:configure.ac:51: -1- m4_pattern_allow([^FLAC_LIBS$])
+m4trace:configure.ac:51: -1- PKG_CHECK_EXISTS([$FLAC_MODULES], [pkg_cv_[]FLAC_CFLAGS=`$PKG_CONFIG --[]cflags "$FLAC_MODULES" 2>/dev/null`
 		      test "x$?" != "x0" && pkg_failed=yes ], [pkg_failed=yes])
-m4trace:configure.ac:47: -1- PKG_CHECK_EXISTS([$FLAC_MODULES], [pkg_cv_[]FLAC_LIBS=`$PKG_CONFIG --[]libs "$FLAC_MODULES" 2>/dev/null`
+m4trace:configure.ac:51: -1- PKG_CHECK_EXISTS([$FLAC_MODULES], [pkg_cv_[]FLAC_LIBS=`$PKG_CONFIG --[]libs "$FLAC_MODULES" 2>/dev/null`
 		      test "x$?" != "x0" && pkg_failed=yes ], [pkg_failed=yes])
-m4trace:configure.ac:47: -1- _PKG_SHORT_ERRORS_SUPPORTED
-m4trace:configure.ac:48: -1- m4_pattern_allow([^FLAC_CFLAGS$])
-m4trace:configure.ac:49: -1- m4_pattern_allow([^FLAC_LIBS$])
-m4trace:configure.ac:51: -1- _m4_warn([obsolete], [AC_OUTPUT should be used without arguments.
+m4trace:configure.ac:51: -1- _PKG_SHORT_ERRORS_SUPPORTED
+m4trace:configure.ac:52: -1- m4_pattern_allow([^FLAC_CFLAGS$])
+m4trace:configure.ac:53: -1- m4_pattern_allow([^FLAC_LIBS$])
+m4trace:configure.ac:55: -1- _m4_warn([obsolete], [AC_OUTPUT should be used without arguments.
 You should run autoupdate.], [])
-m4trace:configure.ac:51: -1- m4_pattern_allow([^LIB@&t@OBJS$])
-m4trace:configure.ac:51: -1- m4_pattern_allow([^LTLIBOBJS$])
-m4trace:configure.ac:51: -1- AM_CONDITIONAL([am__EXEEXT], [test -n "$EXEEXT"])
-m4trace:configure.ac:51: -1- m4_pattern_allow([^am__EXEEXT_TRUE$])
-m4trace:configure.ac:51: -1- m4_pattern_allow([^am__EXEEXT_FALSE$])
-m4trace:configure.ac:51: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_TRUE])
-m4trace:configure.ac:51: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_FALSE])
-m4trace:configure.ac:51: -1- _AC_AM_CONFIG_HEADER_HOOK(["$ac_file"])
-m4trace:configure.ac:51: -1- _AM_OUTPUT_DEPENDENCY_COMMANDS
+m4trace:configure.ac:55: -1- m4_pattern_allow([^LIB@&t@OBJS$])
+m4trace:configure.ac:55: -1- m4_pattern_allow([^LTLIBOBJS$])
+m4trace:configure.ac:55: -1- AM_CONDITIONAL([am__EXEEXT], [test -n "$EXEEXT"])
+m4trace:configure.ac:55: -1- m4_pattern_allow([^am__EXEEXT_TRUE$])
+m4trace:configure.ac:55: -1- m4_pattern_allow([^am__EXEEXT_FALSE$])
+m4trace:configure.ac:55: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_TRUE])
+m4trace:configure.ac:55: -1- _AM_SUBST_NOTMAKE([am__EXEEXT_FALSE])
+m4trace:configure.ac:55: -1- _AC_AM_CONFIG_HEADER_HOOK(["$ac_file"])
+m4trace:configure.ac:55: -1- _AM_OUTPUT_DEPENDENCY_COMMANDS

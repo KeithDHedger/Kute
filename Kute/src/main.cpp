@@ -80,6 +80,7 @@ void printhelp(void)
 	printf("f,--force-flac		Don't try to guess the file type treat it as a FLAC file \n");
 	printf("c,--force-aac		Don't try to guess the file type treat it as an AAC file\n");
 	printf("p,--force-mp3		Don't try to guess the file type treat it as an MP3 file\n");
+	printf("			The force options may be needed if the file has NO tag data\n");
 	printf("q,--use-quotes		Quote file/artist/album names etc\n");
 	printf("R,--remove-all		Remove ALL Mp4 tags\n");
 	printf("?,--help		Print this help\n");
@@ -96,11 +97,10 @@ void getFileType(void)
 
 	if((mp3tmpfile=open(filename,O_RDONLY)) > 0)
 		{
-
-			if((mp3file=id3_file_fdopen(mp3tmpfile,ID3_FILE_MODE_READONLY)) != NULL)
+			if((mp3file=id3_file_fdopen(mp3tmpfile,ID3_FILE_MODE_READONLY))!=NULL)
 				{
 
-					if(((tag=id3_file_tag(mp3file)) != NULL) && (tag->nframes != 0))
+					if(((tag=id3_file_tag(mp3file))!=NULL) && (tag->nframes!=0))
 						{
 							id3_file_close(mp3file);
 							close(mp3tmpfile);
@@ -112,7 +112,7 @@ void getFileType(void)
 
 	FLAC__Metadata_Chain *chain;
 	chain=FLAC__metadata_chain_new();
-	if(chain != NULL && FLAC__metadata_chain_read(chain,filename))
+	if(chain!=NULL && FLAC__metadata_chain_read(chain,filename))
 		{
 			filetype=IS_FLAC;
 			return;
@@ -126,7 +126,7 @@ void getFileType(void)
 int main(int argc,char **argv)
 {
 	int c;
-	bool set_a_tag=false;
+	bool setATag=false;
 	readall=true;
 	force=false;
 	filetype=UNKNOWN_TYPE;
@@ -143,28 +143,28 @@ int main(int argc,char **argv)
 				{
 				case 'r':
 					readall=true;
-					set_a_tag=false;
+					setATag=false;
 					break;
 
 				case 'a':
-					set_a_tag=true;
+					setATag=true;
 					artist=optarg;
 					tagstoset[SETARTIST]=1;
 					break;
 
 				case 'l':
-					set_a_tag=true;
+					setATag=true;
 					album=optarg;
 					tagstoset[SETALBUM]=1;
 					break;
 
 				case 'n':
-					set_a_tag=true;
+					setATag=true;
 					title=optarg;
 					tagstoset[SETTITLE]=1;
 					break;
 				case 't':
-					set_a_tag=true;
+					setATag=true;
 					trackstring=optarg;
 					if(trackstring[0]=='0' && strlen(trackstring)==1)
 						trackstring=(char*)"";
@@ -172,7 +172,7 @@ int main(int argc,char **argv)
 					tagstoset[SETTRACK]=1;
 					break;
 				case 'T':
-					set_a_tag=true;
+					setATag=true;
 					totaltracksstring=optarg;
 					if(totaltracksstring[0]=='0' && strlen(totaltracksstring)==1)
 						totaltracksstring=(char*)"";
@@ -180,7 +180,7 @@ int main(int argc,char **argv)
 					tagstoset[SETTOTALTRACKS]=1;
 					break;
 				case 'C':
-					set_a_tag=true;
+					setATag=true;
 					cdstring=optarg;
 					if(cdstring[0]=='0' && strlen(cdstring)==1)
 						cdstring=(char*)"";
@@ -191,7 +191,7 @@ int main(int argc,char **argv)
 					break;
 
 				case 'i':
-					set_a_tag=true;
+					setATag=true;
 					compilationstring=optarg;
 					if(compilationstring[0]=='0' && strlen(compilationstring)==1)
 						compilationstring=(char*)"";
@@ -199,22 +199,22 @@ int main(int argc,char **argv)
 					tagstoset[SETCOMPILATION]=1;
 					break;
 				case 'y':
-					set_a_tag=true;
+					setATag=true;
 					year=optarg;
 					tagstoset[SETYEAR]=1;
 					break;
 				case 'g':
-					set_a_tag=true;
+					setATag=true;
 					genre=optarg;
 					tagstoset[SETGENRE]=1;
 					break;
 				case 'm':
 					composer=optarg;
-					set_a_tag=true;
+					setATag=true;
 					tagstoset[SETCOMPOSER]=1;
 					break;
 				case 'o':
-					set_a_tag=true;
+					setATag=true;
 					comment=optarg;
 					tagstoset[SETCOMMENT]=1;
 					break;
@@ -235,7 +235,7 @@ int main(int argc,char **argv)
 					break;
 				case 'R':
 					removealltags=true;
-					set_a_tag=true;
+					setATag=true;
 					break;
 				case '?':
 				case 'h':
@@ -257,7 +257,7 @@ int main(int argc,char **argv)
 			if(force==false)
 				getFileType();
 
-			if(set_a_tag==true)
+			if(setATag==true)
 				{
 					readall=false;
 					switch (filetype)
@@ -269,6 +269,8 @@ int main(int argc,char **argv)
 							setFlacTags();
 							break;
 						case IS_MP3:
+							//readAllMp3(true);
+							//printTags();
 							setMp3Tags();
 							break;
 						default:

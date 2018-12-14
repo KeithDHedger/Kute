@@ -38,6 +38,7 @@
 
 #include "globals.h"
 #include "mp3tags.h"
+using namespace TagLib;
 
 int			mp3tmpfile;
 id3_file	*mp3file;
@@ -81,7 +82,7 @@ void getMp3Tag(const char *tagname,char **tagdata)
 		}
 }
 
-bool readAllMp3(void)
+bool readAllMp3(bool nochange)
 {
 	int					genre_code;
 	const id3_ucs4_t	*tnam;
@@ -102,16 +103,24 @@ bool readAllMp3(void)
 
 	if(((tag=id3_file_tag(mp3file))==NULL) || (tag->nframes==0))
 		{
-			printf("filetype=%i\n",filetype);
 			printf("ERROR Could not open %s for reading as a MP3 file!\n",filename);
 			id3_file_close(mp3file);
 			return FALSE;
 		}
 
-	getMp3Tag(ID3_FRAME_TITLE,&title);
-	getMp3Tag(ID3_FRAME_ALBUM,&album);
-	getMp3Tag(ID3_FRAME_ARTIST,&artist);
-	getMp3Tag(ID3_FRAME_TRACK,&trackstring);
+//printf(">>>>>%s<<<<\n",title);
+//	if((nochange==false) || (title==NULL))
+//	if(tagstoset[SETTITLE]==0)
+		getMp3Tag(ID3_FRAME_TITLE,&title);
+//printf("<<<<<<<<<<%s>>>>>>>>>>>\n",title);
+//printf("<<<<<<<<<<%s>>>>>>>>>>>\n",artist);
+//	if(tagstoset[SETARTIST]==0)
+		getMp3Tag(ID3_FRAME_ARTIST,&artist);
+//	if(tagstoset[SETALBUM]==0)
+		getMp3Tag(ID3_FRAME_ALBUM,&album);
+
+//	if((tagstoset[SETTRACK]==0) || (tagstoset[SETTOTALTRACKS]==0))
+		getMp3Tag(ID3_FRAME_TRACK,&trackstring);
 
 	if(trackstring==NULL || strlen(trackstring)==0)
 		{
@@ -142,9 +151,14 @@ bool readAllMp3(void)
 			strcpy(cdstring,token);
 		}
 
-	getMp3Tag("TCMP",&compilationstring);
-	getMp3Tag(ID3_FRAME_YEAR,&year);
-	getMp3Tag(ID3_FRAME_GENRE,&genre);
+//	if(tagstoset[SETCOMPILATION]==0)
+		getMp3Tag("TCMP",&compilationstring);
+//	if(tagstoset[SETYEAR]==0)
+		getMp3Tag(ID3_FRAME_YEAR,&year);
+
+//printf("------------>%p<----------\n",genre);
+//	if(tagstoset[SETGENRE]==0)
+		getMp3Tag(ID3_FRAME_GENRE,&genre);
 	genre_code=atoi(genre);
 	if(genre_code>-1)
 		{
@@ -157,10 +171,16 @@ bool readAllMp3(void)
 		{
 			genre=(char*)"";
 		}
-	getMp3Tag("TCOM",&composer);
-	getMp3Tag(ID3_FRAME_COMMENT,&comment);
+//	if(tagstoset[SETCOMPOSER]==0)
+		getMp3Tag("TCOM",&composer);
+//	if(tagstoset[SETCOMMENT]==0)
+		getMp3Tag(ID3_FRAME_COMMENT,&comment);
 
 	id3_file_close(mp3file);
+	tag=NULL;
+//printf("-------------------------\n");
+//printf("<<<<<<<<<<%s>>>>>>>>>>>\n",title);
+//printf("<<<<<<<<<<%s>>>>>>>>>>>\n",artist);
 
 	return true;
 }
@@ -170,14 +190,10 @@ void setMp3Tag(const char *tagname,enum id3_field_type type,char *tagdata)
 	int nstrings;
 
 	frame=NULL;
-	if(tagdata==NULL || strlen(tagdata)==0)
+	while((frame=id3_tag_findframe(tag,tagname,0))!=NULL)
 		{
-			while((frame=id3_tag_findframe(tag,tagname,0)) != NULL)
-				{
-					id3_tag_detachframe(tag,frame);
-					id3_file_update(mp3file);
-				}
-			return;
+			id3_tag_detachframe(tag,frame);
+			id3_file_update(mp3file);
 		}
 
 	if((frame=id3_tag_findframe(tag,tagname,0))==NULL)
@@ -259,7 +275,9 @@ void setMp3Tags(void)
 					return;
 				}
 		}
-
+//printTags();
+//printf("title=>>%s<<\n",title);
+//printf("title=>>%s<<\n",artist);
 	if(tagstoset[SETTITLE]==1)
 		setMp3Tag(ID3_FRAME_TITLE,ID3_FIELD_TYPE_STRINGLIST,title);
 	if(tagstoset[SETARTIST]==1)
@@ -329,6 +347,22 @@ void setMp3Tags(void)
 	int ret=id3_file_update(mp3file);
 
 	id3_file_close(mp3file);
+
+//copy to v1 tags
+//note not all v2 tags can be copied.
+	MPEG::File f(filename);
+	int flags=MPEG::File::AllTags;
+
+	ID3v1::Tag *id3v1tag = f.ID3v1Tag(true);
+
+	id3v1tag->setTitle(f.tag()->title());
+	id3v1tag->setArtist(f.tag()->artist());
+	id3v1tag->setAlbum(f.tag()->album());
+	id3v1tag->setComment(f.tag()->comment());
+	id3v1tag->setGenre(f.tag()->genre());
+	id3v1tag->setYear(f.tag()->year());
+	id3v1tag->setTrack(f.tag()->track());
+	f.save();
 
 	if(ret)
 		printf("Could not write id3 tag to track.\n");
