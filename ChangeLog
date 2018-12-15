@@ -1,4 +1,5 @@
 0.2.0
+Added --list-genres.
 Setting any mp3 tag now creates v1 an v2 tags.
 Fixed duplicating mp3 tags when changing.
 Added taglib dep.

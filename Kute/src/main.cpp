@@ -55,6 +55,7 @@ struct option long_options[] =
 	{"force-mp3",0,0,'p'},
 	{"use-quotes",0,0,'q'},
 	{"remove-all",0,0,'R'},
+	{"list-genres",0,0,'G'},
 	{"help",0,0,'?'},
 	{0,0,0,0}
 };
@@ -83,6 +84,7 @@ void printhelp(void)
 	printf("			The force options may be needed if the file has NO tag data\n");
 	printf("q,--use-quotes		Quote file/artist/album names etc\n");
 	printf("R,--remove-all		Remove ALL Mp4 tags\n");
+	printf("G,--list-genres		List standard genres\n");
 	printf("?,--help		Print this help\n");
 }
 
@@ -123,6 +125,31 @@ void getFileType(void)
 		filetype=IS_MP4;
 }
 
+const char	*mp3Genres[]={
+"Blues","Classic Rock","Country","Dance","Disco","Funk","Grunge","Hip-Hop","Jazz","Metal","New Age","Oldies","Other","Pop","R&B","Rap","Reggae","Rock","Techno","Industrial","Alternative","Ska","Death Metal","Pranks","Soundtrack","Euro-Techno","Ambient","Trip-Hop","Vocal","Jazz+Funk","Fusion","Trance","Classical","Instrumental","Acid","House","Game","Sound Clip","Gospel","Noise","AlternRock","Bass","Soul","Punk","Space","Meditative","Instrumental Pop","Instrumental Rock","Ethnic","Gothic","Darkwave","Techno-Industrial","Electronic","Pop-Folk","Eurodance","Dream","Southern Rock","Comedy","Cult","Gangsta Rap","Top 40","Christian Rap","Pop / Funk","Jungle","Native American","Cabaret","New Wave","Psychedelic","Rave","Showtunes","Trailer","Lo-Fi","Tribal","Acid Punk","Acid Jazz","Polka","Retro","Musical","Rock & Roll","Hard Rock","Folk","Folk-Rock","National Folk","Swing","Fast Fusion","Bebob","Latin","Revival","Celtic","Bluegrass","Avantgarde","Gothic Rock","Progressive Rock","Psychedelic Rock","Symphonic Rock","Slow Rock","Big Band","Chorus","Easy Listening","Acoustic","Humour","Speech","Chanson","Opera","Chamber Music","Sonata","Symphony","Booty Bass","Primus","Porn Groove","Satire","Slow Jam","Club","Tango","Samba","Folklore","Ballad","Power Ballad","Rhythmic Soul","Freestyle","Duet","Punk Rock","Drum Solo","A Cappella","Euro-House","Dance Hall","Goa","Drum & Bass","Club-House","Hardcore","Terror","Indie","BritPop","Negerpunk","Polsk Punk","Beat","Christian Gangsta Rap","Heavy Metal","Black Metal","Crossover","Contemporary Christian","Christian Rock","Merengue","Salsa","Thrash Metal","Anime","JPop","Synthpop",NULL};
+
+const char	*extraGenres[]={
+"Abstract","Art Rock","Baroque","Bhangra","Big Beat","Breakbeat","Chillout","Downtempo","Dub","EBM","Eclectic","Electro","Electroclash","Emo","Experimental","Garage","Global","IDM","Illbient","Industro-Goth","Jam Band","Krautrock","Leftfield","Lounge","Math Rock","New Romantic","Nu-Breakz","Post-Punk","Post-Rock","Psytrance","Shoegaze","Space Rock","Trop Rock","World Music","Neoclassical","Audiobook","Audio Theatre","Neue Deutsche Welle","Podcast","Indie Rock","G-Funk","Dubstep","Garage Rock","Psybient",NULL};
+
+void listGenres(void)
+{
+	int	cnt=0;
+	int xtracnt=0;
+	printf("---------------------\nStandard MP3 genres\n---------------------\n");
+	while(mp3Genres[cnt]!=NULL)
+		{
+			printf("%i: %s\n",cnt,mp3Genres[cnt]);
+			cnt++;
+		}
+
+	printf("---------------------\nNon standard genres\n---------------------\n");
+	while(extraGenres[xtracnt]!=NULL)
+		{
+			printf("%i: %s\n",cnt,extraGenres[xtracnt++]);
+			cnt++;
+		}
+}
+
 int main(int argc,char **argv)
 {
 	int c;
@@ -135,12 +162,15 @@ int main(int argc,char **argv)
 	while(1)
 		{
 			int option_index=0;
-			c=getopt_long (argc,argv,":alntTCiygmo:rfcpqR?h",long_options,&option_index);
+			c=getopt_long (argc,argv,":alntTCiygmo:rfcpqRG?h",long_options,&option_index);
 			if(c==-1)
 				break;
 
 			switch (c)
 				{
+				case 'G':
+					listGenres();
+					exit(0);
 				case 'r':
 					readall=true;
 					setATag=false;
@@ -186,8 +216,6 @@ int main(int argc,char **argv)
 						cdstring=(char*)"";
 
 					tagstoset[SETCD]=1;
-					if(strchr(cdstring,'/'))
-						tagstoset[SETTOTALCDS]=1;
 					break;
 
 				case 'i':
@@ -269,8 +297,6 @@ int main(int argc,char **argv)
 							setFlacTags();
 							break;
 						case IS_MP3:
-							//readAllMp3(true);
-							//printTags();
 							setMp3Tags();
 							break;
 						default:
@@ -309,18 +335,17 @@ int main(int argc,char **argv)
 				}
 			optind++;
 		}
-	/*
-		free(title);
-		free(artist);
-		free(album);
-		free(cdstring);
-		free(year);
-		free(totaltracksstring);
-		free(trackstring);
-		free(genre);
-		free(comment);
-		free(composer);
-	*/
+
+	free(title);
+	free(artist);
+	free(album);
+	free(cdstring);
+	free(year);
+	free(totaltracksstring);
+	free(trackstring);
+	free(genre);
+	free(comment);
+	free(composer);
 
 	return 0;
 }

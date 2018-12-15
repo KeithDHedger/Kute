@@ -108,19 +108,10 @@ bool readAllMp3(bool nochange)
 			return FALSE;
 		}
 
-//printf(">>>>>%s<<<<\n",title);
-//	if((nochange==false) || (title==NULL))
-//	if(tagstoset[SETTITLE]==0)
-		getMp3Tag(ID3_FRAME_TITLE,&title);
-//printf("<<<<<<<<<<%s>>>>>>>>>>>\n",title);
-//printf("<<<<<<<<<<%s>>>>>>>>>>>\n",artist);
-//	if(tagstoset[SETARTIST]==0)
-		getMp3Tag(ID3_FRAME_ARTIST,&artist);
-//	if(tagstoset[SETALBUM]==0)
-		getMp3Tag(ID3_FRAME_ALBUM,&album);
-
-//	if((tagstoset[SETTRACK]==0) || (tagstoset[SETTOTALTRACKS]==0))
-		getMp3Tag(ID3_FRAME_TRACK,&trackstring);
+	getMp3Tag(ID3_FRAME_TITLE,&title);
+	getMp3Tag(ID3_FRAME_ARTIST,&artist);
+	getMp3Tag(ID3_FRAME_ALBUM,&album);
+	getMp3Tag(ID3_FRAME_TRACK,&trackstring);
 
 	if(trackstring==NULL || strlen(trackstring)==0)
 		{
@@ -137,28 +128,14 @@ bool readAllMp3(bool nochange)
 					strcpy(totaltracksstring,token);
 				}
 			else
-				{
-					totaltracksstring=(char*)"";
-				}
+				totaltracksstring=(char*)"";
 		}
 
 	getMp3Tag("TPOS",&cdstring);
-	if(strchr(cdstring,'/'))
-		{
-			token=strtok(cdstring,"/");
-			token=strtok(NULL,"/");
-			cdstring=(char*)malloc(strlen(token)+1);
-			strcpy(cdstring,token);
-		}
+	getMp3Tag("TCMP",&compilationstring);
+	getMp3Tag(ID3_FRAME_YEAR,&year);
+	getMp3Tag(ID3_FRAME_GENRE,&genre);
 
-//	if(tagstoset[SETCOMPILATION]==0)
-		getMp3Tag("TCMP",&compilationstring);
-//	if(tagstoset[SETYEAR]==0)
-		getMp3Tag(ID3_FRAME_YEAR,&year);
-
-//printf("------------>%p<----------\n",genre);
-//	if(tagstoset[SETGENRE]==0)
-		getMp3Tag(ID3_FRAME_GENRE,&genre);
 	genre_code=atoi(genre);
 	if(genre_code>-1)
 		{
@@ -168,19 +145,13 @@ bool readAllMp3(bool nochange)
 			strcpy(genre,(char*)data);
 		}
 	else
-		{
-			genre=(char*)"";
-		}
-//	if(tagstoset[SETCOMPOSER]==0)
-		getMp3Tag("TCOM",&composer);
-//	if(tagstoset[SETCOMMENT]==0)
-		getMp3Tag(ID3_FRAME_COMMENT,&comment);
+		genre=(char*)"";
+
+	getMp3Tag("TCOM",&composer);
+	getMp3Tag(ID3_FRAME_COMMENT,&comment);
 
 	id3_file_close(mp3file);
 	tag=NULL;
-//printf("-------------------------\n");
-//printf("<<<<<<<<<<%s>>>>>>>>>>>\n",title);
-//printf("<<<<<<<<<<%s>>>>>>>>>>>\n",artist);
 
 	return true;
 }
@@ -275,9 +246,7 @@ void setMp3Tags(void)
 					return;
 				}
 		}
-//printTags();
-//printf("title=>>%s<<\n",title);
-//printf("title=>>%s<<\n",artist);
+
 	if(tagstoset[SETTITLE]==1)
 		setMp3Tag(ID3_FRAME_TITLE,ID3_FIELD_TYPE_STRINGLIST,title);
 	if(tagstoset[SETARTIST]==1)
@@ -297,7 +266,7 @@ void setMp3Tags(void)
 		setMp3Tag("TCOM",ID3_FIELD_TYPE_STRINGLIST,composer);
 	if(tagstoset[SETCOMMENT]==1)
 		setMp3Tag(ID3_FRAME_COMMENT,ID3_FIELD_TYPE_STRINGFULL,comment);
-	if(tagstoset[SETCD]==1 || tagstoset[SETTOTALCDS]==1)
+	if(tagstoset[SETCD]==1)
 		setMp3Tag("TPOS",ID3_FIELD_TYPE_STRINGLIST,cdstring);
 
 	getMp3Tag(ID3_FRAME_TRACK,&tempbuffer);
@@ -322,16 +291,12 @@ void setMp3Tags(void)
 				sprintf(ttot,"");
 		}
 	if(tagstoset[SETTRACK]==1)
-		{
-			sprintf(ttrack,"%s",trackstring);
-		}
+		sprintf(ttrack,"%s",trackstring);
 
 	if(tagstoset[SETTOTALTRACKS]==1 || tagstoset[SETTRACK]==1)
 		{
 			if(ttrack!=NULL && strlen(ttrack)>0)
-				{
-					sprintf(tempbuffer,"%s%s",ttrack,ttot);
-				}
+				sprintf(tempbuffer,"%s%s",ttrack,ttot);
 			else
 				sprintf(tempbuffer,"");
 
@@ -339,10 +304,7 @@ void setMp3Tags(void)
 		}
 
 	if(tagstoset[SETCOMPILATION]==1)
-		{
-			setMp3Tag("TCMP",ID3_FIELD_TYPE_STRINGLIST,compilationstring);
-		}
-
+		setMp3Tag("TCMP",ID3_FIELD_TYPE_STRINGLIST,compilationstring);
 
 	int ret=id3_file_update(mp3file);
 
