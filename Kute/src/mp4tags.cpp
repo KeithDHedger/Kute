@@ -133,17 +133,20 @@ bool doReadAllFlacTags(void)
 	tags=MP4TagsAlloc();
 	MP4TagsFetch(tags,mp4file);
 
-	title=(char*)tags->name;
-	if(title==NULL)
-		title=(char*)"";
+	if(tags->name!=NULL)
+		title=strdup(tags->name);
+	else
+		title=strdup("");
 
-	artist=(char*)tags->artist;
-	if(artist==NULL)
-		artist=(char*)"";
+	if(tags->artist!=NULL)
+		artist=strdup(tags->artist);
+	else
+		artist=strdup("");
 
-	album=(char*)tags->album;
-	if(album==NULL)
-		album=(char*)"";
+	if(tags->album!=NULL)
+		album=strdup(tags->album);
+	else
+		album=strdup("");
 
 	if(tags->track)
 		{
@@ -152,8 +155,8 @@ bool doReadAllFlacTags(void)
 		}
 	else
 		{
-			trackstring=(char*)"";
-			totaltracksstring=(char*)"";
+			trackstring=strdup("");
+			totaltracksstring=strdup("");
 		}
 
 	cd=0;
@@ -169,29 +172,33 @@ bool doReadAllFlacTags(void)
 		}
 	else
 		{
-			cdstring=(char*)"";
+			cdstring=strdup("");
 		}
 
-	genre=(char*)tags->genre;
-	if(genre==NULL)
-		genre=(char*)"";
+	if(tags->genre!=NULL)
+		genre=strdup(tags->genre);
+	else
+		genre=strdup("");
 
-	year=(char*)tags->releaseDate;
-	if(year==NULL)
-		year=(char*)"";
+	if(tags->releaseDate!=NULL)
+		year=strdup(tags->releaseDate);
+	else
+		year=strdup("");
 
 	if(tags->compilation)
 		asprintf(&compilationstring,"%i",*tags->compilation);
 	else
-		compilationstring=(char*)"";
+		compilationstring=strdup("");
 
-	composer=(char*)tags->composer;
-	if(composer==NULL)
-		composer=(char*)"";
+	if(tags->composer!=NULL)
+		composer=strdup(tags->composer);
+	else
+		composer=strdup("");
 
-	comment=(char*)tags->comments;
-	if(comment==NULL)
-		comment=(char*)"";
+	if(tags->comments!=NULL)
+		comment=strdup(tags->comments);
+	else
+		comment=strdup("");
 
 	if(!tags)
 		MP4TagsFree(tags);

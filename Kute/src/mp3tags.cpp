@@ -115,8 +115,8 @@ bool readAllMp3(bool nochange)
 
 	if(trackstring==NULL || strlen(trackstring)==0)
 		{
-			trackstring=(char*)"";
-			totaltracksstring=(char*)"";
+			trackstring=strdup("");
+			totaltracksstring=strdup("");
 		}
 	else
 		{
@@ -128,7 +128,7 @@ bool readAllMp3(bool nochange)
 					strcpy(totaltracksstring,token);
 				}
 			else
-				totaltracksstring=(char*)"";
+				totaltracksstring=strdup("");
 		}
 
 	getMp3Tag("TPOS",&cdstring);
@@ -145,7 +145,7 @@ bool readAllMp3(bool nochange)
 			strcpy(genre,(char*)data);
 		}
 	else
-		genre=(char*)"";
+		genre=strdup("");
 
 	getMp3Tag("TCOM",&composer);
 	getMp3Tag(ID3_FRAME_COMMENT,&comment);
