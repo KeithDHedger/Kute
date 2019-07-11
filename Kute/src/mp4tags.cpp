@@ -73,17 +73,19 @@ void setMp4Tag(void)
 			MP4TagsSetTrack(tags,&trck);
 		}
 
-//	if(tagstoset[SETCD]==1 || tagstoset[SETTOTALCDS]==1)
-	if(tagstoset[SETCD]==1)
+	if(tagstoset[SETCD]==1 || tagstoset[SETTOTALCDS]==1)
 		{
 			long t=0;
 			MP4TagDisk	dsk= {0,0};
 			if(tagstoset[SETCD]==1)
 				dsk.index=atoi(cdstring);
 
-				char* ptr=strrchr(cdstring,'/');
-				if(ptr!=NULL)
-					t=atoi(++ptr);
+			if(tagstoset[SETTOTALCDS]==1)
+				{
+					char* ptr=strrchr(cdstring,'/');
+					if(ptr!=NULL)
+						t=atoi(++ptr);
+				}
 			dsk.total=t;
 
 			if((dsk.index==0) && (dsk.total==0))
