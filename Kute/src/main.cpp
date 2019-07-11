@@ -197,7 +197,7 @@ int main(int argc,char **argv)
 					setATag=true;
 					trackstring=optarg;
 					if(trackstring[0]=='0' && strlen(trackstring)==1)
-						trackstring=strdup("");
+						trackstring=(char*)"";
 
 					tagstoset[SETTRACK]=1;
 					break;
@@ -205,7 +205,7 @@ int main(int argc,char **argv)
 					setATag=true;
 					totaltracksstring=optarg;
 					if(totaltracksstring[0]=='0' && strlen(totaltracksstring)==1)
-						totaltracksstring=strdup("");
+						totaltracksstring=(char*)"";
 
 					tagstoset[SETTOTALTRACKS]=1;
 					break;
@@ -213,7 +213,7 @@ int main(int argc,char **argv)
 					setATag=true;
 					cdstring=optarg;
 					if(cdstring[0]=='0' && strlen(cdstring)==1)
-						cdstring=strdup("");
+						cdstring=(char*)"";
 
 					tagstoset[SETCD]=1;
 					break;
@@ -222,7 +222,7 @@ int main(int argc,char **argv)
 					setATag=true;
 					compilationstring=optarg;
 					if(compilationstring[0]=='0' && strlen(compilationstring)==1)
-						compilationstring=strdup("");
+						compilationstring=(char*)"";
 
 					tagstoset[SETCOMPILATION]=1;
 					break;
@@ -336,16 +336,16 @@ int main(int argc,char **argv)
 			optind++;
 		}
 
-	freeAndNull(&title);
-	freeAndNull(&artist);
-	freeAndNull(&album);
-	freeAndNull(&cdstring);
-	freeAndNull(&year);
-	freeAndNull(&totaltracksstring);
-	freeAndNull(&trackstring);
-	freeAndNull(&genre);
-	freeAndNull(&comment);
-	freeAndNull(&composer);
+	free(title);
+	free(artist);
+	free(album);
+	free(cdstring);
+	free(year);
+	free(totaltracksstring);
+	free(trackstring);
+	free(genre);
+	free(comment);
+	free(composer);
 
 	return 0;
 }

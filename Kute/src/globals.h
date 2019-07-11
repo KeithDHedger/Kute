@@ -58,7 +58,6 @@ extern int	tagstoset[MAXTAG];
 extern char	*tempbuffer;
 
 void printTags(void);
-void freeAndNull(char **data);
 
 #define _GLOBALS_
 
