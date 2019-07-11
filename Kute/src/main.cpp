@@ -95,11 +95,28 @@ void getFileType(void)
 	id3_tag			*tag;
 	char			*mp4info=NULL;
 
+	if(strcasestr(filename,".mp3")!=NULL)
+		{
+			filetype=IS_MP3;
+			return;
+		}
+
+	if(strcasestr(filename,".flac")!=NULL)
+		{
+			filetype=IS_FLAC;
+			return;
+		}
+
+	if(strcasestr(filename,".m4a")!=NULL)
+		{
+			filetype=IS_MP4;
+			return;
+		}
+
 	if((mp3tmpfile=open(filename,O_RDONLY)) > 0)
 		{
 			if((mp3file=id3_file_fdopen(mp3tmpfile,ID3_FILE_MODE_READONLY))!=NULL)
 				{
-
 					if(((tag=id3_file_tag(mp3file))!=NULL) && (tag->nframes!=0))
 						{
 							id3_file_close(mp3file);
@@ -135,7 +152,7 @@ int main(int argc,char **argv)
 	while(1)
 		{
 			int option_index=0;
-			c=getopt_long (argc,argv,":alntTCiygmo:rfcpqR?h",long_options,&option_index);
+			c=getopt_long (argc,argv,"a:l:n:t:T:C:i:y:g:m:o:rfcpqR?h",long_options,&option_index);
 			if(c==-1)
 				break;
 
@@ -148,42 +165,42 @@ int main(int argc,char **argv)
 
 				case 'a':
 					setATag=true;
-					artist=optarg;
+					artist=strdup(optarg);
 					tagstoset[SETARTIST]=1;
 					break;
 
 				case 'l':
 					setATag=true;
-					album=optarg;
+					album=strdup(optarg);
 					tagstoset[SETALBUM]=1;
 					break;
 
 				case 'n':
 					setATag=true;
-					title=optarg;
+					title=strdup(optarg);
 					tagstoset[SETTITLE]=1;
 					break;
 				case 't':
 					setATag=true;
-					trackstring=optarg;
+					trackstring=strdup(optarg);
 					if(trackstring[0]=='0' && strlen(trackstring)==1)
-						trackstring=(char*)"";
+						trackstring=strdup("");
 
 					tagstoset[SETTRACK]=1;
 					break;
 				case 'T':
 					setATag=true;
-					totaltracksstring=optarg;
+					totaltracksstring=strdup(optarg);
 					if(totaltracksstring[0]=='0' && strlen(totaltracksstring)==1)
-						totaltracksstring=(char*)"";
+						totaltracksstring=strdup("");
 
 					tagstoset[SETTOTALTRACKS]=1;
 					break;
 				case 'C':
 					setATag=true;
-					cdstring=optarg;
+					cdstring=strdup(optarg);
 					if(cdstring[0]=='0' && strlen(cdstring)==1)
-						cdstring=(char*)"";
+						cdstring=strdup("");
 
 					tagstoset[SETCD]=1;
 					if(strchr(cdstring,'/'))
@@ -192,30 +209,30 @@ int main(int argc,char **argv)
 
 				case 'i':
 					setATag=true;
-					compilationstring=optarg;
+					compilationstring=strdup(optarg);
 					if(compilationstring[0]=='0' && strlen(compilationstring)==1)
-						compilationstring=(char*)"";
+						compilationstring=strdup("");
 
 					tagstoset[SETCOMPILATION]=1;
 					break;
 				case 'y':
 					setATag=true;
-					year=optarg;
+					year=strdup(optarg);
 					tagstoset[SETYEAR]=1;
 					break;
 				case 'g':
 					setATag=true;
-					genre=optarg;
+					genre=strdup(optarg);
 					tagstoset[SETGENRE]=1;
 					break;
 				case 'm':
-					composer=optarg;
+					composer=strdup(optarg);
 					setATag=true;
 					tagstoset[SETCOMPOSER]=1;
 					break;
 				case 'o':
 					setATag=true;
-					comment=optarg;
+					comment=strdup(optarg);
 					tagstoset[SETCOMMENT]=1;
 					break;
 				case 'f':
@@ -269,8 +286,6 @@ int main(int argc,char **argv)
 							setFlacTags();
 							break;
 						case IS_MP3:
-							//readAllMp3(true);
-							//printTags();
 							setMp3Tags();
 							break;
 						default:
@@ -309,18 +324,19 @@ int main(int argc,char **argv)
 				}
 			optind++;
 		}
-	/*
-		free(title);
-		free(artist);
-		free(album);
-		free(cdstring);
-		free(year);
-		free(totaltracksstring);
-		free(trackstring);
-		free(genre);
-		free(comment);
-		free(composer);
-	*/
+	
+
+		freeAndNull(&artist);
+		freeAndNull(&title);
+		freeAndNull(&album);
+		freeAndNull(&cdstring);
+		freeAndNull(&year);
+		freeAndNull(&totaltracksstring);
+		freeAndNull(&trackstring);
+		freeAndNull(&genre);
+		freeAndNull(&comment);
+		freeAndNull(&composer);
+
 
 	return 0;
 }

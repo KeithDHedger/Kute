@@ -64,4 +64,12 @@ void printTags(void)
 		}
 }
 
+void freeAndNull(char **data)
+{
+	if((data!=NULL) && (*data!=NULL))
+		{
+			free(*data);
+			*data=NULL;
+		}
+}
 

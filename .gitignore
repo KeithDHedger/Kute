@@ -1,5 +1,13 @@
 
 *.deps
 config.h.in
-
+*.o
+*.BAK
+.dirstamp
+*.log
+Kute/app/kute
+Makefile
+*.status
+stamp-h1
+config.h
 
