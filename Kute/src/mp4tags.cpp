@@ -119,10 +119,11 @@ void setMp4Tag(void)
 	MP4Optimize(filename,NULL);
 }
 
-bool doReadAllFlacTags(void)
+bool doReadAllM4aTags(void)
 {
 	MP4FileHandle	mp4file=NULL;
 	const MP4Tags	*tags;
+	const char		*retstr=NULL;
 
 	mp4file=MP4Read(filename);
 
@@ -135,17 +136,23 @@ bool doReadAllFlacTags(void)
 	tags=MP4TagsAlloc();
 	MP4TagsFetch(tags,mp4file);
 
-	title=(char*)tags->name;
-	if(title==NULL)
-		title=(char*)"";
+	retstr=tags->name;
+	if(retstr==NULL)
+		title=strdup("");
+	else
+		title=strdup(retstr);
 
-	artist=(char*)tags->artist;
-	if(artist==NULL)
-		artist=(char*)"";
+	retstr=tags->artist;
+	if(retstr==NULL)
+		artist=strdup("");
+	else
+		artist=strdup(retstr);
 
-	album=(char*)tags->album;
-	if(album==NULL)
-		album=(char*)"";
+	retstr=tags->album;
+	if(retstr==NULL)
+		album=strdup("");
+	else
+		album=strdup(retstr);
 
 	if(tags->track)
 		{
@@ -154,8 +161,8 @@ bool doReadAllFlacTags(void)
 		}
 	else
 		{
-			trackstring=(char*)"";
-			totaltracksstring=(char*)"";
+			trackstring=strdup("");
+			totaltracksstring=strdup("");
 		}
 
 	cd=0;
@@ -171,29 +178,37 @@ bool doReadAllFlacTags(void)
 		}
 	else
 		{
-			cdstring=(char*)"";
+			cdstring=strdup("");
 		}
 
-	genre=(char*)tags->genre;
-	if(genre==NULL)
-		genre=(char*)"";
+	retstr=tags->genre;
+	if(retstr==NULL)
+		genre=strdup("");
+	else
+		genre=strdup(retstr);
 
-	year=(char*)tags->releaseDate;
-	if(year==NULL)
-		year=(char*)"";
+	retstr=tags->releaseDate;
+	if(retstr==NULL)
+		year=strdup("");
+	else
+		year=strdup(retstr);
+
+	retstr=tags->composer;
+	if(retstr==NULL)
+		composer=strdup("");
+	else
+		composer=strdup(retstr);
+
+	retstr=tags->comments;
+	if(retstr==NULL)
+		comment=strdup("");
+	else
+		comment=strdup(retstr);
 
 	if(tags->compilation)
 		asprintf(&compilationstring,"%i",*tags->compilation);
 	else
-		compilationstring=(char*)"";
-
-	composer=(char*)tags->composer;
-	if(composer==NULL)
-		composer=(char*)"";
-
-	comment=(char*)tags->comments;
-	if(comment==NULL)
-		comment=(char*)"";
+		compilationstring=strdup("");
 
 	if(!tags)
 		MP4TagsFree(tags);

@@ -1,1 +1,1 @@
-COMMONSRC = ../src/flactags.cpp ../src/globals.cpp ../src/main.cpp ../src/mp3tags.cpp ../src/mp4tags.cpp
+COMMONSRC = ../src/flactags.cpp ../src/globals.cpp ../src/main.cpp ../src/mp3album.cpp ../src/mp3artist.cpp ../src/mp3tags.cpp ../src/mp3title.cpp ../src/mp4tags.cpp

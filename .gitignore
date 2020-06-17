@@ -6,6 +6,9 @@ config.h.in
 .dirstamp
 *.log
 Kute/app/kute
+Kute/app/mp3title
+Kute/app/mp3album
+Kute/app/mp3artist
 Makefile
 *.status
 stamp-h1

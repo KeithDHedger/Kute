@@ -165,75 +165,124 @@ int main(int argc,char **argv)
 
 				case 'a':
 					setATag=true;
-					artist=strdup(optarg);
 					tagstoset[SETARTIST]=1;
+					if(strlen(optarg)>0)
+						artist=strdup(optarg);
+					else
+						{
+							tagstoset[SETARTIST]=0;
+							artist=strdup("");
+						}
 					break;
 
 				case 'l':
 					setATag=true;
-					album=strdup(optarg);
 					tagstoset[SETALBUM]=1;
+					if(strlen(optarg)>0)
+						album=strdup(optarg);
+					else
+						{
+							tagstoset[SETALBUM]=0;
+							album=strdup("");
+						}
 					break;
 
 				case 'n':
 					setATag=true;
-					title=strdup(optarg);
 					tagstoset[SETTITLE]=1;
+					if(strlen(optarg)>0)
+						title=strdup(optarg);
+					else
+						{
+							tagstoset[SETTITLE]=0;
+							title=strdup("");
+						}
 					break;
 				case 't':
 					setATag=true;
-					trackstring=strdup(optarg);
-					if(trackstring[0]=='0' && strlen(trackstring)==1)
-						trackstring=strdup("");
-
 					tagstoset[SETTRACK]=1;
+					if(strlen(optarg)>0)
+						trackstring=strdup(optarg);
+					else
+						{
+							tagstoset[SETTRACK]=0;
+							trackstring=strdup("");
+						}
 					break;
 				case 'T':
 					setATag=true;
-					totaltracksstring=strdup(optarg);
-					if(totaltracksstring[0]=='0' && strlen(totaltracksstring)==1)
-						totaltracksstring=strdup("");
-
 					tagstoset[SETTOTALTRACKS]=1;
+					if(strlen(optarg)>0)
+						totaltracksstring=strdup(optarg);
+					else
+						{
+							tagstoset[SETTOTALTRACKS]=0;
+							totaltracksstring=strdup("");
+						}
 					break;
 				case 'C':
 					setATag=true;
-					cdstring=strdup(optarg);
-					if(cdstring[0]=='0' && strlen(cdstring)==1)
-						cdstring=strdup("");
-
-					tagstoset[SETCD]=1;
-					if(strchr(cdstring,'/'))
-						tagstoset[SETTOTALCDS]=1;
+					tagstoset[SETTOTALCDS]=1;
+					if(strlen(optarg)>0)
+						cdstring=strdup(optarg);
+					else
+						{
+							tagstoset[SETTOTALCDS]=0;
+							cdstring=strdup("");
+						}
 					break;
-
 				case 'i':
 					setATag=true;
-					compilationstring=strdup(optarg);
-					if(compilationstring[0]=='0' && strlen(compilationstring)==1)
-						compilationstring=strdup("");
-
 					tagstoset[SETCOMPILATION]=1;
+					if(strlen(optarg)>0)
+						compilationstring=strdup(optarg);
+					else
+						{
+							tagstoset[SETCOMPILATION]=0;
+							compilationstring=strdup("");
+						}
 					break;
 				case 'y':
 					setATag=true;
-					year=strdup(optarg);
 					tagstoset[SETYEAR]=1;
+					if(strlen(optarg)>0)
+						year=strdup(optarg);
+					else
+						{
+							tagstoset[SETYEAR]=0;
+							year=strdup("");
+						}
 					break;
 				case 'g':
 					setATag=true;
-					genre=strdup(optarg);
 					tagstoset[SETGENRE]=1;
+					if(strlen(optarg)>0)
+						genre=strdup(optarg);
+					else
+						{
+							tagstoset[SETGENRE]=0;
+							genre=strdup("");
+						}
 					break;
 				case 'm':
-					composer=strdup(optarg);
-					setATag=true;
 					tagstoset[SETCOMPOSER]=1;
+					if(strlen(optarg)>0)
+						composer=strdup(optarg);
+					else
+						{
+							tagstoset[SETCOMPOSER]=0;
+							composer=strdup("");
+						}
 					break;
 				case 'o':
-					setATag=true;
-					comment=strdup(optarg);
 					tagstoset[SETCOMMENT]=1;
+					if(strlen(optarg)>0)
+						comment=strdup(optarg);
+					else
+						{
+							tagstoset[SETCOMMENT]=0;
+							comment=strdup("");
+						}
 					break;
 				case 'f':
 					force=true;
@@ -304,7 +353,7 @@ int main(int argc,char **argv)
 							tags_ok=doReadAllFlac();
 							break;
 						case IS_MP4:
-							tags_ok=doReadAllFlacTags();
+							tags_ok=doReadAllM4aTags();
 							break;
 						case IS_MP3:
 							tags_ok=readAllMp3();
@@ -324,19 +373,18 @@ int main(int argc,char **argv)
 				}
 			optind++;
 		}
-	
 
-		freeAndNull(&artist);
-		freeAndNull(&title);
-		freeAndNull(&album);
-		freeAndNull(&cdstring);
-		freeAndNull(&year);
-		freeAndNull(&totaltracksstring);
-		freeAndNull(&trackstring);
-		freeAndNull(&genre);
-		freeAndNull(&comment);
-		freeAndNull(&composer);
-
+	freeAndNull(&artist);
+	freeAndNull(&title);
+	freeAndNull(&album);
+	freeAndNull(&cdstring);
+	freeAndNull(&year);
+	freeAndNull(&totaltracksstring);
+	freeAndNull(&trackstring);
+	freeAndNull(&genre);
+	freeAndNull(&comment);
+	freeAndNull(&composer);
+	freeAndNull(&compilationstring);
 
 	return 0;
 }

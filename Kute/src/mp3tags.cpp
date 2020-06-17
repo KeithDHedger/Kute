@@ -335,6 +335,7 @@ void setMp3Tags(void)
 
 //copy to v1 tags
 //note not all v2 tags can be copied.
+
 	MPEG::File f(filename);
 	int flags=MPEG::File::AllTags;
 

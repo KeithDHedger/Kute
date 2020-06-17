@@ -26,5 +26,5 @@
 #define _MP4TAGS_
 
 void setMp4Tag(void);
-bool doReadAllFlacTags(void);
+bool doReadAllM4aTags(void);
 #endif

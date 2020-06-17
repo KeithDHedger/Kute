@@ -226,6 +226,6 @@ bool FlacTagReadFileTag(char *filename)
 
 bool doReadAllFlac(void)
 {
-	return FlacTagReadFileTag (filename);
+	return FlacTagReadFileTag(filename);
 }
 
