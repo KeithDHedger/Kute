@@ -1,138 +1,189 @@
-.\" 
-.TH "Kute" "1" "15-02-2009" "" ""
+.TH "Kute" "1" "0.3.0" "K. D. Hedger" ""
 .SH "NAME"
-Kute \- (K)eiths (U)niversal (T)ag (E)ditor
+Kute - (K)eiths (U)niversal (T)ag (E)ditor
+.br
 
 .SH "SYNOPSIS"
-kute [OPTION]... [FILE]...
+kute [OPTION]... [FILE] [FILE] ...
+.br
 
 .SH "DESCRIPTION"
-.TP 
 Read/Write tags to/from a music file including FLAC,AAC and MP3. Multiple files can be tagged simultaneously. Tags can also be removed (see examples). File type is found automatically (default) or can forced to a specific format.
-.SH "OPTIONS"
-.B r, \-\-read\-all
-Print tags to stdout (default)
-.TP 
-.B a, \-\-artist=\fRARG
-Set tag ARTIST to ARG
-.TP 
-.B l, \-\-album=\fRARG
-Set tag ALBUM to ARG
-.TP 
-.B n, \-\-title=\fRARG
-Set tag TITLE to ARG
-.TP 
-.B t, \-\-track=\fRARG
-Set tag TRACK to ARG
-.TP 
-.B T, \-\-total\-tracks=\fRARG
-Set tag TOTALTRACKS to ARG
-.TP 
-.B C, \-\-cd=\fRARG
-Set tag CD to ARG
-.TP 
-.B i, \-\-compilation=\fRARG
-Set tag COMPILATION to ARG
-.br 
-Note this is non standard and ARG should be 1 for part of a compilation or 0 for not
-.TP 
-.B y, \-\-year=\fRARG
-Set tag YEAR to ARG
-.TP 
-.B g, \-\-genre=\fRARG
-Set tag GENRE to ARG
-.TP 
-.B m, \-\-composer=\fRARG
-Set tag COMPOSER to ARG
-.TP 
-.B o, \-\-comment=\fRARG
-Set tag COMMENT to ARG
-.TP 
-.B f, \-\-force\-flac
-Don't try to guess the file type treat it as a FLAC file
-.TP 
-.B c, \-\-force\-aac
-Don't try to guess the file type treat it as an AAC file
-.TP 
-.B p, \-\-force\-mp3
-Don't try to guess the file type treat it as an MP3 file
-.TP 
-.B q, \-\-use\-quotes
-Quote file/artist/album names etc
-.TP 
+.br
 
-.B ?,h, \-\-help
-Print this help
+.SH "OPTIONS"
+\fBr, --read-all \fRPrint tags to stdout (default)
+.br
+
+\fBa, --artist=\fRARG
+.br
+       Set tag ARTIST to ARG
+.br
+
+\fBl, --album=\fRARG
+.br
+       Set tag ALBUM to ARG
+.br
+
+\fBn, --title=\fRARG
+.br
+       Set tag TITLE to ARG
+.br
+
+\fBt, --track=\fRARG
+.br
+       Set tag TRACK to ARG
+.br
+
+\fBT, --total-tracks=\fRARG
+.br
+       Set tag TOTALTRACKS to ARG
+.br
+
+\fBC, --cd=\fRARG
+.br
+       Set tag CD to ARG
+.br
+
+\fBi, --compilation=\fRARG
+.br
+       Set tag COMPILATION to ARG
+.br
+       Note this is non standard and ARG should be 1 for part of a compilation or 0 for not
+.br
+
+\fBy, --year=\fRARG
+.br
+       Set tag YEAR to ARG
+.br
+
+\fBg, --genre=\fRARG
+.br
+       Set tag GENRE to ARG
+.br
+
+\fBm, --composer=\fRARG
+.br
+       Set tag COMPOSER to ARG
+.br
+
+\fBo, --comment=\fRARG
+.br
+       Set tag COMMENT to ARG
+.br
+
+\fBY, --copy\fR
+.br
+		Copy ALL tags from first file to ALL subsequent files.
+.br
+
+\fBf, --force-flac\fR
+.br
+       Don't try to guess the file type treat it as a FLAC file
+.br
+
+\fBc, --force-aac\fR
+.br
+       Don't try to guess the file type treat it as an AAC file
+.br
+
+\fBp, --force-mp3\fR
+.br
+       Don't try to guess the file type treat it as an MP3 file
+.br
+
+\fBq, --use-quotes\fR
+.br
+       Quote file/artist/album names etc
+.br
+
+\fB?,h, --help\fR
+.br
+       Print this help
+.br
 
 .SH "EXAMPLES"
 kute "/media/LinuxData/Music/Buddy Holly/The Very Best Of Buddy Holly/01 That'll Be The Day.flac"
-.br 
+.br
 Produces:
-.br 
+.br
 FILENAME=/media/LinuxData/Music/Buddy Holly/The Very Best Of Buddy Holly/01 That'll Be The Day.flac
-.br 
+.br
 FILETYPE=1
-.br 
+.br
 TITLE=That'll Be The Day
-.br 
+.br
 ARTIST=Buddy Holly
-.br 
+.br
 ALBUM=The Very Best Of Buddy Holly
-.br 
+.br
 TRACK=01
-.br 
+.br
 TOTALTRACKS=20
-.br 
+.br
 CD=
-.br 
-GENRE=Rock & Roll
-.br 
+.br
+GENRE=Rock &amp; Roll
+.br
 YEAR=
-.br 
+.br
 COMPILATION=
-.br 
+.br
 COMPOSER=
-.br 
+.br
 COMMENT=
-.P
+.br
+
 Set the title to "new title"
-.P
-kute \-\-title="new title" "/media/LinuxData/Music/Buddy Holly/The Very Best Of Buddy Holly/01 That'll Be The Day.flac"
-.P
+.br
+
+kute --title="new title" "/media/LinuxData/Music/Buddy Holly/The Very Best Of Buddy Holly/01 That'll Be The Day.flac"
+.br
+
 Remove track number and track total
-.P
-kute \-\-track= "/media/LinuxData/Music/Buddy Holly/The Very Best Of Buddy Holly/01 That'll Be The Day.flac"
-.P
-Set the album for "01 The Jean Genie.flac" \fBAND\fR "12 Diamond Dogs.flac" to "The Best of David Bowie"
-.P
-kute \-\-album="The Best of David Bowie" "/media/LinuxData/Music/David Bowie/The Best of David Bowie/01 The Jean Genie.flac" "/media/LinuxData/Music/David Bowie/The Best of David Bowie/12 Diamond Dogs.flac"
+.br
+
+kute --track= "/media/LinuxData/Music/Buddy Holly/The Very Best Of Buddy Holly/01 That'll Be The Day.flac"
+.br
+
+Set the album for "01 The Jean Genie.flac" \fBAND \fR"12 Diamond Dogs.flac" to "The Best of David Bowie"
+.br
+
+kute --album="The Best of David Bowie" "/media/LinuxData/Music/David Bowie/The Best of David Bowie/01 The Jean Genie.flac" "/media/LinuxData/Music/David Bowie/The Best of David Bowie/12 Diamond Dogs.flac"
+.br
+
+Copy all tags from /tmp/xxx/01 All The Tired Horses.flac to /tmp/xxx/01 All The Tired Horses.m4a and /tmp/xxx/01 All The Tired Horses.mp3
+.br
+
+kute -Y "/tmp/xxx/01 All The Tired Horses.flac" "/tmp/xxx/01 All The Tired Horses.m4a" "/tmp/xxx/01 All The Tired Horses.mp3"
+.br
 .SH "NOTES"
 Setting the track number, cd number, track total or compiliation to 0 will remove the tag.
-.br 
+.br
 Forcing a file type onto a different file may cause unexpected results.
-.br 
-.P
+.br
+
 \fBAlways, ALWAYS use on a backup of the original, just in case!\fR
-.br 
-.P
+.br
+
 \fBFiletypes\fR
-.br 
+.br
 1=FLAC
-.br 
+.br
 2=AAC
-.br 
+.br
 3=MP3
-.br 
+.br
 4=UNKNOWN
-.P
+.br
+
 Removing the track tag will alo remove the total tracks tag.
+.br
 .SH "AUTHOR"
 Keith Hedger
+.br
 
 .SH "REPORTING BUGS"
-kdhedger@yahoo.co.uk
-
-.SH "COPYRIGHT"
-K.D.Hedger 2009
-
+keithdhedger@gmail.com
+.br
 
