@@ -282,8 +282,13 @@ void setMp3Tags(void)
 		setMp3Tag("TCOM",ID3_FIELD_TYPE_STRINGLIST,composer);
 	if(tagstoset[SETCOMMENT]==1)
 		setMp3Tag(ID3_FRAME_COMMENT,ID3_FIELD_TYPE_STRINGFULL,comment);
-	if(tagstoset[SETCD]==1 || tagstoset[SETTOTALCDS]==1)
-		setMp3Tag("TPOS",ID3_FIELD_TYPE_STRINGLIST,cdstring);
+
+	if(tagstoset[SETCD]==1)
+		{
+			if(strchr(cdstring,'/')!=NULL)
+				*(strchr(cdstring,'/'))=0;
+			setMp3Tag("TPOS",ID3_FIELD_TYPE_STRINGLIST,cdstring);
+		}
 
 	getMp3Tag(ID3_FRAME_TRACK,&tempbuffer);
 

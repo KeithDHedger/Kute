@@ -1,4 +1,5 @@
 0.3.0
+Added copy all tags from file 1 to file n.
 Added 3 small apps mp3album, mp3artist and mp3title to quickly get tags from mp3s.
 Fixed segfault when passing empty strings to set tags.
 Quotes now use double quotes.

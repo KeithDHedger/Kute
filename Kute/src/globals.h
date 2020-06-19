@@ -23,6 +23,7 @@
 #include <mpegfile.h>
 
 #include <stdlib.h>
+#include <string.h>
 
 #ifndef _GLOBALS_
 
@@ -31,7 +32,7 @@
 #define IS_MP3 3
 #define UNKNOWN_TYPE 4
 
-enum {SETTITLE=0,SETALBUM,SETARTIST,SETTRACK,SETTOTALTRACKS,SETCD,SETTOTALCDS,SETCOMPILATION,SETYEAR,SETGENRE,SETCOMPOSER,SETCOMMENT,MAXTAG};
+enum {SETTITLE=0,SETALBUM,SETARTIST,SETTRACK,SETTOTALTRACKS,SETCD,SETCOMPILATION,SETYEAR,SETGENRE,SETCOMPOSER,SETCOMMENT,MAXTAG};
 
 extern char	*filename;
 extern int	filetype;
@@ -57,6 +58,7 @@ extern int	tagstoset[MAXTAG];
 
 extern char	*tempbuffer;
 
+extern char	*convertString(const char *fromstr);
 void printTags(void);
 void freeAndNull(char **data);
 

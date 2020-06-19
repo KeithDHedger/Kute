@@ -50,6 +50,7 @@ struct option long_options[] =
 	{"genre",1,0,'g'},
 	{"composer",1,0,'m'},
 	{"comment",1,0,'o'},
+	{"copy",0,0,'Y'},
 	{"force-flac",0,0,'f'},
 	{"force-aac",0,0,'c'},
 	{"force-mp3",0,0,'p'},
@@ -76,7 +77,8 @@ void printhelp(void)
 	printf("y,--year=ARG		Set tag YEAR to ARG\n");
 	printf("g,--genre=ARG		Set tag GENRE to ARG\n");
 	printf("m,--composer=ARG	Set tag COMPOSER to ARG\n");
-	printf("o,--comment=ARG	Set tag COMMENT to ARG\n");
+	printf("o,--comment=ARG		Set tag COMMENT to ARG\n");
+	printf("Y,--copy		Copy all tags to [FILE] [FILE] ...\n");
 	printf("f,--force-flac		Don't try to guess the file type treat it as a FLAC file \n");
 	printf("c,--force-aac		Don't try to guess the file type treat it as an AAC file\n");
 	printf("p,--force-mp3		Don't try to guess the file type treat it as an MP3 file\n");
@@ -85,7 +87,6 @@ void printhelp(void)
 	printf("R,--remove-all		Remove ALL Mp4 tags\n");
 	printf("?,--help		Print this help\n");
 }
-
 
 void getFileType(void)
 {
@@ -142,17 +143,19 @@ void getFileType(void)
 
 int main(int argc,char **argv)
 {
-	int c;
-	bool setATag=false;
+	int			c;
+	bool		setATag=false;
+	bool		tags_ok=false;
+	bool		copytofile=false;
+
 	readall=true;
 	force=false;
 	filetype=UNKNOWN_TYPE;
-	bool tags_ok=false;
 
 	while(1)
 		{
 			int option_index=0;
-			c=getopt_long (argc,argv,"a:l:n:t:T:C:i:y:g:m:o:rfcpqR?h",long_options,&option_index);
+			c=getopt_long (argc,argv,"a:l:n:t:T:C:i:y:g:m:o:YrfcpqR?h",long_options,&option_index);
 			if(c==-1)
 				break;
 
@@ -167,7 +170,7 @@ int main(int argc,char **argv)
 					setATag=true;
 					tagstoset[SETARTIST]=1;
 					if(strlen(optarg)>0)
-						artist=strdup(optarg);
+						artist=convertString(optarg);
 					else
 						{
 							tagstoset[SETARTIST]=0;
@@ -179,7 +182,7 @@ int main(int argc,char **argv)
 					setATag=true;
 					tagstoset[SETALBUM]=1;
 					if(strlen(optarg)>0)
-						album=strdup(optarg);
+						album=convertString(optarg);
 					else
 						{
 							tagstoset[SETALBUM]=0;
@@ -191,7 +194,7 @@ int main(int argc,char **argv)
 					setATag=true;
 					tagstoset[SETTITLE]=1;
 					if(strlen(optarg)>0)
-						title=strdup(optarg);
+						title=convertString(optarg);
 					else
 						{
 							tagstoset[SETTITLE]=0;
@@ -202,7 +205,7 @@ int main(int argc,char **argv)
 					setATag=true;
 					tagstoset[SETTRACK]=1;
 					if(strlen(optarg)>0)
-						trackstring=strdup(optarg);
+						trackstring=convertString(optarg);
 					else
 						{
 							tagstoset[SETTRACK]=0;
@@ -213,7 +216,7 @@ int main(int argc,char **argv)
 					setATag=true;
 					tagstoset[SETTOTALTRACKS]=1;
 					if(strlen(optarg)>0)
-						totaltracksstring=strdup(optarg);
+						totaltracksstring=convertString(optarg);
 					else
 						{
 							tagstoset[SETTOTALTRACKS]=0;
@@ -222,12 +225,12 @@ int main(int argc,char **argv)
 					break;
 				case 'C':
 					setATag=true;
-					tagstoset[SETTOTALCDS]=1;
+					tagstoset[SETCD]=1;
 					if(strlen(optarg)>0)
-						cdstring=strdup(optarg);
+						cdstring=convertString(optarg);
 					else
 						{
-							tagstoset[SETTOTALCDS]=0;
+							tagstoset[SETCD]=0;
 							cdstring=strdup("");
 						}
 					break;
@@ -235,7 +238,7 @@ int main(int argc,char **argv)
 					setATag=true;
 					tagstoset[SETCOMPILATION]=1;
 					if(strlen(optarg)>0)
-						compilationstring=strdup(optarg);
+						compilationstring=convertString(optarg);
 					else
 						{
 							tagstoset[SETCOMPILATION]=0;
@@ -246,7 +249,7 @@ int main(int argc,char **argv)
 					setATag=true;
 					tagstoset[SETYEAR]=1;
 					if(strlen(optarg)>0)
-						year=strdup(optarg);
+						year=convertString(optarg);
 					else
 						{
 							tagstoset[SETYEAR]=0;
@@ -257,7 +260,7 @@ int main(int argc,char **argv)
 					setATag=true;
 					tagstoset[SETGENRE]=1;
 					if(strlen(optarg)>0)
-						genre=strdup(optarg);
+						genre=convertString(optarg);
 					else
 						{
 							tagstoset[SETGENRE]=0;
@@ -267,7 +270,7 @@ int main(int argc,char **argv)
 				case 'm':
 					tagstoset[SETCOMPOSER]=1;
 					if(strlen(optarg)>0)
-						composer=strdup(optarg);
+						composer=convertString(optarg);
 					else
 						{
 							tagstoset[SETCOMPOSER]=0;
@@ -277,7 +280,7 @@ int main(int argc,char **argv)
 				case 'o':
 					tagstoset[SETCOMMENT]=1;
 					if(strlen(optarg)>0)
-						comment=strdup(optarg);
+						comment=convertString(optarg);
 					else
 						{
 							tagstoset[SETCOMMENT]=0;
@@ -309,6 +312,11 @@ int main(int argc,char **argv)
 					return 0;
 					break;
 
+				case 'Y':
+					copytofile=true;
+					readall=true;
+					setATag=false;
+					break;
 				default:
 					printf ("?? Unknown argument ??\n");
 					return 1;
@@ -346,7 +354,6 @@ int main(int argc,char **argv)
 
 			if(readall==true)
 				{
-
 					switch(filetype)
 						{
 						case IS_FLAC:
@@ -367,7 +374,14 @@ int main(int argc,char **argv)
 
 			if(tags_ok==true)
 				{
-					printTags();
+					if(copytofile==false)
+						printTags();
+					else
+						{
+							setATag=true;
+							for(int j=SETTITLE;j<MAXTAG;j++)
+								tagstoset[j]=1;
+						}
 					if(optind < argc)
 						printf("\n");
 				}
