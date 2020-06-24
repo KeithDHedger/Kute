@@ -41,6 +41,9 @@ OPTIONS
        o, --comment=ARG
               Set tag COMMENT to ARG
 
+		Y, --copy
+              Copy ALL tags from first file to ALL subsequent files.
+
        f, --force-flac
               Don't try to guess the file type treat it as a FLAC file
 
@@ -85,6 +88,9 @@ EXAMPLES
 
        kute --album="The Best of David  Bowie"  "/media/LinuxData/Music/David  Bowie/The  Best  of  David  Bowie/01  The  Jean  Genie.flac"  "/media/Linux-
        Data/Music/David Bowie/The Best of David Bowie/12 Diamond Dogs.flac"
+
+       Copy all tags from /tmp/xxx/01 All The Tired Horses.flac to /tmp/xxx/01 All The Tired Horses.m4a and /tmp/xxx/01 All The Tired Horses.mp3
+       kute -Y "/tmp/xxx/01 All The Tired Horses.flac" "/tmp/xxx/01 All The Tired Horses.m4a" "/tmp/xxx/01 All The Tired Horses.mp3"
 
 NOTES
        Setting the track number, cd number, track total or compiliation to 0 will remove the tag.
