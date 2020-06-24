@@ -41,7 +41,7 @@ OPTIONS
        o, --comment=ARG
               Set tag COMMENT to ARG
 
-		Y, --copy
+       Y, --copy
               Copy ALL tags from first file to ALL subsequent files.
 
        f, --force-flac
