@@ -108,6 +108,9 @@ bool readAllMp3(bool nochange)
 			return FALSE;
 		}
 
+//discid not standard tag in mp3
+	discidstr=strdup("");
+
 	getMp3Tag(ID3_FRAME_TITLE,&title);
 	getMp3Tag(ID3_FRAME_ARTIST,&artist);
 	getMp3Tag(ID3_FRAME_ALBUM,&album);

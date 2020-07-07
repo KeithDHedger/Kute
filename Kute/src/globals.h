@@ -32,7 +32,7 @@
 #define IS_MP3 3
 #define UNKNOWN_TYPE 4
 
-enum {SETTITLE=0,SETALBUM,SETARTIST,SETTRACK,SETTOTALTRACKS,SETCD,SETCOMPILATION,SETYEAR,SETGENRE,SETCOMPOSER,SETCOMMENT,MAXTAG};
+enum {SETTITLE=0,SETALBUM,SETARTIST,SETTRACK,SETTOTALTRACKS,SETCD,SETCOMPILATION,SETYEAR,SETGENRE,SETCOMPOSER,SETCOMMENT,SETDISCID,MAXTAG};
 
 extern char	*filename;
 extern int	filetype;
@@ -54,6 +54,8 @@ extern char	*cdstring;
 extern char	*totaltracksstring;
 extern char	*trackstring;
 extern char	*compilationstring;
+extern char	*discidstr;
+
 extern int	tagstoset[MAXTAG];
 
 extern char	*tempbuffer;

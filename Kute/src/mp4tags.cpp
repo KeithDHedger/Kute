@@ -136,6 +136,9 @@ bool doReadAllM4aTags(void)
 	tags=MP4TagsAlloc();
 	MP4TagsFetch(tags,mp4file);
 
+//discid not standard tag in mp4
+	discidstr=strdup("");
+
 	retstr=tags->name;
 	if(retstr==NULL)
 		title=strdup("");

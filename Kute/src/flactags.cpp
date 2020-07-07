@@ -120,6 +120,9 @@ void setFlacTags(void)
 							setFlacTag(block,entry,"DESCRIPTION",comment);
 						}
 
+					if(tagstoset[SETDISCID]==1)
+						setFlacTag(block,entry,"DISCID",discidstr);
+
 					FLAC__metadata_chain_sort_padding(chain);
 					FLAC__metadata_chain_write(chain,true,true);
 					FLAC__metadata_iterator_delete(iter);
@@ -215,6 +218,7 @@ bool FlacTagReadFileTag(char *filename)
 					getFlacTagData("COMPOSER",&composer,block);
 					getFlacTagData("COMPILATION",&compilationstring,block);
 					getFlacTagData("COMMENT",&comment,block);
+					getFlacTagData("DISCID",&discidstr,block);
 
 					if(comment!=NULL && strlen(comment) <1)
 						getFlacTagData("DESCRIPTION",&comment,block);

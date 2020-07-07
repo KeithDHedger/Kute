@@ -41,6 +41,7 @@ int		tagstoset[MAXTAG];
 char	*cdstring=NULL;
 char	*totaltracksstring=NULL;
 char	*compilationstring=NULL;
+char	*discidstr=NULL;
 
 char	*trackstring=NULL;
 char	*tempbuffer=(char*)calloc(2048,1);
@@ -75,7 +76,7 @@ void printTags(void)
 			printf("FILENAME=\"%s\"\nFILETYPE=%i\n",filename,filetype);
 			printf("TITLE=\"%s\"\nARTIST=\"%s\"\nALBUM=\"%s\"\nTRACK=%s\nTOTALTRACKS=%s\n",convertStringInPlace(&title),convertStringInPlace(&artist),convertStringInPlace(&album),trackstring,totaltracksstring);
 			printf("CD=\"%s\"\nGENRE=\"%s\"\nYEAR=\"%s\"\nCOMPILATION=\"%s\"\n",cdstring,convertStringInPlace(&genre),year,compilationstring);
-			printf("COMPOSER=\"%s\"\nCOMMENT=\"%s\"\n",convertStringInPlace(&composer),convertStringInPlace(&comment));
+			printf("COMPOSER=\"%s\"\nCOMMENT=\"%s\"\nDISCID=\"%s\"\n",convertStringInPlace(&composer),convertStringInPlace(&comment),discidstr);
 
 		}
 	else
@@ -83,7 +84,7 @@ void printTags(void)
 			printf("FILENAME=%s\nFILETYPE=%i\n",filename,filetype);
 			printf("TITLE=%s\nARTIST=%s\nALBUM=%s\nTRACK=%s\nTOTALTRACKS=%s\n",title,artist,album,trackstring,totaltracksstring);
 			printf("CD=%s\nGENRE=%s\nYEAR=%s\nCOMPILATION=%s\n",cdstring,genre,year,compilationstring);
-			printf("COMPOSER=%s\nCOMMENT=%s\n",composer,comment);
+			printf("COMPOSER=%s\nCOMMENT=%s\nDISCID=%s\n",composer,comment,discidstr);
 		}
 }
 

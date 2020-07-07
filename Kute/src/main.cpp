@@ -46,6 +46,7 @@ struct option long_options[] =
 	{"total-tracks",1,0,'T'},
 	{"cd",1,0,'C'},
 	{"compilation",1,0,'i'},
+	{"discid",1,0,'d'},
 	{"year",1,0,'y'},
 	{"genre",1,0,'g'},
 	{"composer",1,0,'m'},
@@ -73,6 +74,7 @@ void printhelp(void)
 	printf("T,--total-tracks=ARG	Set tag TOTALTRACKS to ARG\n");
 	printf("C,--cd=ARG		Set tag CD to ARG\n");
 	printf("i,--compilation=ARG	Set tag COMPILATION to ARG\n");
+	printf("d,--discid=ARG	Set tag DISCID to ARG\n");
 	printf("			Note this is non standard and ARG should be 1 for part of a compilation or 0 for not\n");
 	printf("y,--year=ARG		Set tag YEAR to ARG\n");
 	printf("g,--genre=ARG		Set tag GENRE to ARG\n");
@@ -155,7 +157,7 @@ int main(int argc,char **argv)
 	while(1)
 		{
 			int option_index=0;
-			c=getopt_long (argc,argv,"a:l:n:t:T:C:i:y:g:m:o:YrfcpqR?h",long_options,&option_index);
+			c=getopt_long (argc,argv,"a:l:n:t:T:C:i:y:g:m:o:d:YrfcpqR?h",long_options,&option_index);
 			if(c==-1)
 				break;
 
@@ -164,6 +166,18 @@ int main(int argc,char **argv)
 				case 'r':
 					readall=true;
 					setATag=false;
+					break;
+
+				case 'd':
+					setATag=true;
+					tagstoset[SETDISCID]=1;
+					if(strlen(optarg)>0)
+						discidstr=convertString(optarg);
+					else
+						{
+							tagstoset[SETDISCID]=0;
+							discidstr=strdup("");
+						}
 					break;
 
 				case 'a':
@@ -399,6 +413,7 @@ int main(int argc,char **argv)
 	freeAndNull(&comment);
 	freeAndNull(&composer);
 	freeAndNull(&compilationstring);
+	freeAndNull(&discidstr);
 
 	return 0;
 }
