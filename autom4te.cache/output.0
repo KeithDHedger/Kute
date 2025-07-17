@@ -674,6 +674,9 @@ AM_BACKSLASH
 AM_DEFAULT_VERBOSITY
 AM_DEFAULT_V
 AM_V
+CSCOPE
+ETAGS
+CTAGS
 am__fastdepCXX_FALSE
 am__fastdepCXX_TRUE
 CXXDEPMODE
@@ -4006,6 +4009,20 @@ else
 fi
 
 
+# Variables for tags utilities; see am/tags.am
+if test -z "$CTAGS"; then
+  CTAGS=ctags
+fi
+
+if test -z "$ETAGS"; then
+  ETAGS=etags
+fi
+
+if test -z "$CSCOPE"; then
+  CSCOPE=cscope
+fi
+
+
 
 # POSIX will say in a future version that running "rm -f" with no argument
 # is OK; and we want to be able to make that assumption in our Makefile
@@ -5340,14 +5357,14 @@ else
         _pkg_short_errors_supported=no
 fi
         if test $_pkg_short_errors_supported = yes; then
-	        ID3TAG_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "$ID3TAG_MODULES" 2>&1`
+                ID3TAG_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "$ID3TAG_MODULES" 2>&1`
         else
-	        ID3TAG_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "$ID3TAG_MODULES" 2>&1`
+                ID3TAG_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "$ID3TAG_MODULES" 2>&1`
         fi
-	# Put the nasty error message in config.log where it belongs
-	echo "$ID3TAG_PKG_ERRORS" >&5
+        # Put the nasty error message in config.log where it belongs
+        echo "$ID3TAG_PKG_ERRORS" >&5
 
-	as_fn_error $? "Package requirements ($ID3TAG_MODULES) were not met:
+        as_fn_error $? "Package requirements ($ID3TAG_MODULES) were not met:
 
 $ID3TAG_PKG_ERRORS
 
@@ -5360,7 +5377,7 @@ See the pkg-config man page for more details." "$LINENO" 5
 elif test $pkg_failed = untried; then
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
 printf "%s\n" "no" >&6; }
-	{ { printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+        { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
 printf "%s\n" "$as_me: error: in \`$ac_pwd':" >&2;}
 as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
@@ -5373,11 +5390,11 @@ See the pkg-config man page for more details.
 To get pkg-config, see <http://pkg-config.freedesktop.org/>.
 See \`config.log' for more details" "$LINENO" 5; }        
 else
-	ID3TAG_CFLAGS=$pkg_cv_ID3TAG_CFLAGS
-	ID3TAG_LIBS=$pkg_cv_ID3TAG_LIBS
+        ID3TAG_CFLAGS=$pkg_cv_ID3TAG_CFLAGS
+        ID3TAG_LIBS=$pkg_cv_ID3TAG_LIBS
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 printf "%s\n" "yes" >&6; }
-	
+        
 fi
 
 
@@ -5440,14 +5457,14 @@ else
         _pkg_short_errors_supported=no
 fi
         if test $_pkg_short_errors_supported = yes; then
-	        TAGLIB_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "$TAGLIB_MODULES" 2>&1`
+                TAGLIB_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "$TAGLIB_MODULES" 2>&1`
         else
-	        TAGLIB_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "$TAGLIB_MODULES" 2>&1`
+                TAGLIB_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "$TAGLIB_MODULES" 2>&1`
         fi
-	# Put the nasty error message in config.log where it belongs
-	echo "$TAGLIB_PKG_ERRORS" >&5
+        # Put the nasty error message in config.log where it belongs
+        echo "$TAGLIB_PKG_ERRORS" >&5
 
-	as_fn_error $? "Package requirements ($TAGLIB_MODULES) were not met:
+        as_fn_error $? "Package requirements ($TAGLIB_MODULES) were not met:
 
 $TAGLIB_PKG_ERRORS
 
@@ -5460,7 +5477,7 @@ See the pkg-config man page for more details." "$LINENO" 5
 elif test $pkg_failed = untried; then
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
 printf "%s\n" "no" >&6; }
-	{ { printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+        { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
 printf "%s\n" "$as_me: error: in \`$ac_pwd':" >&2;}
 as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
@@ -5473,11 +5490,11 @@ See the pkg-config man page for more details.
 To get pkg-config, see <http://pkg-config.freedesktop.org/>.
 See \`config.log' for more details" "$LINENO" 5; }        
 else
-	TAGLIB_CFLAGS=$pkg_cv_TAGLIB_CFLAGS
-	TAGLIB_LIBS=$pkg_cv_TAGLIB_LIBS
+        TAGLIB_CFLAGS=$pkg_cv_TAGLIB_CFLAGS
+        TAGLIB_LIBS=$pkg_cv_TAGLIB_LIBS
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 printf "%s\n" "yes" >&6; }
-	
+        
 fi
 
 
@@ -5535,14 +5552,14 @@ else
         _pkg_short_errors_supported=no
 fi
         if test $_pkg_short_errors_supported = yes; then
-	        FLAC_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "$FLAC_MODULES" 2>&1`
+                FLAC_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "$FLAC_MODULES" 2>&1`
         else
-	        FLAC_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "$FLAC_MODULES" 2>&1`
+                FLAC_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "$FLAC_MODULES" 2>&1`
         fi
-	# Put the nasty error message in config.log where it belongs
-	echo "$FLAC_PKG_ERRORS" >&5
+        # Put the nasty error message in config.log where it belongs
+        echo "$FLAC_PKG_ERRORS" >&5
 
-	as_fn_error $? "Package requirements ($FLAC_MODULES) were not met:
+        as_fn_error $? "Package requirements ($FLAC_MODULES) were not met:
 
 $FLAC_PKG_ERRORS
 
@@ -5555,7 +5572,7 @@ See the pkg-config man page for more details." "$LINENO" 5
 elif test $pkg_failed = untried; then
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
 printf "%s\n" "no" >&6; }
-	{ { printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+        { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
 printf "%s\n" "$as_me: error: in \`$ac_pwd':" >&2;}
 as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
 is in your PATH or set the PKG_CONFIG environment variable to the full
@@ -5568,11 +5585,11 @@ See the pkg-config man page for more details.
 To get pkg-config, see <http://pkg-config.freedesktop.org/>.
 See \`config.log' for more details" "$LINENO" 5; }        
 else
-	FLAC_CFLAGS=$pkg_cv_FLAC_CFLAGS
-	FLAC_LIBS=$pkg_cv_FLAC_LIBS
+        FLAC_CFLAGS=$pkg_cv_FLAC_CFLAGS
+        FLAC_LIBS=$pkg_cv_FLAC_LIBS
         { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 printf "%s\n" "yes" >&6; }
-	
+        
 fi
 
 

@@ -19,11 +19,6 @@
  */
 
 #include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
 
@@ -31,35 +26,24 @@
 #include "mp3tags.h"
 #include "config.h"
 
-using namespace TagLib;
+id3_tag	*tag;
 
-char		*artist=NULL;
-int			mp3tmpfile;
-id3_file	*mp3file;
-id3_tag		*tag;
-id3_frame	*frame;
-id3_field	*field;
-char		*latinstr=(char*)malloc(10000);
-int			strcnt;
-unsigned	field_type;
-
-void getMp3Tag(const char *tagname,char **tagdata)
+void getMp3Tag(const char *tagname)
 {
+	id3_frame	*frame;
+	id3_field	*field;
+
 	if((frame=id3_tag_findframe(tag,tagname,0)))
 		{
-			for (int i=0; (field=id3_frame_field(frame,i)); i++)
+			for (int i=0;(field=id3_frame_field(frame,i));i++)
 				{
-					field_type=id3_field_type(field);
-					if(field_type==ID3_FIELD_TYPE_STRINGLIST)
+					if(id3_field_type(field)==ID3_FIELD_TYPE_STRINGLIST)
 						{
-							strcnt=id3_field_getnstrings(field);
-							for (int j=0; j < strcnt; j++)
+							if(id3_field_getnstrings(field)>0)
 								{
-									latinstr=(char*)id3_ucs4_utf8duplicate(id3_field_getstrings(field,j));
-									(*tagdata)=(char*)malloc(strlen(latinstr)+1);
-									strcpy((*tagdata),latinstr);
+									printf("%s",id3_ucs4_utf8duplicate(id3_field_getstrings(field,0)));
+									return;
 								}
-
 						}
 				}
 		}
@@ -67,6 +51,9 @@ void getMp3Tag(const char *tagname,char **tagdata)
 
 bool readMp3Title(const char *filename)
 {
+	id3_file		*mp3file;
+	int			mp3tmpfile;
+
 	if((mp3tmpfile=open(filename,O_RDONLY)) < 0)
 		{
 			fprintf(stderr,"ERROR Could not open %s for reading!\n",filename);
@@ -87,7 +74,7 @@ bool readMp3Title(const char *filename)
 			return false;
 		}
 
-	getMp3Tag(ID3_FRAME_ARTIST,&artist);
+	getMp3Tag(ID3_FRAME_ARTIST);
 
 	id3_file_close(mp3file);
 	return true;
@@ -97,8 +84,5 @@ int main(int argc,char **argv)
 {
 	if(!readMp3Title(argv[1]))
 		return(1);
-	
-	printf("%s",artist);
-	free(artist);
 	return(0);
 }
