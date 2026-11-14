@@ -45,7 +45,7 @@ id3_file	*mp3file;
 id3_tag		*tag;
 id3_frame	*frame;
 id3_field	*field;
-char		*latinstr=(char*)malloc(10000);
+char		*latinstr;
 int			strcnt;
 unsigned	field_type;
 
@@ -62,16 +62,16 @@ void getMp3Tag(const char *tagname,char **tagdata)
 							for (int j=0; j < strcnt; j++)
 								{
 									latinstr=(char*)id3_ucs4_utf8duplicate(id3_field_getstrings(field,j));
-									(*tagdata)=(char*)malloc(strlen(latinstr)+1);
-									strcpy((*tagdata),latinstr);
+									asprintf(tagdata,latinstr);
+									freeAndNull(&latinstr);
 								}
 
 						}
 					if(field_type==ID3_FIELD_TYPE_STRINGFULL)
 						{
 							latinstr=(char*)id3_ucs4_utf8duplicate(id3_field_getfullstring(field));
-							(*tagdata)=(char*)malloc(strlen(latinstr)+1);
-							strcpy((*tagdata),latinstr);
+							asprintf(tagdata,latinstr);
+							freeAndNull(&latinstr);
 						}
 
 				}
@@ -139,14 +139,16 @@ bool readAllMp3(bool nochange)
 				}
 		}
 
+	freeAndNull(&cdstring);
 	getMp3Tag("TPOS",&cdstring);
 	if(strchr(cdstring,'/'))
 		{
+			char *tstr;
 			token=strtok(cdstring,"/");
-			token=strtok(NULL,"/");
+			tstr=strdup(token);
 			freeAndNull(&cdstring);
-			cdstring=(char*)malloc(strlen(token)+1);
-			strcpy(cdstring,token);
+			cdstring=strdup(tstr);
+			freeAndNull(&tstr);
 		}
 
 	getMp3Tag("TCMP",&compilationstring);
@@ -159,12 +161,13 @@ bool readAllMp3(bool nochange)
 			tnam=id3_genre_index(genre_code);
 			id3_latin1_t * data=id3_ucs4_latin1duplicate(tnam);
 			freeAndNull(&genre);
-			genre=(char*)malloc(strlen((const char*)data));
-			strcpy(genre,(char*)data);
+			asprintf(&genre,"%s",data);
+			freeAndNull((char**)&data);
 		}
 	else
 		{
-			genre=(char*)"";
+			freeAndNull(&genre);
+			asprintf(&genre,"");
 		}
 
 	getMp3Tag("TCOM",&composer);
@@ -288,8 +291,6 @@ void setMp3Tags(void)
 
 	if(tagstoset[SETCD]==1)
 		{
-			if(strchr(cdstring,'/')!=NULL)
-				*(strchr(cdstring,'/'))=0;
 			setMp3Tag("TPOS",ID3_FIELD_TYPE_STRINGLIST,cdstring);
 		}
 

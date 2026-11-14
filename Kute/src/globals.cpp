@@ -74,7 +74,7 @@ void printTags(void)
 	if(quotes==true)
 		{
 			printf("FILENAME=\"%s\"\nFILETYPE=%i\n",filename,filetype);
-			printf("TITLE=\"%s\"\nARTIST=\"%s\"\nALBUM=\"%s\"\nTRACK=%s\nTOTALTRACKS=%s\n",convertStringInPlace(&title),convertStringInPlace(&artist),convertStringInPlace(&album),trackstring,totaltracksstring);
+			printf("TITLE=\"%s\"\nARTIST=\"%s\"\nALBUM=\"%s\"\nTRACK=\"%s\"\nTOTALTRACKS=\"%s\"\n",convertStringInPlace(&title),convertStringInPlace(&artist),convertStringInPlace(&album),trackstring,totaltracksstring);
 			printf("CD=\"%s\"\nGENRE=\"%s\"\nYEAR=\"%s\"\nCOMPILATION=\"%s\"\n",cdstring,convertStringInPlace(&genre),year,compilationstring);
 			printf("COMPOSER=\"%s\"\nCOMMENT=\"%s\"\nDISCID=\"%s\"\n",convertStringInPlace(&composer),convertStringInPlace(&comment),discidstr);
 

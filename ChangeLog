@@ -1,4 +1,6 @@
 0.3.0
+Fixed mem leaks.
+Fixed occasional double free.
 Code clean for mp3title, mp3album, mp3artist.
 Added copy all tags from file 1 to file n.
 Added 3 small apps mp3album, mp3artist and mp3title to quickly get tags from mp3s.

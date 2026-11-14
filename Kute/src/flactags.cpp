@@ -169,8 +169,8 @@ void getFlacTagData(const char* name,char** tagname,FLAC__StreamMetadata *block)
 
 	if(tagchanged==false)
 		{
-			*tagname=(char *)malloc(1);
-			*tagname[0]=0;
+			freeAndNull(tagname);
+			asprintf(tagname,"");
 		}
 }
 
@@ -205,26 +205,28 @@ bool FlacTagReadFileTag(char *filename)
 
 			switch (FLAC__metadata_simple_iterator_get_block_type(iter))
 				{
-				case FLAC__METADATA_TYPE_VORBIS_COMMENT:
-				{
-					getFlacTagData("TITLE",&title,block);
-					getFlacTagData("ARTIST",&artist,block);
-					getFlacTagData("ALBUM",&album,block);
-					getFlacTagData("DISCNUMBER",&cdstring,block);
-					getFlacTagData("DATE",&year,block);
-					getFlacTagData("TRACKTOTAL",&totaltracksstring,block);
-					getFlacTagData("TRACKNUMBER",&trackstring,block);
-					getFlacTagData("GENRE",&genre,block);
-					getFlacTagData("COMPOSER",&composer,block);
-					getFlacTagData("COMPILATION",&compilationstring,block);
-					getFlacTagData("COMMENT",&comment,block);
-					getFlacTagData("DISCID",&discidstr,block);
+					case FLAC__METADATA_TYPE_VORBIS_COMMENT:
+						{
+							getFlacTagData("TITLE",&title,block);
+							getFlacTagData("ARTIST",&artist,block);
+							getFlacTagData("ALBUM",&album,block);
+							getFlacTagData("DISCNUMBER",&cdstring,block);
+							getFlacTagData("DATE",&year,block);
+							getFlacTagData("TRACKTOTAL",&totaltracksstring,block);
+							getFlacTagData("TRACKNUMBER",&trackstring,block);
+							getFlacTagData("GENRE",&genre,block);
+							getFlacTagData("COMPOSER",&composer,block);
+							getFlacTagData("COMPILATION",&compilationstring,block);
+							getFlacTagData("COMMENT",&comment,block);
+							getFlacTagData("DISCID",&discidstr,block);
 
-					if(comment!=NULL && strlen(comment) <1)
-						getFlacTagData("DESCRIPTION",&comment,block);
+							if(comment!=NULL && strlen(comment) <1)
+								getFlacTagData("DESCRIPTION",&comment,block);
+						}
 				}
-				}
+			FLAC__metadata_object_delete(block);
 		}
+	FLAC__metadata_simple_iterator_delete(iter);
 	return true;
 }
 

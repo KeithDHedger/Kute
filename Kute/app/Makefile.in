@@ -300,11 +300,6 @@ AM_CPPFLAGS = $(MP4_CFLAGS) \
 
 COMMONSRC = ../src/flactags.cpp ../src/globals.cpp ../src/main.cpp ../src/mp3album.cpp ../src/mp3artist.cpp ../src/mp3tags.cpp ../src/mp3title.cpp ../src/mp4tags.cpp
 kute_SOURCES = COMMONSRC = ../src/flactags.cpp ../src/globals.cpp ../src/main.cpp ../src/mp3tags.cpp ../src/mp4tags.cpp
-
-#kute_CFLAGS=-Ofast
-#mp3title_CFLAGS=-Ofast
-#mp3album_CFLAGS=-Ofast
-#mp3artist_CXXFLAGS=-Ofast
 mp3title_SOURCES = ../src/mp3title.cpp
 mp3album_SOURCES = ../src/mp3album.cpp
 mp3artist_SOURCES = ../src/mp3artist.cpp

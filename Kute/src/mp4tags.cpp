@@ -122,7 +122,7 @@ void setMp4Tag(void)
 bool doReadAllM4aTags(void)
 {
 	MP4FileHandle	mp4file=NULL;
-	const MP4Tags	*tags;
+	const MP4Tags	*tags=NULL;
 	const char		*retstr=NULL;
 
 	mp4file=MP4Read(filename);
@@ -135,7 +135,7 @@ bool doReadAllM4aTags(void)
 
 	tags=MP4TagsAlloc();
 	MP4TagsFetch(tags,mp4file);
-
+	MP4Close(mp4file);
 //discid not standard tag in mp4
 	discidstr=strdup("");
 
@@ -213,10 +213,11 @@ bool doReadAllM4aTags(void)
 	else
 		compilationstring=strdup("");
 
-	if(!tags)
+//printf(">>tags=%p\n",tags);
+	//if(!tags)
 		MP4TagsFree(tags);
-	if(!mp4file)
-		MP4Close(mp4file);
+	//if(mp4file)
+	//	MP4Close(mp4file);
 
 	return true;
 }
