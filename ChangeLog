@@ -1,4 +1,7 @@
 0.3.0
+Set default values for some empty tags.
+Fixed setting CD number.
+Fixed setting compilation tag to either 0 or 1.
 Fixed mem leaks.
 Fixed occasional double free.
 Code clean for mp3title, mp3album, mp3artist.

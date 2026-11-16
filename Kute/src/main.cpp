@@ -175,7 +175,7 @@ int main(int argc,char **argv)
 						discidstr=convertString(optarg);
 					else
 						{
-							tagstoset[SETDISCID]=0;
+							//tagstoset[SETDISCID]=0;
 							discidstr=strdup("");
 						}
 					break;
@@ -187,7 +187,7 @@ int main(int argc,char **argv)
 						artist=convertString(optarg);
 					else
 						{
-							tagstoset[SETARTIST]=0;
+							//tagstoset[SETARTIST]=0;
 							artist=strdup("");
 						}
 					break;
@@ -199,7 +199,7 @@ int main(int argc,char **argv)
 						album=convertString(optarg);
 					else
 						{
-							tagstoset[SETALBUM]=0;
+							//tagstoset[SETALBUM]=0;
 							album=strdup("");
 						}
 					break;
@@ -211,7 +211,7 @@ int main(int argc,char **argv)
 						title=convertString(optarg);
 					else
 						{
-							tagstoset[SETTITLE]=0;
+							//tagstoset[SETTITLE]=0;
 							title=strdup("");
 						}
 					break;
@@ -222,8 +222,8 @@ int main(int argc,char **argv)
 						trackstring=convertString(optarg);
 					else
 						{
-							tagstoset[SETTRACK]=0;
-							trackstring=strdup("");
+							//tagstoset[SETTRACK]=0;
+							trackstring=strdup("1");
 						}
 					break;
 				case 'T':
@@ -233,31 +233,37 @@ int main(int argc,char **argv)
 						totaltracksstring=convertString(optarg);
 					else
 						{
-							tagstoset[SETTOTALTRACKS]=0;
-							totaltracksstring=strdup("");
+							//tagstoset[SETTOTALTRACKS]=0;
+							totaltracksstring=strdup("1");
 						}
 					break;
 				case 'C':
 					setATag=true;
 					tagstoset[SETCD]=1;
 					if(strlen(optarg)>0)
-						cdstring=convertString(optarg);
+						{
+							cdstring=convertString(optarg);
+							setCDString();
+						}
 					else
 						{
-							tagstoset[SETCD]=0;
-							cdstring=strdup("");
+							//tagstoset[SETCD]=0;
+							cdstring=strdup("1");
 						}
 					break;
 				case 'i':
 					setATag=true;
 					tagstoset[SETCOMPILATION]=1;
-					if(strlen(optarg)>0)
-						compilationstring=convertString(optarg);
-					else
-						{
-							tagstoset[SETCOMPILATION]=0;
-							compilationstring=strdup("");
-						}
+					compilationstring=strdup(setBoolFromString(optarg));
+//					if(strlen(optarg)>0)
+//						//compilationstring=strdup("1");
+//						//compilationstring=convertString(optarg);
+//						compilationstringstrdup(setBoolFromString(optarg));
+//					else
+//						{
+//							//tagstoset[SETCOMPILATION]=0;
+//							compilationstring=strdup("0");
+//						}
 					break;
 				case 'y':
 					setATag=true;
@@ -266,7 +272,7 @@ int main(int argc,char **argv)
 						year=convertString(optarg);
 					else
 						{
-							tagstoset[SETYEAR]=0;
+							//tagstoset[SETYEAR]=0;
 							year=strdup("");
 						}
 					break;
@@ -277,7 +283,7 @@ int main(int argc,char **argv)
 						genre=convertString(optarg);
 					else
 						{
-							tagstoset[SETGENRE]=0;
+							//tagstoset[SETGENRE]=0;
 							genre=strdup("");
 						}
 					break;
@@ -287,7 +293,7 @@ int main(int argc,char **argv)
 						composer=convertString(optarg);
 					else
 						{
-							tagstoset[SETCOMPOSER]=0;
+							//tagstoset[SETCOMPOSER]=0;
 							composer=strdup("");
 						}
 					break;
@@ -297,7 +303,7 @@ int main(int argc,char **argv)
 						comment=convertString(optarg);
 					else
 						{
-							tagstoset[SETCOMMENT]=0;
+							//tagstoset[SETCOMMENT]=0;
 							comment=strdup("");
 						}
 					break;
@@ -414,6 +420,7 @@ int main(int argc,char **argv)
 	freeAndNull(&composer);
 	freeAndNull(&compilationstring);
 	freeAndNull(&discidstr);
+	//freeAndNull(&tempbuffer);
 
 	return 0;
 }

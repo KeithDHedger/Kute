@@ -44,9 +44,11 @@ char	*compilationstring=NULL;
 char	*discidstr=NULL;
 
 char	*trackstring=NULL;
-char	*tempbuffer=(char*)calloc(2048,1);
+//char	*tempbuffer=(char*)calloc(2048,1);
+char	 tb[2048];
+char	*tempbuffer=&tb[0];
 
-char	*convertString(const char *fromstr)
+char	*convertString(const char *fromstr)//TODO//HHHMMmmmmmm
 {
 	char *tstr=strdup(fromstr);
 
@@ -67,7 +69,6 @@ const char* convertStringInPlace(char **fromstr)
 		}
 	return(*fromstr);
 }
-
 
 void printTags(void)
 {
@@ -97,3 +98,23 @@ void freeAndNull(char **data)
 		}
 }
 
+const char* setBoolFromString(const char *str)
+{
+	if(strlen(str)==0||str[0]=='0')
+		return("0");
+
+	return("1");
+}
+
+void setCDString(void)
+{
+	char *where=strchr(cdstring,'/');
+	
+	if(where!=NULL)
+		{
+			*where=0;
+			char *tstr=strdup(cdstring);
+			freeAndNull(&cdstring);
+			cdstring=tstr;
+		}
+}

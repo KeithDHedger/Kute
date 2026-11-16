@@ -120,8 +120,8 @@ bool readAllMp3(bool nochange)
 		{
 			freeAndNull(&totaltracksstring);
 			freeAndNull(&trackstring);	
-			trackstring=strdup("");
-			totaltracksstring=strdup("");
+			trackstring=strdup("1");
+			totaltracksstring=strdup("1");
 		}
 	else
 		{
@@ -135,21 +135,19 @@ bool readAllMp3(bool nochange)
 				}
 			else
 				{
-					totaltracksstring=strdup("");
+					totaltracksstring=strdup("1");
 				}
+		}
+
+	if(strcmp(totaltracksstring,"0")==0)
+		{
+			freeAndNull(&totaltracksstring);
+			totaltracksstring=strdup("1");
 		}
 
 	freeAndNull(&cdstring);
 	getMp3Tag("TPOS",&cdstring);
-	if(strchr(cdstring,'/'))
-		{
-			char *tstr;
-			token=strtok(cdstring,"/");
-			tstr=strdup(token);
-			freeAndNull(&cdstring);
-			cdstring=strdup(tstr);
-			freeAndNull(&tstr);
-		}
+	setCDString();
 
 	getMp3Tag("TCMP",&compilationstring);
 	getMp3Tag(ID3_FRAME_YEAR,&year);
@@ -331,6 +329,8 @@ void setMp3Tags(void)
 
 			setMp3Tag(ID3_FRAME_TRACK,ID3_FIELD_TYPE_STRINGLIST,tempbuffer);
 		}
+freeAndNull(&ttrack);
+freeAndNull(&ttot);
 
 	if(tagstoset[SETCOMPILATION]==1)
 		{

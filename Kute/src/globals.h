@@ -63,6 +63,8 @@ extern char	*tempbuffer;
 extern char	*convertString(const char *fromstr);
 void printTags(void);
 void freeAndNull(char **data);
+const char* setBoolFromString(const char *str);
+void setCDString(void);
 
 #define _GLOBALS_
 

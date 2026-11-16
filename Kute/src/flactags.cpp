@@ -139,8 +139,8 @@ void setFlacTags(void)
 
 void getFlacTagData(const char* name,char** tagname,FLAC__StreamMetadata *block)
 {
-	int											field_num=0;
-	int											field_len;
+	int										field_num=0;
+	int										field_len;
 	char										*field_value;
 	FLAC__StreamMetadata_VorbisComment			*vc;
 	FLAC__StreamMetadata_VorbisComment_Entry	*field;
@@ -159,6 +159,7 @@ void getFlacTagData(const char* name,char** tagname,FLAC__StreamMetadata *block)
 					field_value++;
 					if(field_value && strlen(field_value) > 0)
 						{
+							freeAndNull(tagname);
 							field_len=field->length-(field_value-(char*)field->entry);
 							*tagname=(char *) malloc(strlen(field_value)+1);
 							strcpy(*tagname,field_value);
@@ -211,12 +212,33 @@ bool FlacTagReadFileTag(char *filename)
 							getFlacTagData("ARTIST",&artist,block);
 							getFlacTagData("ALBUM",&album,block);
 							getFlacTagData("DISCNUMBER",&cdstring,block);
+							if(strlen(cdstring)==0 || (strlen(cdstring)==1 && cdstring[0]=='0'))
+								{
+									freeAndNull(&cdstring);
+									cdstring=strdup("1");
+								}
+							fprintf(stderr,">>>>%s<<<<\n",cdstring);
 							getFlacTagData("DATE",&year,block);
 							getFlacTagData("TRACKTOTAL",&totaltracksstring,block);
+							if(strlen(totaltracksstring)==0 || (strlen(totaltracksstring)==1 && totaltracksstring[0]=='0'))
+								{
+									freeAndNull(&totaltracksstring);
+									totaltracksstring=strdup("1");
+								}
 							getFlacTagData("TRACKNUMBER",&trackstring,block);
+							if(strlen(trackstring)==0 || (strlen(trackstring)==1 && trackstring[0]=='0'))
+								{
+									freeAndNull(&trackstring);
+									trackstring=strdup("1");
+								}
 							getFlacTagData("GENRE",&genre,block);
 							getFlacTagData("COMPOSER",&composer,block);
 							getFlacTagData("COMPILATION",&compilationstring,block);
+							if(strlen(compilationstring)==0)
+								{
+									freeAndNull(&compilationstring);
+									compilationstring=strdup("0");
+								}
 							getFlacTagData("COMMENT",&comment,block);
 							getFlacTagData("DISCID",&discidstr,block);
 

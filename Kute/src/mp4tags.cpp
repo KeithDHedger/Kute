@@ -99,6 +99,7 @@ void setMp4Tag(void)
 			uint8_t comp;
 			comp=strtol(compilationstring,NULL,10);
 			MP4TagsSetCompilation(tags,&comp);
+			//MP4TagsSetCompilation(tags,compilationstring);
 		}
 
 	if(tagstoset[SETYEAR]==1)
@@ -159,13 +160,19 @@ bool doReadAllM4aTags(void)
 
 	if(tags->track)
 		{
-			asprintf(&trackstring,"%i",tags->track->index);
-			asprintf(&totaltracksstring,"%i",tags->track->total);
+			if(tags->track->index!=0)
+				asprintf(&trackstring,"%i",tags->track->index);
+			else
+				asprintf(&trackstring,"%i",1);
+			if(tags->track->total!=0)
+				asprintf(&totaltracksstring,"%i",tags->track->total);
+			else
+				asprintf(&totaltracksstring,"%i",1);
 		}
 	else
 		{
-			trackstring=strdup("");
-			totaltracksstring=strdup("");
+			trackstring=strdup("1");
+			totaltracksstring=strdup("1");
 		}
 
 	cd=0;
